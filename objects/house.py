@@ -1,4 +1,4 @@
-class House:
+class House(object):
     x = None
     y = None
     height = 0
