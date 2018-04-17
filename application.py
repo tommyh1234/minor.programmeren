@@ -1,6 +1,7 @@
 from objects.map import Map
 from objects.mansion import Mansion
 
+
 def main():
     grid = Map()
 
