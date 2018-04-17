@@ -20,9 +20,6 @@ class Area(object):
                 self.bungalowList.append(house)
             elif kind == "FamilyHome":
                 self.familyHomeList.append(house)
-        else:
-            house.x = None
-            house.y = None
 
     def check_validity(self, house):
         endX = house.x + house.width
