@@ -10,7 +10,7 @@ class Area(object):
         house.x = x
         house.y = y
         kind = type(house).__name__
-        if self.check_validity(house):
+        if house.check_validity():
             for i in range(x, x + house.width):
                 for j in range(y, y + house.height):
                     self.grid[i][j] = house
@@ -20,19 +20,6 @@ class Area(object):
                 self.bungalowList.append(house)
             elif kind == "FamilyHome":
                 self.familyHomeList.append(house)
-
-    def check_validity(self, house):
-        endX = house.x + house.width
-        endY = house.y + house.height
-
-        for i in range(house.x, endX):
-            for j in range(house.y, endY):
-                # if there's something that is not this house
-                if (self.grid[i][j] is not None
-                        and self.grid[i][j] is not house):
-                    return False
-
-        return True
 
     def check_house_balance(self):
         mansions = len(self.mansionList)
