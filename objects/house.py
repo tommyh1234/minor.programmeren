@@ -46,6 +46,7 @@ class House(object):
                 x = self.x - space
                 y = self.y - space
 
+        self.space = space        
         return space
 
     def get_price(self):
