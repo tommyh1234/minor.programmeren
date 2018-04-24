@@ -35,13 +35,17 @@ class House(object):
         space = 0
         x = self.x
         y = self.y
+        # when a given position is not taken by something else
         while (self.area.grid[x][y] is None or self.area.grid[x][y] is self):
-            if x < self.x + space:
+            # check the next x pos
+            if x < self.x + self.width + space:
                 x += 1
-            elif y < self.y + space:
+            # check next y and reset x
+            elif y < self.y + self.height + space:
                 y += 1
                 x = self.x - space
             else:
+                # reset and check a larger area
                 space += 1
                 x = self.x - space
                 y = self.y - space

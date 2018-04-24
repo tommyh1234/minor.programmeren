@@ -11,9 +11,11 @@ class Area(object):
         house.y = y
         kind = type(house).__name__
         if house.check_validity():
+            # place the house on every coordinate that is covered by the house
             for i in range(x, x + house.width):
                 for j in range(y, y + house.height):
                     self.grid[i][j] = house
+            # add the house to the appropriate list
             if kind == "Mansion":
                 self.mansionList.append(house)
             elif kind == "Bungalow":
