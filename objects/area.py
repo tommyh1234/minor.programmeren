@@ -36,3 +36,24 @@ class Area(object):
         if familyHomes / total * 100 != 60:
             return False
         return True
+
+    def get_area_price(self):
+
+        totalPriceGrid = 0
+
+        while i < len(mansionList)
+            mansionList[i].get_space()
+            totalPrice +=  mansionList[i].get_price()
+            i += 1
+        while i < len(bungalowList)
+            bungalowList[i].get_space()
+            totalPrice +=  bungalowList[i].get_price()
+            i += 1
+        while i < len(familyHomeList)
+            familyHomeList[i].get_space()
+            totalPrice +=  familyHomeList[i].get_price()
+            i += 1
+        return totalPriceGrid
+
+
+
