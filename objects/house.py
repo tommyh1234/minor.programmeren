@@ -11,9 +11,6 @@ class House(object):
 
     def __init__(self, area):
         self.area = area
-        self.space = self.get_space()
-        if self.space < self.minimumSpace:
-            raise RuntimeError("The garden is too small!")
 
     def surface(self):
         return self.width * self.height
@@ -21,6 +18,10 @@ class House(object):
     def check_validity(self):
         endX = self.x + self.width
         endY = self.y + self.height
+
+        self.space = self.get_space()
+        if self.space < self.minimumSpace:
+            return False
 
         for i in range(self.x, endX):
             for j in range(self.y, endY):
