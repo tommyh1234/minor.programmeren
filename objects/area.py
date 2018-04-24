@@ -5,6 +5,14 @@ class Area(object):
     mansionList = []
     bungalowList = []
     familyHomeList = []
+    houseAmount = 0
+
+    houseAmount = raw_input("20, 40 or 60 houses?:")
+        if houseAmount != 20, houseAmount != 40, houseAmount != 60
+            print("Only 20, 40 or 60 houses are vallid")
+            return False
+        self.    
+        
 
     def place_house(self, house, x, y):
         house.x = x
@@ -28,13 +36,14 @@ class Area(object):
         bungalows = len(self.bungalowList)
         familyHomes = len(self.familyHomeList)
         total = mansions + bungalows + familyHomes
-
         if mansions / total * 100 != 15:
             return False
         if bungalows / total * 100 != 25:
             return False
         if familyHomes / total * 100 != 60:
-            return False
+            return False 
+        if total !== self.houseAmount
+            return False       
         return True
 
     def get_area_price(self):
@@ -43,15 +52,15 @@ class Area(object):
 
         while i < len(mansionList)
             mansionList[i].get_space()
-            totalPrice +=  mansionList[i].get_price()
+            totalPrice += mansionList[i].get_price()
             i += 1
         while i < len(bungalowList)
             bungalowList[i].get_space()
-            totalPrice +=  bungalowList[i].get_price()
+            totalPrice += bungalowList[i].get_price()
             i += 1
         while i < len(familyHomeList)
             familyHomeList[i].get_space()
-            totalPrice +=  familyHomeList[i].get_price()
+            totalPrice += familyHomeList[i].get_price()
             i += 1
         return totalPriceGrid
 
