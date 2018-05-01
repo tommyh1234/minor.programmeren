@@ -30,6 +30,18 @@ class Area(object):
             raise RuntimeError("Cannot validly place \
                                 house at these coordinates.")
 
+    def remove_house(self, house):
+        for i in range(house.x, house.x + house.width):
+            for j in range(house.y, house.y + house.height):
+                self.grid[i][j] = None
+        kind = type(house).__name__
+        if kind == "Mansion":
+            self.mansionList.remove(house)
+        elif kind == "Bungalow":
+            self.bungalowList.append(house)
+        elif kind == "FamilyHome":
+            self.familyHomeList.append(house)
+
     def check_house_balance(self):
         mansions = len(self.mansionList)
         bungalows = len(self.bungalowList)
