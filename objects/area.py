@@ -1,10 +1,12 @@
 class Area(object):
     width = 320
     height = 360
-    grid = [[None for y in range(height)] for x in range(width)]
-    mansionList = []
-    bungalowList = []
-    familyHomeList = []
+    
+    def __init__(self):
+        self.grid = [[None for y in range(self.height)] for x in range(self.width)]
+        self.mansionList = []
+        self.bungalowList = []
+        self.familyHomeList = []
 
     def place_house(self, house, x, y):
         house.x = x
@@ -47,14 +49,14 @@ class Area(object):
 
         while i < len(self.mansionList):
             self.mansionList[i].get_space()
-            totalPrice +=  self.mansionList[i].get_price()
+            totalPrice += self.mansionList[i].get_price()
             i += 1
         while i < len(self.bungalowList):
             self.bungalowList[i].get_space()
-            totalPrice +=  self.bungalowList[i].get_price()
+            totalPrice += self.bungalowList[i].get_price()
             i += 1
         while i < len(self.familyHomeList):
             self.familyHomeList[i].get_space()
-            totalPrice +=  self.familyHomeList[i].get_price()
+            totalPrice += self.familyHomeList[i].get_price()
             i += 1
         return totalPrice
