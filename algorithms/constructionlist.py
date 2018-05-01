@@ -13,6 +13,5 @@ def construction_list(area, fhAmount, bAmount, mAmount):
         houses.append(Bungalow(area))
     for k in range(0, mAmount):
         houses.append(Mansion(area))
-    print('All houses: {}'.format(houses))
 
     return houses

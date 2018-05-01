@@ -7,6 +7,7 @@ class RandomAlgorithm(object):
 
     def execute(self, area, fhAmount, bAmount, mAmount):
         houses = construction_list(area, fhAmount, bAmount, mAmount)
+        print('All houses: {}'.format(houses))
 
         # place a house from the list on random coordinates
         counter = 0
