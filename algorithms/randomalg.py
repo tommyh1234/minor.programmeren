@@ -1,4 +1,5 @@
-from algorithms.constructionlist import construction_list
+# -*- coding: UTF-8 -*-
+from constructionlist import construction_list
 import random
 
 
@@ -24,9 +25,23 @@ class RandomAlgorithm(object):
                 houses.remove(currentHouse)
 
             except RuntimeError:
-                print("Cannot validly place house at these coordinates.")
+                print("✘ Cannot validly place house at these coordinates.")
             counter += 1
-            # event = pygame.event.Event(pygame.USEREVENT, area)
-            # pygame.event.post(event)
-        print('All houses placed')
+        print('✓✓ All houses placed ✓✓')
+
+        # create a list with all placed houses
+        placedHouses = (area.familyHomeList
+                        + area.bungalowList
+                        + area.mansionList)
+
+        # Recheck the validity of all houses (important to catch
+        # invalid free space when houses with smaller free space
+        # are placed after houses with larger free space)
+        for house in placedHouses:
+            try:
+                house.check_validity()
+                print("✓ {} validly placed".format(house))
+            except RuntimeError:
+                print("✘ {} is not validly placed.".format(house))
+
         print('Grid value: {}'.format(area.get_area_price()))
