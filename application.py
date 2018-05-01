@@ -14,5 +14,6 @@ def main():
     grid0 = Area(amount)
     algorithm.fillRandomGrid(grid0, 36, 15, 9)
 
+
 if __name__ == "__main__":
     main()
