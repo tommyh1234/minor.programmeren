@@ -63,6 +63,7 @@ class Visualizer:
                     house.y*2 - house.minimumSpace*2)
                 )
 
+        for house in houseList:
             # draw house
             kind = type(house).__name__
             if kind == "Mansion":

@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from constructionlist import construction_list
+from algorithms.constructionlist import construction_list
 import random
 
 
