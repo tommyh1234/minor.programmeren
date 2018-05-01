@@ -38,9 +38,9 @@ class Area(object):
         if kind == "Mansion":
             self.mansionList.remove(house)
         elif kind == "Bungalow":
-            self.bungalowList.append(house)
+            self.bungalowList.remove(house)
         elif kind == "FamilyHome":
-            self.familyHomeList.append(house)
+            self.familyHomeList.remove(house)
 
     def check_house_balance(self):
         mansions = len(self.mansionList)
