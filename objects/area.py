@@ -48,7 +48,7 @@ class Area(object):
 
     def get_area_price(self):
 
-        totalPriceGrid = 0
+        totalPrice = 0
         i = 0
 
         while i < len(self.mansionList):
@@ -62,6 +62,5 @@ class Area(object):
         while i < len(self.familyHomeList):
             self.familyHomeList[i].get_space()
             totalPrice += self.familyHomeList[i].get_price()
-
             i += 1
         return totalPrice
