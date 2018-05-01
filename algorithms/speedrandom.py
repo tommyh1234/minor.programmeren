@@ -49,8 +49,9 @@ class SpeedRandomAlgorithm(object):
                Value: {} | \
                {} runs | \
                {} failed initial placements | \
-               {} invalid placements on double check'.format(housesAmount,
-                                                             gridvalue,
-                                                             runCounter,
-                                                             failedPlacementCounter,
-                                                             checkInvalidPlacement))
+               {} invalid placements on double check'
+              .format(housesAmount,
+                      gridvalue,
+                      runCounter,
+                      failedPlacementCounter,
+                      checkInvalidPlacement))
