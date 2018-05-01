@@ -1,9 +1,12 @@
 class Area(object):
     width = 320
     height = 360
-    
+   
     def __init__(self):
-        self.grid = [[None for y in range(self.height)] for x in range(self.width)]
+        self.grid = [[None for y
+                      in range(self.height)] 
+                      for x 
+                      in range(self.width)]
         self.mansionList = []
         self.bungalowList = []
         self.familyHomeList = []

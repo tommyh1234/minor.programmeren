@@ -41,7 +41,7 @@ class House(object):
             # check the next x pos within area
             if (x < self.x + self.width - 1 + space and
                 x >= 0 and x < self.area.width - 1):
-                x += 1
+                    x += 1
             # check next y within area and reset x
             elif (y < self.y + self.height - 1 + space and
                   y >= 0 and y < self.area.height - 1):

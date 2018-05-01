@@ -2,6 +2,7 @@ from objects.familyHome import FamilyHome
 from objects.bungalow import Bungalow
 from objects.mansion import Mansion
 
+
 def construction_list(area, fhAmount, bAmount, mAmount):
 
     # create a list with the required amount of houses
@@ -15,3 +16,4 @@ def construction_list(area, fhAmount, bAmount, mAmount):
     print('All houses: {}'.format(houses))
 
     return houses
+
