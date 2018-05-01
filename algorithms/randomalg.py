@@ -1,8 +1,8 @@
 from constructionlist import construction_list
 import random
 
-class RandomAlgorithm(object):
 
+class RandomAlgorithm(object):
 
     def fillRandomGrid(self, area, fhAmount, bAmount, mAmount):
 

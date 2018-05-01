@@ -16,4 +16,3 @@ def construction_list(area, fhAmount, bAmount, mAmount):
     print('All houses: {}'.format(houses))
 
     return houses
-

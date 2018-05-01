@@ -1,12 +1,10 @@
 class Area(object):
     width = 320
     height = 360
-   
+
     def __init__(self):
-        self.grid = [[None for y
-                      in range(self.height)] 
-                      for x 
-                      in range(self.width)]
+        self.grid = [[None for y in range(self.height)]
+                     for x in range(self.width)]
         self.mansionList = []
         self.bungalowList = []
         self.familyHomeList = []
@@ -29,7 +27,8 @@ class Area(object):
             elif kind == "FamilyHome":
                 self.familyHomeList.append(house)
         else:
-            raise RuntimeError("Cannot validly place house at these coordinates.")
+            raise RuntimeError("Cannot validly place \
+                                house at these coordinates.")
 
     def check_house_balance(self):
         mansions = len(self.mansionList)
