@@ -1,12 +1,11 @@
 # -*- coding: UTF-8 -*-
-from constructionlist import construction_list
+from algorithms.constructionlist import construction_list
 import random
 
 
 class RandomAlgorithm(object):
 
-    def fillRandomGrid(self, area, fhAmount, bAmount, mAmount):
-
+    def execute(self, area, fhAmount, bAmount, mAmount):
         houses = construction_list(area, fhAmount, bAmount, mAmount)
 
         # place a house from the list on random coordinates

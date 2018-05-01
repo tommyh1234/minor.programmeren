@@ -1,1 +1,5 @@
 *.sublime-workspace
+anenv
+__pycache__
+algorithms/__pycache__
+objects/__pycache__
