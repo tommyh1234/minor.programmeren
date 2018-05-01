@@ -7,12 +7,8 @@ class Area(object):
     familyHomeList = []
     houseAmount = 0
 
-    houseAmount = raw_input("20, 40 or 60 houses?:")
-        if houseAmount != 20, houseAmount != 40, houseAmount != 60
-            print("Only 20, 40 or 60 houses are vallid")
-            return False
-        self.    
-        
+    def __init__ (self, houseAmount):
+        self.houseAmount = houseAmount
 
     def place_house(self, house, x, y):
         house.x = x
