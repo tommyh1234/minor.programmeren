@@ -42,7 +42,7 @@ class Area(object):
             return False
         if familyHomes / total * 100 != 60:
             return False
-        if total != self.houseAmount
+        if total != self.houseAmount:
             return False
         return True
 
