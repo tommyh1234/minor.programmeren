@@ -43,7 +43,6 @@ class Area(object):
         return True
 
     def get_area_price(self):
-
         totalPriceGrid = 0
 
         while i < len(mansionList)
