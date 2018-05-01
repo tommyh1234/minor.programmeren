@@ -28,6 +28,9 @@ class Visualizer:
             self.area = event.area
 
     def on_render(self):
+        if self.algorithm.isDone is False:
+            self.algorithm.execute()
+
         for i in range(0, 3):
             for j in range(0, 3):
                 self.screen.blit(self.img_grass, (i*270, j*270))
@@ -102,11 +105,9 @@ class Visualizer:
     def on_cleanup(self):
         pygame.quit()
 
-    def on_execute(self, fhAmount, bAmount, mAmount):
+    def on_execute(self):
         if self.on_init() is False:
             self._running = False
-
-        self.algorithm.execute(self.area, fhAmount, bAmount, mAmount)
 
         while(self._running):
             for event in pygame.event.get():
