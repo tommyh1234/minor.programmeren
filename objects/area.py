@@ -1,8 +1,8 @@
 class Area(object):
     width = 320
     height = 360
-    
-    def __init__ (self, houseAmount):
+
+    def __init__(self, houseAmount):
         self.houseAmount = houseAmount
         self.grid = [[None for y in range(self.height)]
                      for x in range(self.width)]
@@ -41,16 +41,15 @@ class Area(object):
         if bungalows / total * 100 != 25:
             return False
         if familyHomes / total * 100 != 60:
-            return False 
-        if total !== self.houseAmount
-            return False       
+            return False
+        if total != self.houseAmount
+            return False
         return True
 
     def get_area_price(self):
 
         totalPriceGrid = 0
         i = 0
-
 
         while i < len(self.mansionList):
             self.mansionList[i].get_space()
