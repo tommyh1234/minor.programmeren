@@ -1,11 +1,10 @@
-from constructionlist import construction_list
+from algorithms.constructionlist import construction_list
 import random
 
 
 class RandomAlgorithm(object):
 
-    def fillRandomGrid(self, area, fhAmount, bAmount, mAmount):
-
+    def execute(self, area, fhAmount, bAmount, mAmount):
         houses = construction_list(area, fhAmount, bAmount, mAmount)
 
         # place a house from the list on random coordinates
@@ -27,5 +26,7 @@ class RandomAlgorithm(object):
             except RuntimeError:
                 print("Cannot validly place house at these coordinates.")
             counter += 1
+            # event = pygame.event.Event(pygame.USEREVENT, area)
+            # pygame.event.post(event)
         print('All houses placed')
         print('Grid value: {}'.format(area.get_area_price()))
