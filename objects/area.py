@@ -18,7 +18,6 @@ class Area(object):
             for i in range(x, x + house.width):
                 for j in range(y, y + house.height):
                     self.grid[i][j] = house
-            print('House placed succesfully')
             # add the house to the appropriate list
             if kind == "Mansion":
                 self.mansionList.append(house)
