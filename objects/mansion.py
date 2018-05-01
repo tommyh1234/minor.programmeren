@@ -7,3 +7,6 @@ class Mansion(House):
     minimumSpace = 12
     priceIncrease = 0.06
     value = 610000
+
+    def __repr__(self):
+        return ("{}".format(self.__class__.__name__))
