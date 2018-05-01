@@ -31,9 +31,9 @@ class RandomAlgorithm(object):
         print('✓✓ All houses placed ✓✓')
 
         # create a list with all placed houses
-        placedHouses = area.familyHomeList \
-                       + area.bungalowList \
-                       + area.mansionList
+        placedHouses = (area.familyHomeList
+                        + area.bungalowList
+                        + area.mansionList)
 
         # Recheck the validity of all houses (important to catch
         # invalid free space when houses with smaller free space
