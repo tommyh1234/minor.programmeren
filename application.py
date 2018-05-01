@@ -1,6 +1,7 @@
 from objects.area import Area
 from algorithms.speedrandom import SpeedRandomAlgorithm
-
+# from algorithms.randomalg import RandomAlgorithm
+# from visualizer import Vizualizer
 
 def main():
 
@@ -16,6 +17,10 @@ def main():
     print('50 runs | Highest: {} | Lowest: {}'
           .format(max(gridValues), min(gridValues)))
 
+    #grid = Area()
+    #algorithm = RandomAlgorithm(grid, 9, 15, 36)
+    #visualizer = Visualizer(grid, algorithm)
+    #visualizer.on_execute()
 
 if __name__ == "__main__":
     main()
