@@ -1,13 +1,17 @@
 from objects.area import Area
-from objects.familyHome import FamilyHome
-from objects.bungalow import Bungalow
-from objects.mansion import Mansion
+from algorithms.randomalg import RandomAlgorithm
+
 
 def main():
-    grid = Area()
+    algorithm = RandomAlgorithm()
 
-    familyHome = FamilyHome(grid)
-    bungalow = Bungalow(grid)
-    mansion = Mansion(grid)
-    
-    grid.place_house(mansion, 5, 5)
+    grid0 = Area()
+    algorithm.fillRandomGrid(grid0, 36, 15, 9)
+
+    grid1 = Area()
+    algorithm1 = RandomAlgorithm()
+    algorithm1.fillRandomGrid(grid1, 36, 15, 9)
+
+
+if __name__ == "__main__":
+    main()
