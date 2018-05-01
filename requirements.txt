@@ -1,1 +1,2 @@
-flake8 pygame
+flake8
+pygame
