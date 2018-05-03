@@ -1,4 +1,4 @@
-import random 
+import random
 from algorithms.randomalg import RandomAlgorithm
 
 
@@ -53,8 +53,8 @@ class HillClimbingAlgorithm(object):
         # include except RecursionError: place old house back.
         except RuntimeError:
             print("Trying to shift house to invalid location ({}, {}) "
-                   "so revert to original position ({}, {})."
-                   .format(currentHouse.x, currentHouse.y, backupX, backupY))
+                  "so revert to original position ({}, {})."
+                  .format(currentHouse.x, currentHouse.y, backupX, backupY))
 
             # remove house and place origanal house
             currentHouse.x = backupX
@@ -93,29 +93,29 @@ class HillClimbingAlgorithm(object):
         # but only if it still falls within the map TODO break maken
         if directionShift == 0:
             tempCurrentHouseX = currentHouse.x + amountShift
-            if (tempCurrentHouseX > currentHouse.minimumSpace and
-                tempCurrentHouseX < self.area.width
-                                    - currentHouse.width
-                                    - currentHouse.minimumSpace):
+            if (tempCurrentHouseX > currentHouse.minimumSpace) and
+                (tempCurrentHouseX < self.area.width
+                                     - currentHouse.width
+                                     - currentHouse.minimumSpace):
                 currentHouse.x += amountShift
                 return currentHouse
             else:
                 print("AmountShift ({}) not possible "
-                     "(house would be outside map)".format(amountShift))
+                      "(house would be outside map)".format(amountShift))
                 self.determineShift(currentHouse, directionShift)
         else:
-            tempCurrentHouseY = currentHouse.y + amountShift  
-            if (tempCurrentHouseY > currentHouse.minimumSpace and 
-                tempCurrentHouseY < self.area.height
+            tempCurrentHouseY = currentHouse.y + amountShift
+            if (tempCurrentHouseY > currentHouse.minimumSpace) and
+                (tempCurrentHouseY < self.area.height
                                     - currentHouse.height
                                     - currentHouse.minimumSpace):
                 currentHouse.y += amountShift
                 return currentHouse
             else:
-                print("AmountShift ({}) not possible " 
+                print("AmountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
                 self.determineShift(currentHouse, directionShift)
 
-        # recursive error catching. 
+        # recursive error catching
         # returning currenthouse from last valid determineShift attempt
         return currentHouse
