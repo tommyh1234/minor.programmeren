@@ -8,5 +8,5 @@ class Bungalow(House):
     priceIncrease = 0.04
     value = 399000
 
-    def __repr__(self):
-        return ("{}".format(self.__class__.__name__))
+    # def __repr__(self):
+    #     return ("{}".format(self.__class__.__name__))
