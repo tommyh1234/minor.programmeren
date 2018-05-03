@@ -93,10 +93,11 @@ class HillClimbingAlgorithm(object):
         # but only if it still falls within the map TODO break maken
         if directionShift == 0:
             tempCurrentHouseX = currentHouse.x + amountShift
-            if (tempCurrentHouseX > currentHouse.minimumSpace and 
-                tempCurrentHouseX < self.area.width
-                                  - currentHouse.width
-                                  - currentHouse.minimumSpace):
+            tempBoundry = self.area.width
+                          - currentHouse.width
+                          - currentHouse.minimumSpace
+            if (tempCurrentHouseX > currentHouse.minimumSpace and
+                tempCurrentHouseX < tempBoundry):
                 currentHouse.x += amountShift
                 return currentHouse
             else:
@@ -105,10 +106,11 @@ class HillClimbingAlgorithm(object):
                 self.determineShift(currentHouse, directionShift)
         else:
             tempCurrentHouseY = currentHouse.y + amountShift
+            tempBoundry = self.area.height
+                          - currentHouse.height
+                          - currentHouse.minimumSpace
             if (tempCurrentHouseY > currentHouse.minimumSpace and
-                tempCurrentHouseY < self.area.height 
-                                    - currentHouse.height 
-                                    - currentHouse.minimumSpace):
+                tempCurrentHouseY < tempBoundry):
                 currentHouse.y += amountShift
                 return currentHouse
             else:
