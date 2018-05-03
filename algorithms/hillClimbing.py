@@ -94,8 +94,8 @@ class HillClimbingAlgorithm(object):
         if directionShift == 0:
             tempCurrentHouseX = currentHouse.x + amountShift
             tempBoundry = (self.area.width
-                            - currentHouse.width
-                            - currentHouse.minimumSpace)
+                           - currentHouse.width
+                           - currentHouse.minimumSpace)
             if (tempCurrentHouseX > currentHouse.minimumSpace and
                     tempCurrentHouseX < tempBoundry):
                 currentHouse.x += amountShift
@@ -107,8 +107,8 @@ class HillClimbingAlgorithm(object):
         else:
             tempCurrentHouseY = currentHouse.y + amountShift
             tempBoundry = (self.area.height
-                            - currentHouse.height
-                            - currentHouse.minimumSpace)
+                           - currentHouse.height
+                           - currentHouse.minimumSpace)
             if (tempCurrentHouseY > currentHouse.minimumSpace and
                     tempCurrentHouseY < tempBoundry):
                 currentHouse.y += amountShift
