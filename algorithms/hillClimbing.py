@@ -4,69 +4,111 @@ from objects.area import Area
 
 class HillClimbingAlgorithm(object):
 
-    def excute(self, area, fhAmount, bAmount, mAmount):
-
+    def __init__(self, area, fhAmount, bAmount, mAmount):
+        self.isDone = False
+        self.tryCount = 0
+        self.area = area
         # fill grid random
-        currentGrid = RandomAlgorithm()
-        currentGrid.fillRandomGrid(area, fhAmount, bAmount, mAmount)
-
-        currentTotalPrice = area.get_area_price()
+        self.randomAlg = RandomAlgorithm(self.area, fhAmount, bAmount, mAmount)
+        while(self.randomAlg.isDone == False):
+            self.randomAlg.execute()
 
         # make list of all houses
-        houseList = []
-        houseList.extend(area.mansionList)
-        houseList.extend(area.familyHomeList)
-        houseList.extend(area.bungalowList)
+        self.houseList = []
+        self.houseList.extend(self.area.mansionList)
+        self.houseList.extend(self.area.familyHomeList)
+        self.houseList.extend(self.area.bungalowList)
         
-        print('houselist: {}'.format(houseList))
+    def execute(self):
+        currentTotalPrice = self.area.get_area_price()
+        # pick random houses from list of placed houses
+        currentHouse = random.choice(self.houseList)
 
-        # pick random houses
-        currentHouse = random.choice(houseList)
+        print('CurrentHouse: {}'.format(currentHouse))
 
-        print('currentHouse: {}'.format(currentHouse))
-
-        ## save x and y house
+        # save cordination of house
         backupX = currentHouse.x
         backupY = currentHouse.y
 
-        print('currentHouseX: {}'.format(currentHouse.x))
-        print('currentHouseY: {}'.format(currentHouse.y))
+        print('Original location: ({}, {})'.format(currentHouse.x, currentHouse.y))
 
-        # random move
-        AmountShift = random.randint( -10, 10)
-        print(AmountShift)
+        # remove current house from the map
+        self.area.remove_house(currentHouse)
 
-        # move to horizontal or vertical 
-        DirectionShift = random.randint(0, 1)
-        print(DirectionShift)
+        # choose to move horizontal or vertical 
+        directionShift = random.randint(0, 1)
+        print("Direction: {}".format(directionShift))
 
-        # remove house
-        area.remove_house(currentHouse)
-
-        # change house in direction
-        if DirectionShift == 0:
-            self.currentHouse.x += AmountShift
-        else:
-            self.currentHouse.y += AmountShift
-
+        # determine distance to shift the house with
+        currentHouse = self.determineShift(currentHouse, directionShift)
+        print(currentHouse)
+        print("New location: ({}, {}).".format(currentHouse.x, currentHouse.y))
+        print("House: {}".format(currentHouse))
+            
         # place new house
         try:
-            area.place_house(currentHouse)
+            self.area.place_house(currentHouse, currentHouse.x, currentHouse.y)
+        # replace with true/false for place house
+        # include except RecursionError: place old house back.
         except RuntimeError:
-            print ("not valid location for house")
+            print ("Trying to shift house to invalid location ({}, {}) "
+                    "so revert to original position ({}, {})."
+                    .format(currentHouse.x, currentHouse.y, backupX, backupY))
+            
+            # remove house and place origanal house
+            currentHouse.x = backupX
+            currentHouse.y = backupY
 
-        # check if value of grid is increased
-        newTotalPrice = area.get_area_price()
+            # place new house
+            print("Trying to place the house back to previous location")
+            print(len(self.houseList))
+            self.area.place_house(currentHouse, currentHouse.x, currentHouse.y)
 
-        if currentTotalPrice > newTotalPrice:
+        # check if value of grid is increased or stays the same
+        newTotalPrice = self.area.get_area_price()
 
-            # remove new house
-            area.remove_house(currentHouse)
+        if currentTotalPrice >= newTotalPrice:
 
             # remove house and place origanal house
             currentHouse.x = backupX
             currentHouse.y = backupY
 
             # place new house
-            are.place_house(currentHouse)
- 
+            self.area.place_house(currentHouse, currentHouse.x, currentHouse.y)
+
+        if self.tryCount > 100:
+            self.isDone = True
+
+        print("--------------------")
+
+    # determine distance to shift the house with
+    def determineShift(self, currentHouse, directionShift):
+        # pick random distance to shift the house with
+        amountShift = random.randint(-10, 10)
+        print("amountShift: {}".format(amountShift))
+
+        # change house in chosen direction, but only if it still falls within the map TODO break maken
+        if directionShift == 0:
+            print("ofdaar")
+            tempCurrentHouseX = currentHouse.x + amountShift 
+            if (tempCurrentHouseX > currentHouse.minimumSpace and 
+                tempCurrentHouseX < self.area.width - currentHouse.width - currentHouse.minimumSpace):
+                currentHouse.x += amountShift
+                return currentHouse
+            else:
+                print("This amountShift ({}) is not possible (house would be out of map)".format(amountShift))
+                self.determineShift(currentHouse, directionShift)
+        else:
+            print("hier")
+            tempCurrentHouseY = currentHouse.y + amountShift  
+            if (tempCurrentHouseY > currentHouse.minimumSpace and 
+                tempCurrentHouseY < self.area.height - currentHouse.height - currentHouse.minimumSpace):
+                currentHouse.y += amountShift
+                return currentHouse
+            else:
+                print("This amountShift ({}) is not possible (house would be out of map)".format(amountShift))
+                self.determineShift(currentHouse, directionShift)
+        
+        # recursive error catching. Returning currenthouse from last valid determineShift attempt
+        print(currentHouse.x, currentHouse.y, amountShift, directionShift)
+        return currentHouse
