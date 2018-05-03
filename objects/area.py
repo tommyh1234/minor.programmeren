@@ -27,7 +27,7 @@ class Area(object):
                 self.familyHomeList.append(house)
         else:
             raise RuntimeError("Cannot validly place "
-                                "house at these coordinates.")
+                               "house at these coordinates.")
 
     def remove_house(self, house):
         for i in range(house.x, house.x + house.width):

@@ -74,7 +74,7 @@ class House(object):
             else:
                 break
 
-        self.space = space        
+        self.space = space
         return space
 
     def get_price(self):

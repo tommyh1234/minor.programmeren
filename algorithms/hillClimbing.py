@@ -1,6 +1,6 @@
 import random 
 from algorithms.randomalg import RandomAlgorithm
-from objects.area import Area
+
 
 class HillClimbingAlgorithm(object):
 
@@ -10,7 +10,7 @@ class HillClimbingAlgorithm(object):
         self.area = area
         # fill grid random
         self.randomAlg = RandomAlgorithm(self.area, fhAmount, bAmount, mAmount)
-        while(self.randomAlg.isDone == False):
+        while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 
         # make list of all houses
@@ -18,7 +18,7 @@ class HillClimbingAlgorithm(object):
         self.houseList.extend(self.area.mansionList)
         self.houseList.extend(self.area.familyHomeList)
         self.houseList.extend(self.area.bungalowList)
-        
+
     def execute(self):
         currentTotalPrice = self.area.get_area_price()
         # pick random houses from list of placed houses
@@ -30,12 +30,13 @@ class HillClimbingAlgorithm(object):
         backupX = currentHouse.x
         backupY = currentHouse.y
 
-        print('Original location: ({}, {})'.format(currentHouse.x, currentHouse.y))
+        print('Original location: ({}, {})'
+              .format(currentHouse.x, currentHouse.y))
 
         # remove current house from the map
         self.area.remove_house(currentHouse)
 
-        # choose to move horizontal or vertical 
+        # choose to move horizontal or vertical
         directionShift = random.randint(0, 1)
         print("Direction: {}".format(directionShift))
 
@@ -44,17 +45,17 @@ class HillClimbingAlgorithm(object):
         print(currentHouse)
         print("New location: ({}, {}).".format(currentHouse.x, currentHouse.y))
         print("House: {}".format(currentHouse))
-            
+
         # place new house
         try:
             self.area.place_house(currentHouse, currentHouse.x, currentHouse.y)
         # replace with true/false for place house
         # include except RecursionError: place old house back.
         except RuntimeError:
-            print ("Trying to shift house to invalid location ({}, {}) "
-                    "so revert to original position ({}, {})."
-                    .format(currentHouse.x, currentHouse.y, backupX, backupY))
-            
+            print("Trying to shift house to invalid location ({}, {}) "
+                   "so revert to original position ({}, {})."
+                   .format(currentHouse.x, currentHouse.y, backupX, backupY))
+
             # remove house and place origanal house
             currentHouse.x = backupX
             currentHouse.y = backupY
@@ -68,13 +69,14 @@ class HillClimbingAlgorithm(object):
         newTotalPrice = self.area.get_area_price()
 
         if currentTotalPrice >= newTotalPrice:
-
             # remove house and place origanal house
             currentHouse.x = backupX
             currentHouse.y = backupY
 
             # place new house
-            self.area.place_house(currentHouse, currentHouse.x, currentHouse.y)
+            self.area.place_house(currentHouse,
+                                  currentHouse.x,
+                                  currentHouse.y)
 
         if self.tryCount > 100:
             self.isDone = True
@@ -87,28 +89,33 @@ class HillClimbingAlgorithm(object):
         amountShift = random.randint(-10, 10)
         print("amountShift: {}".format(amountShift))
 
-        # change house in chosen direction, but only if it still falls within the map TODO break maken
+        # change house in chosen direction,
+        # but only if it still falls within the map TODO break maken
         if directionShift == 0:
-            print("ofdaar")
-            tempCurrentHouseX = currentHouse.x + amountShift 
-            if (tempCurrentHouseX > currentHouse.minimumSpace and 
-                tempCurrentHouseX < self.area.width - currentHouse.width - currentHouse.minimumSpace):
+            tempCurrentHouseX = currentHouse.x + amountShift
+            if (tempCurrentHouseX > currentHouse.minimumSpace and
+                tempCurrentHouseX < self.area.width
+                                    - currentHouse.width
+                                    - currentHouse.minimumSpace):
                 currentHouse.x += amountShift
                 return currentHouse
             else:
-                print("This amountShift ({}) is not possible (house would be out of map)".format(amountShift))
+                print("AmountShift ({}) not possible "
+                     "(house would be outside map)".format(amountShift))
                 self.determineShift(currentHouse, directionShift)
         else:
-            print("hier")
             tempCurrentHouseY = currentHouse.y + amountShift  
             if (tempCurrentHouseY > currentHouse.minimumSpace and 
-                tempCurrentHouseY < self.area.height - currentHouse.height - currentHouse.minimumSpace):
+                tempCurrentHouseY < self.area.height
+                                    - currentHouse.height
+                                    - currentHouse.minimumSpace):
                 currentHouse.y += amountShift
                 return currentHouse
             else:
-                print("This amountShift ({}) is not possible (house would be out of map)".format(amountShift))
+                print("AmountShift ({}) not possible " 
+                      "(house would be outside map)".format(amountShift))
                 self.determineShift(currentHouse, directionShift)
-        
-        # recursive error catching. Returning currenthouse from last valid determineShift attempt
-        print(currentHouse.x, currentHouse.y, amountShift, directionShift)
+
+        # recursive error catching. 
+        # returning currenthouse from last valid determineShift attempt
         return currentHouse
