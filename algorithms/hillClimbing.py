@@ -1,5 +1,6 @@
 import random
 from algorithms.randomalg import RandomAlgorithm
+# from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(object):
@@ -19,6 +20,12 @@ class HillClimbingAlgorithm(object):
         self.houseList.extend(self.area.bungalowList)
 
     def execute(self):
+
+        while (len(self.area.mansionList)
+               + len(self.area.familyHomeList)
+               + len(self.area.bungalowList) != 60):
+            break
+
         # total price grid
         currentTotalPrice = self.area.get_area_price()
 
@@ -43,7 +50,7 @@ class HillClimbingAlgorithm(object):
         # go back to orignal location
         newTotalPrice = self.area.get_area_price()
 
-    # if randomTypeOfMove == 0
+        # if randomTypeOfMove == 0
         if currentTotalPrice >= newTotalPrice:
             # remove house and place origanal house
             currentHouse.x = backupX

@@ -18,23 +18,24 @@ class Area(object):
         kind = type(house).__name__
 
         # place new house
-        try:
-            if house.check_validity():
-                # place the house on every coordinate
-                # that is covered by the house
-                for i in range(x, x + house.width):
-                    for j in range(y, y + house.height):
-                        self.grid[i][j] = house
-                # add the house to the appropriate list
-                if kind == "Mansion":
-                    self.mansionList.append(house)
-                elif kind == "Bungalow":
-                    self.bungalowList.append(house)
-                elif kind == "FamilyHome":
-                    self.familyHomeList.append(house)
-        except RuntimeError:
-            print("Cannot validly place "
-                  "house at these coordinates.")
+        if house.check_validity():
+            # place the house on every coordinate
+            # that is covered by the house
+            for i in range(x, x + house.width):
+                for j in range(y, y + house.height):
+                    self.grid[i][j] = house
+            # add the house to the appropriate list
+            if kind == "Mansion":
+                self.mansionList.append(house)
+            elif kind == "Bungalow":
+                self.bungalowList.append(house)
+            elif kind == "FamilyHome":
+                self.familyHomeList.append(house)
+            return True
+        else:
+            print("✘ Cannot validly place house at"
+                  " ({}, {})".format(house.x, house.y))
+            return False
 
     def remove_house(self, house):
         for i in range(house.x, house.x + house.width):
@@ -90,16 +91,29 @@ class Area(object):
         # remove house from map
         self.remove_house(currentHouse)
 
-        directionShift = None
-
         # determine distance to move and update house coordinates
+        directionShift = None
         currentHouse = self.determineShift(currentHouse, directionShift)
 
-        if not self.place_house(currentHouse, currentHouse.x, currentHouse.y):
-            # place origanal house
+        # if house cannot be placed with new coordinates, put it back
+        if self.place_house(currentHouse,
+                            currentHouse.x,
+                            currentHouse.y) is False:
+            # place original house
             currentHouse.x = backupX
             currentHouse.y = backupY
-            self.place_house(currentHouse, currentHouse.x, currentHouse.y)
+
+            if self.place_house(currentHouse, currentHouse.x, currentHouse.y):
+                print("(innerloop) Put house back on"
+                      " original location ({}, {})"
+                      .format(currentHouse.x, currentHouse.y))
+            else:
+                print("(innerloop) Could not put house back "
+                      "on original location ({}, {})"
+                      .format(currentHouse.x, currentHouse.y))
+        else:
+            print("(outerloop) House placed on new location ({}, {})"
+                  .format(currentHouse.x, currentHouse.y))
 
     def determineShift(self, currentHouse, directionShift):
 
@@ -113,7 +127,7 @@ class Area(object):
         print("amountShift: {}".format(amountShift))
 
         # move house in chosen direction,
-        # but only if it still falls within the map TODO break maken
+        # but only if it still falls within the map
         recursiveCount = 0
         if directionShift == 0:
             tempCurrentHouseX = currentHouse.x + amountShift
@@ -125,23 +139,17 @@ class Area(object):
                 currentHouse.x += amountShift
                 return currentHouse
             else:
-                recursiveCount += 1
-                secondRecursiveCount = 0
                 print("AmountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
+                recursiveCount += 1
+
+                # change directoin from horizontal to vertical after 50 tries
                 if recursiveCount < 50:
-                    secondRecursiveCount += 1
-                    # change directoin horizontal vertical
-                    if secondRecursiveCount < 2:
-                        if directionShift == 1:
-                            directionShift = 0
-                            self.determineShift(currentHouse, directionShift)
-                        else:
-                            directionShift = 1
-                            self.determineShift(currentHouse, directionShift)
-                    else:
-                        print("return currenthouse")
-                        return currentHouse
+                    directionShift = 1
+                    self.determineShift(currentHouse, directionShift)
+                else:
+                    print("Could not shift, return currentHouse")
+                    return currentHouse
 
         else:
             tempCurrentHouseY = currentHouse.y + amountShift
@@ -155,7 +163,15 @@ class Area(object):
             else:
                 print("AmountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
-                self.determineShift(currentHouse, directionShift)
+                recursiveCount += 1
+
+                # change directoin from vertical to horizontal after 50 tries
+                if recursiveCount < 50:
+                    directionShift = 0
+                    self.determineShift(currentHouse, directionShift)
+                else:
+                    print("Could not shift, return currentHouse")
+                    return currentHouse
 
         # recursive error catching
         # returning currenthouse from last valid determineShift attempt

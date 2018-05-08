@@ -18,26 +18,30 @@ class RandomAlgorithm(Algorithm):
             print('Run {} | Houses left: {}'.format(
                 self.counter, len(self.houses))
                  )
+            # choose a random house from the list
             currentHouse = random.choice(self.houses)
 
-            try:
-                xCor = random.randint(currentHouse.minimumSpace,
-                                      (self.area.width
-                                       - currentHouse.width
-                                       - currentHouse.minimumSpace))
-                yCor = random.randint(currentHouse.minimumSpace,
-                                      (self.area.height
-                                       - currentHouse.height
-                                       - currentHouse.minimumSpace))
+            # choose random x and y coordinates on the map
+            xCor = random.randint(currentHouse.minimumSpace,
+                                  (self.area.width
+                                   - currentHouse.width
+                                   - currentHouse.minimumSpace))
+            yCor = random.randint(currentHouse.minimumSpace,
+                                  (self.area.height
+                                   - currentHouse.height
+                                   - currentHouse.minimumSpace))
 
-                print('Trying to place "{}" on ({}, {})'.format(currentHouse,
-                                                                xCor,
-                                                                yCor))
-                self.area.place_house(currentHouse, xCor, yCor)
+            print('Trying to place "{}" on ({}, {})'.format(currentHouse,
+                                                            xCor,
+                                                            yCor))
+
+            # only remove house from list if validly placed
+            if not self.area.place_house(currentHouse, xCor, yCor):
+                print("Cannot validly place house at"
+                      " ({}, {})".format(xCor, yCor))
+            else:
                 self.houses.remove(currentHouse)
 
-            except RuntimeError:
-                print("✘ Cannot validly place house at these coordinates.")
             self.counter += 1
         else:
             print('✓✓ All houses placed ✓✓')
