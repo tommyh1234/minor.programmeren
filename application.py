@@ -20,10 +20,9 @@ def main():
     #       .format(max(gridValues), min(gridValues)))
 
     grid = Area()
-    algorithm = HillClimbingAlgorithm(grid, 9, 15, 36)
+    algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
     visualizer = Visualizer(grid, algorithm)
     visualizer.on_execute()
-
 
 if __name__ == "__main__":
     main()
