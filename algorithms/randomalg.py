@@ -17,7 +17,7 @@ class RandomAlgorithm(Algorithm):
         if len(self.houses) > 0:
             print('Run {} | Houses left: {}'.format(
                 self.counter, len(self.houses))
-            )
+                 )
             currentHouse = random.choice(self.houses)
 
             try:

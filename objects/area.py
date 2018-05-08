@@ -57,18 +57,24 @@ class Area(object):
     def get_area_price(self):
 
         totalPrice = 0
-        i = 0
+        counter = 0
 
-        while i < len(self.mansionList):
-            self.mansionList[i].get_space()
-            totalPrice += self.mansionList[i].get_price()
-            i += 1
-        while i < len(self.bungalowList):
-            self.bungalowList[i].get_space()
-            totalPrice += self.bungalowList[i].get_price()
-            i += 1
-        while i < len(self.familyHomeList):
-            self.familyHomeList[i].get_space()
-            totalPrice += self.familyHomeList[i].get_price()
-            i += 1
+        while counter < len(self.mansionList):
+            self.mansionList[counter].get_space()
+            totalPrice += self.mansionList[counter].get_price()
+            counter += 1
+        counter = 0
+
+        while counter < len(self.bungalowList):
+            self.bungalowList[counter].get_space()
+            totalPrice += self.bungalowList[counter].get_price()
+            counter += 1
+        counter = 0
+
+        while counter < len(self.familyHomeList):
+            self.familyHomeList[counter].get_space()
+            totalPrice += self.familyHomeList[counter].get_price()
+            counter += 1
+        counter = 0
+
         return totalPrice
