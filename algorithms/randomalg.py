@@ -17,15 +17,18 @@ class RandomAlgorithm(Algorithm):
         if len(self.houses) > 0:
             print('Run {} | Houses left: {}'.format(
                 self.counter, len(self.houses))
-            )
+                 )
             currentHouse = random.choice(self.houses)
 
             try:
-                xCor = random.randint(0, self.area.width - currentHouse.width)
-                yCor = random.randint(
-                    0,
-                    self.area.height - currentHouse.height
-                    )
+                xCor = random.randint(currentHouse.minimumSpace,
+                                      (self.area.width
+                                       - currentHouse.width
+                                       - currentHouse.minimumSpace))
+                yCor = random.randint(currentHouse.minimumSpace,
+                                      (self.area.height
+                                       - currentHouse.height
+                                       - currentHouse.minimumSpace))
 
                 print('Trying to place "{}" on ({}, {})'.format(currentHouse,
                                                                 xCor,
