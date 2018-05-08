@@ -1,6 +1,6 @@
 from objects.area import Area
-from algorithms.speedrandom import SpeedRandomAlgorithm
-# from algorithms.hillClimbing import HillClimbingAlgorithm
+# from algorithms.speedrandom import SpeedRandomAlgorithm
+from algorithms.hillClimbing import HillClimbingAlgorithm
 # from algorithms.randomalg import RandomAlgorithm
 from visualizer import Visualizer
 
@@ -27,7 +27,7 @@ def main():
     # visualizer.on_execute()
 
     grid = Area()
-    algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9)
+    algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
     visualizer = Visualizer(grid, algorithm)
     visualizer.on_execute()
 
