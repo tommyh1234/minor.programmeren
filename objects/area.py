@@ -20,7 +20,7 @@ class Area(object):
         # place new house
         try:
             if house.check_validity():
-                # place the house on every coordinate 
+                # place the house on every coordinate
                 # that is covered by the house
                 for i in range(x, x + house.width):
                     for j in range(y, y + house.height):
@@ -34,7 +34,7 @@ class Area(object):
                     self.familyHomeList.append(house)
         except RuntimeError:
             print("Cannot validly place "
-                               "house at these coordinates.")
+                  "house at these coordinates.")
 
     def remove_house(self, house):
         for i in range(house.x, house.x + house.width):

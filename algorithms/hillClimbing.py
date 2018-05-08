@@ -31,7 +31,7 @@ class HillClimbingAlgorithm(object):
         print('Original location house: ({}, {})'
               .format(currentHouse.x, currentHouse.y))
 
-        # random choice wich type of move: switch, 
+        # random choice wich type of move: switch,
         # turn, move house in direction
         # randomTypeOfMove = random.randint(0,2)
 
@@ -39,7 +39,7 @@ class HillClimbingAlgorithm(object):
         # if randomTypeOfMove == 0
         self.area.sliding_house(currentHouse, backupX, backupY)
 
-        # if the price from the grid didn't increased 
+        # if the price from the grid didn't increased
         # go back to orignal location
         newTotalPrice = self.area.get_area_price()
 
