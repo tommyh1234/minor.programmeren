@@ -1,5 +1,7 @@
+# -*- coding: UTF-8 -*-
 import random
 from algorithms.randomalg import RandomAlgorithm
+# from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(object):
@@ -12,18 +14,13 @@ class HillClimbingAlgorithm(object):
         while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 
-        # make list of all houses
-        self.houseList = []
-        self.houseList.extend(self.area.mansionList)
-        self.houseList.extend(self.area.familyHomeList)
-        self.houseList.extend(self.area.bungalowList)
-
     def execute(self):
+
         # total price grid
         currentTotalPrice = self.area.get_area_price()
 
         # pick random houses from list of placed houses
-        currentHouse = random.choice(self.houseList)
+        currentHouse = random.choice(self.area.allHousesList)
 
         # save coordinates of current house
         backupX = currentHouse.x
@@ -43,21 +40,20 @@ class HillClimbingAlgorithm(object):
         # go back to orignal location
         newTotalPrice = self.area.get_area_price()
 
-    # if randomTypeOfMove == 0
-        if currentTotalPrice >= newTotalPrice:
-            # remove house and place origanal house
-            currentHouse.x = backupX
-            currentHouse.y = backupY
+        # if randomTypeOfMove == 0
+        if currentTotalPrice > newTotalPrice:
+            # remove moved house
+            self.area.remove_house(currentHouse)
 
-            # place orignal house back
+            # place house back at original location
             self.area.place_house(currentHouse,
-                                  currentHouse.x,
-                                  currentHouse.y)
+                                  backupX,
+                                  backupY)
         self.tryCount += 1
-        print("trycount {}".format(self.tryCount))
+        print("Move: {}".format(self.tryCount))
 
-        if self.tryCount > 100:
+        if self.tryCount >= 100:
             self.isDone = True
 
-        print(currentTotalPrice)
+        print("Grid value: {}".format(currentTotalPrice))
         print("-------------------- ")
