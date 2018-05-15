@@ -72,23 +72,12 @@ class Area(object):
         totalPrice = 0
         counter = 0
 
-        while counter < len(self.mansionList):
-            self.mansionList[counter].get_space()
-            totalPrice += self.mansionList[counter].get_price()
+        while counter < len(self.allHousesList):
+            if self.allHousesList[counter].check_validity() is False:
+                return 0
+            
+            totalPrice += self.allHousesList[counter].get_price()
             counter += 1
-        counter = 0
-
-        while counter < len(self.bungalowList):
-            self.bungalowList[counter].get_space()
-            totalPrice += self.bungalowList[counter].get_price()
-            counter += 1
-        counter = 0
-
-        while counter < len(self.familyHomeList):
-            self.familyHomeList[counter].get_space()
-            totalPrice += self.familyHomeList[counter].get_price()
-            counter += 1
-        counter = 0
 
         return totalPrice
 

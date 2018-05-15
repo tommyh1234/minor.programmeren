@@ -20,7 +20,7 @@ class RandomAlgorithm(Algorithm):
                  )
 
             # choose first house from the list, resulting in FH > Bung > Man
-            currentHouse = self.houses[0]
+            currentHouse = random.choice(self.houses)
 
             # choose random x and y coordinates on the map
             xCor = random.randint(currentHouse.minimumSpace,
@@ -46,7 +46,6 @@ class RandomAlgorithm(Algorithm):
             self.counter += 1
         else:
             print('✓✓ All houses placed ✓✓')
-            self.isDone = True
 
             # create a list with all placed houses
             placedHouses = []
@@ -58,10 +57,14 @@ class RandomAlgorithm(Algorithm):
             # invalid free space when houses with smaller free space
             # are placed after houses with larger free space)
             for house in placedHouses:
-                try:
-                    house.check_validity()
+                if house.check_validity():
                     print("✓ {} validly placed".format(house))
-                except RuntimeError:
-                    print("✘ {} is not validly placed.".format(house))
+                else:
+                    print("✘ {} is not validly placed. Retrying...".format(house))
+                    self.area.remove_house(house)
+                    self.houses.append(house)
+
+            if len(self.houses) == 0:
+                self.isDone = True
 
             print('Grid value: {}'.format(self.area.get_area_price()))
