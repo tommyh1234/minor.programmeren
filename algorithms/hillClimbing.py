@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import random
-from algorithms.randomalg import RandomAlgorithm
-# from algorithms.speedrandom import SpeedRandomAlgorithm
+# from algorithms.randomalg import RandomAlgorithm
+from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(object):
@@ -10,7 +10,10 @@ class HillClimbingAlgorithm(object):
         self.tryCount = 0
         self.area = area
         # fill grid random
-        self.randomAlg = RandomAlgorithm(self.area, fhAmount, bAmount, mAmount)
+        self.randomAlg = SpeedRandomAlgorithm(self.area,
+                                              fhAmount,
+                                              bAmount,
+                                              mAmount)
         while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 
@@ -46,11 +49,14 @@ class HillClimbingAlgorithm(object):
             self.area.remove_house(currentHouse)
 
             # place house back at original location
-            self.area.place_house(currentHouse,
-                                  backupX,
-                                  backupY)
+            if not self.area.place_house(currentHouse,
+                                         backupX,
+                                         backupY):
+                print("✘ Cannot validly place house at "
+                      "({}, {})".format(currentHouse.x, currentHouse.y))
+
         self.tryCount += 1
-        print("Move: {}".format(self.tryCount))
+        print("Move Nr.: {}".format(self.tryCount))
 
         if self.tryCount >= 100:
             self.isDone = True
