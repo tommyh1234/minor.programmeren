@@ -79,6 +79,7 @@ class House(object):
     def get_price(self):
         # The value of a house is calculated by taking the base value an
         addedPrice = self.value * self.priceIncrease
-        extraMeters = (self.space - 2 * self.minimumSpace) / 2
+        extraMeters = (self.space - self.minimumSpace) / 2
         price = self.value + (extraMeters * addedPrice)
+
         return price
