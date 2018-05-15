@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import random
-from algorithms.randomalg import RandomAlgorithm
-# from algorithms.speedrandom import SpeedRandomAlgorithm
+# from algorithms.randomalg import RandomAlgorithm
+from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(object):
@@ -14,7 +14,10 @@ class HillClimbingAlgorithm(object):
         self.neutralMoves = 0
         self.unbeneficialMoves = 0
         # fill grid random
-        self.randomAlg = RandomAlgorithm(self.area, fhAmount, bAmount, mAmount)
+        self.randomAlg = SpeedRandomAlgorithm(self.area,
+                                              fhAmount,
+                                              bAmount,
+                                              mAmount)
         while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 
@@ -58,11 +61,14 @@ class HillClimbingAlgorithm(object):
             self.area.remove_house(currentHouse)
 
             # place house back at original location
-            self.area.place_house(currentHouse,
+            if not self.area.place_house(currentHouse,
                                   backupX,
-                                  backupY)
-            self.unbeneficialMoves += 1
-            print("❌ Unbeneficial move. Has been undone.")
+                                  backupY):
+                print("✘ Cannot validly place house at "
+                      "({}, {})".format(currentHouse.x, currentHouse.y))
+            else:
+                self.unbeneficialMoves += 1
+                print("❌ Unbeneficial move. Has been undone.")
         elif currentTotalPrice == newTotalPrice:
             self.neutralMoves += 1
             print("😐 Neutral move. Allow to overcome local minima.")

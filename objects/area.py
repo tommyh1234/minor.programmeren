@@ -36,8 +36,6 @@ class Area(object):
                 self.familyHomeList.append(house)
             return True
         else:
-            print("✘ Cannot validly place house at "
-                  "({}, {})".format(house.x, house.y))
             return False
 
     def remove_house(self, house):
@@ -93,7 +91,8 @@ class Area(object):
         if self.place_house(currentHouse,
                             currentHouse.x,
                             currentHouse.y) is False:
-
+            print("✘ Cannot validly place house at"
+                  " ({}, {})".format(currentHouse.x, currentHouse.y))
             if self.place_house(currentHouse, backupX, backupY):
                 print("✔ Put house back at "
                       "original location ({}, {})"
