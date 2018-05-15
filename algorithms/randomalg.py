@@ -38,7 +38,7 @@ class RandomAlgorithm(Algorithm):
 
             # only remove house from list if validly placed
             if not self.area.place_house(currentHouse, xCor, yCor):
-                print("Cannot validly place house at"
+                print("✘ Cannot validly place house at"
                       " ({}, {})".format(xCor, yCor))
             else:
                 self.houses.remove(currentHouse)
@@ -47,16 +47,10 @@ class RandomAlgorithm(Algorithm):
         else:
             print('✓✓ All houses placed ✓✓')
 
-            # create a list with all placed houses
-            placedHouses = []
-            placedHouses.extend(self.area.familyHomeList)
-            placedHouses.extend(self.area.bungalowList)
-            placedHouses.extend(self.area.mansionList)
-
             # Recheck the validity of all houses (important to catch
             # invalid free space when houses with smaller free space
             # are placed after houses with larger free space)
-            for house in placedHouses:
+            for house in self.area.allHousesList:
                 if house.check_validity():
                     print("✓ {} validly placed".format(house))
                 else:

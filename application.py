@@ -26,6 +26,19 @@ def main():
     # visualizer = Visualizer(grid, algorithm)
     # visualizer.on_execute()
 
+    # # just SpeedRandom Algorithm ###
+    # grid = Area()
+    # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9)
+    # visualizer = Visualizer(grid, algorithm)
+    # visualizer.on_execute()
+
+    # # just Random algorithm
+    # grid = Area()
+    # algorithm = RandomAlgorithm(grid, 36, 15, 9)
+    # visualizer = Visualizer(grid, algorithm)
+    # visualizer.on_execute()
+
+    # just a HillClimbing algorithm
     grid = Area()
     algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
     visualizer = Visualizer(grid, algorithm)
