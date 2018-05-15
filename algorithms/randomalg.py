@@ -60,7 +60,8 @@ class RandomAlgorithm(Algorithm):
                 if house.check_validity():
                     print("✓ {} validly placed".format(house))
                 else:
-                    print("✘ {} is not validly placed. Retrying...".format(house))
+                    print("✘ {} is not validly placed."
+                          " Retrying...".format(house))
                     self.area.remove_house(house)
                     self.houses.append(house)
 

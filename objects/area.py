@@ -67,7 +67,7 @@ class Area(object):
         return True
 
     def get_area_price(self):
-        # write explanation, counter?
+        # checking grid price house by house, invalid maps get value of 0
 
         totalPrice = 0
         counter = 0
@@ -75,7 +75,7 @@ class Area(object):
         while counter < len(self.allHousesList):
             if self.allHousesList[counter].check_validity() is False:
                 return 0
-            
+
             totalPrice += self.allHousesList[counter].get_price()
             counter += 1
 
