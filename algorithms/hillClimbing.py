@@ -69,13 +69,14 @@ class HillClimbingAlgorithm(object):
         else:
             self.succesfullMoves += 1
             print("New grid value: {}".format(currentTotalPrice))
-            print("✅ Price increase: {}".format(newTotalPrice - currentTotalPrice))
-        
+            print("✅ Price increase: {}".format(newTotalPrice
+                                                - currentTotalPrice))
         print("-------------------- ")
 
         if self.tryCount >= 100:
-            print("Total price increase: {} " 
-                  "| In: ✅ {} succesfull | 😐 {} neutral | ❌ {} unbeneficial moves"
+            print("Total price increase: {} "
+                  "| In: ✅ {} succesfull | "
+                  "😐 {} neutral | ❌ {} unbeneficial moves"
                   .format(currentTotalPrice - self.initialGridPrice,
                           self.succesfullMoves,
                           self.neutralMoves,
