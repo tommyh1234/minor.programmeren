@@ -7,7 +7,10 @@ import random
 class RandomAlgorithm(Algorithm):
 
     def __init__(self, area, fhAmount, bAmount, mAmount):
-        self.housesToPlace = construction_list(area, fhAmount, bAmount, mAmount)
+        self.housesToPlace = construction_list(area,
+                                               fhAmount,
+                                               bAmount,
+                                               mAmount)
         self.counter = 0
         self.area = area
 
