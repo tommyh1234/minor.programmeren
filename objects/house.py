@@ -74,10 +74,10 @@ class House(object):
             else:
                 break
 
-        self.space = space
         return space
 
     def get_price(self):
-        price = self.value * (1 + (self.space - self.minimumSpace)
-                              / 2 * self.priceIncrease)
+        # write explanation
+        price = self.value * (1 + (self.space - 2 * self.minimumSpace)
+                              / 4 * self.priceIncrease)
         return price

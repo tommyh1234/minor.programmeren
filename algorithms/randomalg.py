@@ -18,8 +18,9 @@ class RandomAlgorithm(Algorithm):
             print('Run {} | Houses left: {}'.format(
                 self.counter, len(self.houses))
                  )
-            # choose a random house from the list
-            currentHouse = random.choice(self.houses)
+
+            # choose first house from the list, resulting in FH > Bung > Man
+            currentHouse = self.houses[0]
 
             # choose random x and y coordinates on the map
             xCor = random.randint(currentHouse.minimumSpace,
@@ -48,9 +49,10 @@ class RandomAlgorithm(Algorithm):
             self.isDone = True
 
             # create a list with all placed houses
-            placedHouses = (self.area.familyHomeList
-                            + self.area.bungalowList
-                            + self.area.mansionList)
+            placedHouses = []
+            placedHouses.extend(self.area.familyHomeList)
+            placedHouses.extend(self.area.bungalowList)
+            placedHouses.extend(self.area.mansionList)
 
             # Recheck the validity of all houses (important to catch
             # invalid free space when houses with smaller free space
