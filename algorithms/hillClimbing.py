@@ -62,8 +62,8 @@ class HillClimbingAlgorithm(object):
 
             # place house back at original location
             if not self.area.place_house(currentHouse,
-                                  backupX,
-                                  backupY):
+                                         backupX,
+                                         backupY):
                 print("✘ Cannot validly place house at "
                       "({}, {})".format(currentHouse.x, currentHouse.y))
             else:
