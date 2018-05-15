@@ -48,14 +48,14 @@ class RandomAlgorithm(Algorithm):
 
             self.counter += 1
         else:
-            print('✓✓ All houses placed ✓✓')
+            print('✔ All houses placed ✔')
 
             # Recheck the validity of all houses (important to catch
             # invalid free space when houses with smaller free space
             # are placed after houses with larger free space)
             for house in self.area.allHousesList:
                 if house.check_validity():
-                    print("✓ {} validly placed".format(house))
+                    print("✔ {} validly placed".format(house))
                 else:
                     print("✘ {} is not validly placed."
                           " Retrying...".format(house))
