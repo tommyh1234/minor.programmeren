@@ -45,7 +45,7 @@ class RandomAlgorithm(Algorithm):
 
             self.counter += 1
         else:
-            print('✓✓ All houses placed ✓✓')
+            print('✔ All houses placed ✔')
 
             # create a list with all placed houses
             placedHouses = []
@@ -58,7 +58,7 @@ class RandomAlgorithm(Algorithm):
             # are placed after houses with larger free space)
             for house in placedHouses:
                 if house.check_validity():
-                    print("✓ {} validly placed".format(house))
+                    print("✔ {} validly placed".format(house))
                 else:
                     print("✘ {} is not validly placed."
                           " Retrying...".format(house))

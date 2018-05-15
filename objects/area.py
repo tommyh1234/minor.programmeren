@@ -95,15 +95,15 @@ class Area(object):
                             currentHouse.y) is False:
 
             if self.place_house(currentHouse, backupX, backupY):
-                print("✓ Put house back at "
+                print("✔ Put house back at "
                       "original location ({}, {})"
                       .format(backupX, backupY))
             else:
-                print("Could not put house back "
+                print("✘ Could not put house back "
                       "at original location ({}, {})"
                       .format(backupX, backupY))
         else:
-            print("✓ House placed at new location ({}, {})"
+            print("✔ House placed at new location ({}, {})"
                   .format(currentHouse.x, currentHouse.y))
 
     def determineShift(self, currentHouse, directionShift):
@@ -114,7 +114,7 @@ class Area(object):
             print("Direction: {}".format(directionShift))
 
         # pick random distance to shift the house with
-        amountShift = random.randint(-30, 30)
+        amountShift = random.randint(-20, 20)
         print("amountShift: {}".format(amountShift))
 
         # move house in chosen direction,
@@ -130,7 +130,7 @@ class Area(object):
                 currentHouse.x += amountShift
                 return currentHouse
             else:
-                print("amountShift ({}) not possible "
+                print("❌ amountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
                 recursiveCount += 1
 
@@ -151,7 +151,7 @@ class Area(object):
                 currentHouse.y += amountShift
                 return currentHouse
             else:
-                print("AmountShift ({}) not possible "
+                print("❌ AmountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
                 recursiveCount += 1
 
