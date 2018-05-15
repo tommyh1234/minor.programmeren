@@ -10,7 +10,10 @@ class HillClimbingAlgorithm(object):
         self.tryCount = 0
         self.area = area
         # fill grid random
-        self.randomAlg = SpeedRandomAlgorithm(self.area, fhAmount, bAmount, mAmount)
+        self.randomAlg = SpeedRandomAlgorithm(self.area,
+                                              fhAmount,
+                                              bAmount,
+                                              mAmount)
         while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 
@@ -51,7 +54,7 @@ class HillClimbingAlgorithm(object):
                                          backupY):
                 print("✘ Cannot validly place house at "
                       "({}, {})".format(currentHouse.x, currentHouse.y))
-        
+
         self.tryCount += 1
         print("Move Nr.: {}".format(self.tryCount))
 
