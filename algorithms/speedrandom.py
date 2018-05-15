@@ -7,11 +7,10 @@ import random
 class SpeedRandomAlgorithm(Algorithm):
 
     def __init__(self, area, fhAmount, bAmount, mAmount):
-        self.houses = construction_list(area, fhAmount, bAmount, mAmount)
+        self.housesToPlace = construction_list(area, fhAmount, bAmount, mAmount)
         self.counter = 0
         self.area = area
         self.initPlacementFail = 0
-        self.retryPlacementFail = 0
 
     def execute(self):
 
@@ -19,10 +18,10 @@ class SpeedRandomAlgorithm(Algorithm):
             print("Building random map. Please wait ...")
 
         # place a house from the list on random coordinates
-        if len(self.houses) > 0:
+        if len(self.housesToPlace) > 0:
 
             # choose first house from the list, resulting in FH > Bung > Man
-            currentHouse = random.choice(self.houses)
+            currentHouse = random.choice(self.housesToPlace)
 
             # choose random x and y coordinates on the map
             xCor = random.randint(currentHouse.minimumSpace,
@@ -36,7 +35,7 @@ class SpeedRandomAlgorithm(Algorithm):
 
             # only remove house from list if validly placed
             if self.area.place_house(currentHouse, xCor, yCor):
-                self.houses.remove(currentHouse)
+                self.housesToPlace.remove(currentHouse)
 
             self.counter += 1
         else:
@@ -47,9 +46,9 @@ class SpeedRandomAlgorithm(Algorithm):
                 if not house.check_validity():
                     self.initPlacementFail += 1
                     self.area.remove_house(house)
-                    self.houses.append(house)
+                    self.housesToPlace.append(house)
 
-            if len(self.houses) == 0:
+            if len(self.housesToPlace) == 0:
                 print('Placed {} houses in {} runs | '
                       'Grid value: {} | '
                       '{} failed initial placements'
