@@ -1,6 +1,6 @@
 from objects.area import Area
-from algorithms.speedrandom import SpeedRandomAlgorithm
-# from algorithms.hillClimbing import HillClimbingAlgorithm
+# from algorithms.speedrandom import SpeedRandomAlgorithm
+from algorithms.hillClimbing import HillClimbingAlgorithm
 # from algorithms.randomalg import RandomAlgorithm
 from visualizer import Visualizer
 
@@ -20,11 +20,11 @@ def main():
     # print('50 runs | Highest: {} | Lowest: {}'
     #       .format(max(gridValues), min(gridValues)))
 
-    # just SpeedRandom Algorithm ###
-    grid = Area()
-    algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9)
-    visualizer = Visualizer(grid, algorithm)
-    visualizer.on_execute()
+    # # just SpeedRandom Algorithm ###
+    # grid = Area()
+    # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9)
+    # visualizer = Visualizer(grid, algorithm)
+    # visualizer.on_execute()
 
     # # just Random algorithm
     # grid = Area()
@@ -32,11 +32,11 @@ def main():
     # visualizer = Visualizer(grid, algorithm)
     # visualizer.on_execute()
 
-    # # just a HillClimbing algorithm
-    # grid = Area()
-    # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
-    # visualizer = Visualizer(grid, algorithm)
-    # visualizer.on_execute()
+    # just a HillClimbing algorithm
+    grid = Area()
+    algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
+    visualizer = Visualizer(grid, algorithm)
+    visualizer.on_execute()
 
 
 if __name__ == "__main__":

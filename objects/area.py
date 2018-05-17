@@ -113,7 +113,7 @@ class Area(object):
             print("Direction: {}".format(directionShift))
 
         # pick random distance to shift the house with
-        amountShift = random.randint(-20, 20)
+        amountShift = random.randint(-5, 5)
         print("amountShift: {}".format(amountShift))
 
         # move house in chosen direction,
