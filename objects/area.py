@@ -23,18 +23,25 @@ class Area(object):
         if house.check_validity():
             # place the house on every coordinate
             # that is covered by the house
-            for i in range(x, x + house.width):
-                for j in range(y, y + house.height):
-                    self.grid[i][j] = house
-            # add the house to the appropriate lists
-            self.allHousesList.append(house)
-            if kind == "Mansion":
-                self.mansionList.append(house)
-            elif kind == "Bungalow":
-                self.bungalowList.append(house)
-            elif kind == "FamilyHome":
-                self.familyHomeList.append(house)
-            return True
+            try:
+                for i in range(x, x + house.width):
+                    for j in range(y, y + house.height):
+                        self.grid[i][j] = house
+                # add the house to the appropriate lists
+                self.allHousesList.append(house)
+                if kind == "Mansion":
+                    self.mansionList.append(house)
+                elif kind == "Bungalow":
+                    self.bungalowList.append(house)
+                elif kind == "FamilyHome":
+                    self.familyHomeList.append(house)
+                return True
+
+            # TODO TRY EXCEPT DOESN'T WORK
+            except IndexError:
+                # catch case where a swapt house would be out if map
+                print("switch out of range")
+                return False
         else:
             print("✘ Cannot validly place house at "
                   "({}, {})".format(house.x, house.y))
@@ -165,3 +172,83 @@ class Area(object):
         # recursive error catching
         # returning currenthouse from last valid determineShift attempt
         return currentHouse
+
+    def turn_house(self, currentHouse, backupWidth, backupHeight):
+
+        # remove house from map
+        self.remove_house(currentHouse)
+
+        # turn house width and height
+        currentHouse.width = backupHeight
+        currentHouse.height = backupWidth
+
+        # if house cannot be placed at new coordinates, put it back
+        if self.place_house(currentHouse,
+                            currentHouse.x,
+                            currentHouse.y) is False:
+
+            # place house back with orignal width and height
+            currentHouse.width = backupWidth
+            currentHouse.height = backupHeight
+
+            if self.place_house(currentHouse, currentHouse.x, currentHouse.y):
+                print("✓ Put house back at "
+                      "original location ({}, {})"
+                      .format(currentHouse.x, currentHouse.y))
+            else:
+                print("Could not put house back "
+                      "at original location ({}, {})"
+                      .format(currentHouse.x, currentHouse.y))
+        else:
+            print("✓ House placed at new location ({}, {})"
+                  .format(currentHouse.x, currentHouse.y))
+
+    def switch_house(self, houseA, houseB):
+        # backup coordination of houses
+        backUpHouseAX = houseA.x
+        backUpHouseAY = houseA.y
+
+        backUpHouseBX = houseB.x
+        backUpHouseBY = houseB.y
+
+        # remove houses from grid
+        self.remove_house(houseA)
+        self.remove_house(houseB)
+
+        # switch coordinates of the houses
+        houseA.x = backUpHouseBX
+        houseA.y = backUpHouseBY
+        houseB.x = backUpHouseAX
+        houseB.y = backUpHouseAY
+
+        # place house at new location
+        aSucces = self.place_house(houseA, houseA.x, houseA.y)
+        bSucces = self.place_house(houseB, houseB.x, houseB.y)
+
+        print("before")
+        print(aSucces)
+        print(bSucces)
+        # check if houses are placed succesful, if not remove two houses
+        if any([aSucces is False, bSucces is False]):
+
+            print("after")
+            print(aSucces)
+            print(bSucces)
+
+            if bSucces is False:
+                self.remove_house(houseA)
+                print("removed A")
+
+            if aSucces is False:
+                self.remove_house(houseB)
+                print("removed B")
+
+            # give houses oringnal location back
+            houseA.x = backUpHouseAX
+            houseA.y = backUpHouseAY
+            houseB.x = backUpHouseBX
+            houseB.y = backUpHouseBY
+
+            # place house back at orignal location
+            self.place_house(houseA, houseA.x, houseA.y)
+            self.place_house(houseB, houseB.x, houseB.y)
