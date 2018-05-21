@@ -1,3 +1,6 @@
+from objects.water import Water
+
+
 class House(object):
     x = None
     y = None
@@ -26,8 +29,9 @@ class House(object):
         for i in range(self.x, endX):
             for j in range(self.y, endY):
                 # if there's something that is not this house
-                if (self.area.grid[i][j] is not None
-                        and self.area.grid[i][j] is not self):
+                if (self.area.grid[i][j] is not None and
+                        self.area.grid[i][j] is not self and
+                        self.area.grid[i][j] is not Water):
                     return False
 
         return True
@@ -36,8 +40,10 @@ class House(object):
         space = 0
         x = self.x
         y = self.y
-        # when a given position is not taken by something else
-        while (self.area.grid[x][y] is None or self.area.grid[x][y] is self):
+        # when a given position is not taken by something else or water
+        while (self.area.grid[x][y] is None or
+               self.area.grid[x][y] is self or
+               self.area.grid[x][y] is Water):
             # check the next x pos within area
             if (x < self.x + self.width - 1 + space and
                     x >= 0 and x < self.area.width - 1):

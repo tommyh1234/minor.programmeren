@@ -9,10 +9,31 @@ class Area(object):
     def __init__(self):
         self.grid = [[None for y in range(self.height)]
                      for x in range(self.width)]
+        self.waterList = []
         self.mansionList = []
         self.bungalowList = []
         self.familyHomeList = []
         self.allHousesList = []
+
+    def surface(self):
+        return self.width * self.height
+
+    def place_water(self, water, x, y):
+        water.x = x
+        water.y = y
+
+        # place new piece of water
+        if water.check_validity():
+            # place the water on every coordinate
+            # that is covered by the water
+            for i in range(x, x + water.width):
+                for j in range(y, y + water.height):
+                    self.grid[i][j] = water
+            # add the water to the list of water instances
+            self.waterList.append(water)
+            return True
+        else:
+            return False
 
     def place_house(self, house, x, y):
         house.x = x

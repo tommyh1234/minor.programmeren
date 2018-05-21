@@ -16,9 +16,9 @@ class HillClimbingAlgorithm(object):
         self.pickHouseList = []
         # fill grid random
         self.randomAlg = RandomAlgorithm(self.area,
-                                              fhAmount,
-                                              bAmount,
-                                              mAmount)
+                                         fhAmount,
+                                         bAmount,
+                                         mAmount)
         while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 
@@ -71,16 +71,17 @@ class HillClimbingAlgorithm(object):
             print("😐 Neutral move. Allow to overcome local minima.")
         else:
             self.succesfullMoves += 1
-            print("✅ Price increase: {} | New grid value: {}".format(newTotalPrice
-                                                                     - currentTotalPrice,
-                                                                     currentTotalPrice))
+            print("✅ Price increase: {} | New grid value: {}"
+                  .format(newTotalPrice
+                          - currentTotalPrice,
+                          currentTotalPrice))
 
         # remove last house from available options in next runs
         self.pickHouseList.remove(currentHouse)
 
         print("-------------------- ")
 
-        if self.tryCount >= 1000:
+        if self.tryCount >= 3000:
             print("Final grid value: {} | "
                   "Total price increase: {} "
                   "| In: ✅ {} succesfull | "
