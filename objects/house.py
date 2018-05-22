@@ -1,4 +1,5 @@
 from objects.water import Water
+import inspect
 
 
 class House(object):
@@ -31,7 +32,7 @@ class House(object):
                 # if there's something that is not this house
                 if (self.area.grid[i][j] is not None and
                         self.area.grid[i][j] is not self and
-                        self.area.grid[i][j] is not Water):
+                        isinstance(self.area.grid[i][j], Water)):
                     return False
 
         return True
@@ -40,10 +41,10 @@ class House(object):
         space = 0
         x = self.x
         y = self.y
-        # when a given position is not taken by something else or water
+        # when a given position is not taken by something else
         while (self.area.grid[x][y] is None or
                self.area.grid[x][y] is self or
-               self.area.grid[x][y] is Water):
+               isinstance(self.area.grid[x][y], Water)):
             # check the next x pos within area
             if (x < self.x + self.width - 1 + space and
                     x >= 0 and x < self.area.width - 1):

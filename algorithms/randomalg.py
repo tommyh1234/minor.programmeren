@@ -52,7 +52,7 @@ class RandomAlgorithm(Algorithm):
             print('Run {} | Houses left: {}'.format(
                 self.housePlacementRuns, len(self.housesToPlace)))
 
-            # choose first house from the list, resulting in  Man > Bung > FH
+            # choose first house from the list, resulting in Man > Bung > FH
             currentHouse = self.housesToPlace[0]
 
             # choose random x and y coordinates on the map
@@ -77,6 +77,11 @@ class RandomAlgorithm(Algorithm):
                 self.housesToPlace.remove(currentHouse)
 
             self.housePlacementRuns += 1
+
+            # if no valid map in 1500 runs, exit the program
+            if self.housePlacementRuns >= 1500:
+                print("1500 Runs, can't create valid map")
+                self.isDone = True
         else:
             print('✔ All houses placed ✔')
 

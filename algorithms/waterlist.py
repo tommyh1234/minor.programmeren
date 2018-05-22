@@ -12,7 +12,6 @@ def water_list(area, waterAmount):
     print("Tot. surface to flood: {} * 0.5 m2".format(surfaceoToFlood))
 
     # create list with required amount of water areas,
-    # max. aspect ratio of 1:4 || 4:1 in width:height || height:width
     waters = []
     for i in range(0, waterAmount - 1):
         currentWater = Water(area)
@@ -20,6 +19,7 @@ def water_list(area, waterAmount):
         prospectiveHeight = random.randint(1, int(math.sqrt(surfaceoToFlood)))
         prospectiveRatio = prospectiveWidth / prospectiveHeight
 
+        # check for max. aspect ratio of 1:4 || 4:1 in width:height || height:width
         while (prospectiveRatio < 1/4 or prospectiveRatio > 4):
 
             prospectiveWidth = random.randint(1,

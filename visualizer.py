@@ -53,12 +53,12 @@ class Visualizer:
             (0, self.height-50, self.width, 50)
             )
 
-        houseList = []
-        houseList.extend(self.area.mansionList)
-        houseList.extend(self.area.familyHomeList)
-        houseList.extend(self.area.bungalowList)
+        housesToPlace = []
+        housesToPlace.extend(self.area.mansionList)
+        housesToPlace.extend(self.area.familyHomeList)
+        housesToPlace.extend(self.area.bungalowList)
 
-        for house in houseList:
+        for house in housesToPlace:
             # draw space
             space = pygame.Surface((
                 house.space * 4 + house.width * 2,
@@ -83,7 +83,7 @@ class Visualizer:
                 (house.x * 2 - house.minimumSpace * 2,
                  house.y * 2 - house.minimumSpace * 2))
 
-        for house in houseList:
+        for house in housesToPlace:
             # draw house
             kind = type(house).__name__
             if kind == "Mansion":
