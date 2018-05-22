@@ -84,9 +84,8 @@ class HillClimbingAlgorithm(object):
 
         print("-------------------- ")
 
-        if self.tryCount >= 3000:
-            print("Final grid value: {} | "
-                  "Total price increase: {} "
+        if self.tryCount >= 2000:
+            print("Total price increase: {} "
                   "| In: ✅ {} succesfull | "
                   "😐 {} neutral | ❌ {} unbeneficial moves"
                   .format(currentTotalPrice,
