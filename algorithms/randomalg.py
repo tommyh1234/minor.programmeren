@@ -2,7 +2,6 @@
 from algorithms.algorithm import Algorithm
 from algorithms.constructionlist import construction_list
 from algorithms.waterlist import water_list
-
 import random
 
 
@@ -16,8 +15,8 @@ class RandomAlgorithm(Algorithm):
         self.waterAmount = random.randint(1, 4)
         self.watersToPlace = water_list(area,
                                         self.waterAmount)
-        self.waterPlacementRuns = 0
-        self.housePlacementRuns = 0
+        self.waterPlacementRuns = 1
+        self.housePlacementRuns = 1
         self.area = area
 
     def execute(self):
@@ -80,8 +79,9 @@ class RandomAlgorithm(Algorithm):
 
             # if no valid map in 1500 runs, exit the program
             if self.housePlacementRuns >= 1500:
-                print("1500 Runs, can't create valid map")
                 self.isDone = True
+                raise RuntimeError("1500 Runs, can't create valid map")
+
         else:
             print('✔ All houses placed ✔')
 
