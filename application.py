@@ -23,7 +23,7 @@ def main():
     # just SpeedRandom Algorithm ###
     grid = Area()
     algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
-    visualizer = BulkVisualizer(grid, algorithm)
+    visualizer = BulkVisualizer(grid, algorithm, 10)
     visualizer.on_execute()
 
     # # just Random algorithm
