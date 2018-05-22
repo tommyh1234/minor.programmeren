@@ -1,0 +1,22 @@
+To do:
+
+Verplicht:
+- Water implementeren
+- Greedy / Simulated Annealing
+
+Experimentatie:
+- Seraliseren kaarten (opslaan/inladen)
+- 30/100 Hillclimbers (1000 stappen)
+- 1000/3000 Random kaarten
+- Hoogste, laagste, average.
+- Distributie Random / HillClimbers / 3de algorithme
+
+extra:
+- Grafiekjes: coolingschema, scoringfuncties
+- 50/50 neutraal wel/niet accepteren in Hillclimber
+
+Anders:
+- Simulated Anealing (ook laten kijken naar hoeveel slechter score wordt!)
+	- Algoritme: lang zoeken naar beste cooling scheme
+	- Experimentatie: puur kijken naar wat beter werkt dan we nu hebben.
+- Hillclimber: wat is invloed van beginnen met verschillende randomkaarten?

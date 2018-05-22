@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import random
-# from algorithms.randomalg import RandomAlgorithm
-from algorithms.speedrandom import SpeedRandomAlgorithm
+from algorithms.randomalg import RandomAlgorithm
+# from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(object):
@@ -13,11 +13,13 @@ class HillClimbingAlgorithm(object):
         self.succesfullMoves = 0
         self.neutralMoves = 0
         self.unbeneficialMoves = 0
+        self.totalHouseAmount = fhAmount + bAmount + mAmount
+        self.pickHouseList = []
         # fill grid random
-        self.randomAlg = SpeedRandomAlgorithm(self.area,
-                                              fhAmount,
-                                              bAmount,
-                                              mAmount)
+        self.randomAlg = RandomAlgorithm(self.area,
+                                         fhAmount,
+                                         bAmount,
+                                         mAmount)
         while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 
@@ -27,15 +29,20 @@ class HillClimbingAlgorithm(object):
         if self.tryCount == 0:
             self.initialGridPrice = self.area.get_area_price()
 
-        # keep track of amount of moved made
-        self.tryCount += 1
-        print("Move: {}".format(self.tryCount))
-
         # total price grid
         currentTotalPrice = self.area.get_area_price()
 
-        # pick random houses from list of placed houses
-        currentHouse = random.choice(self.area.allHousesList)
+        # pick random hous from list of placed houses,
+        # making sure that all houses are visited once
+        # before a house is revisited
+        if self.tryCount % self.totalHouseAmount == 0:
+            self.pickHouseList.extend(self.area.allHousesList)
+
+        # keep track of amount of moves made
+        self.tryCount += 1
+        print("Move: {}".format(self.tryCount))
+
+        currentHouse = random.choice(self.pickHouseList)
 
         # save coordinates of current house
         backupX = currentHouse.x
@@ -45,7 +52,7 @@ class HillClimbingAlgorithm(object):
 
         # random choice wich type of move: switch,
         # turn, move house in direction
-        randomTypeOfMove = random.randint(2, 2)
+        randomTypeOfMove = random.randint(0, 2)
 
         # move house in a certain direction
         if randomTypeOfMove == 0:
@@ -143,16 +150,22 @@ class HillClimbingAlgorithm(object):
             print("😐 Neutral move. Allow to overcome local minima.")
         else:
             self.succesfullMoves += 1
-            print("New grid value: {}".format(currentTotalPrice))
-            print("✅ Price increase: {}".format(newTotalPrice
-                                                - currentTotalPrice))
+            print("✅ Price increase: {} | New grid value: {}"
+                  .format(newTotalPrice
+                          - currentTotalPrice,
+                          currentTotalPrice))
+
+        # remove last house from list of available options in next runs
+        self.pickHouseList.remove(currentHouse)
+
         print("-------------------- ")
 
-        if self.tryCount >= 10:
+        if self.tryCount >= 100:
             print("Total price increase: {} "
                   "| In: ✅ {} succesfull | "
                   "😐 {} neutral | ❌ {} unbeneficial moves"
-                  .format(currentTotalPrice - self.initialGridPrice,
+                  .format(currentTotalPrice,
+                          currentTotalPrice - self.initialGridPrice,
                           self.succesfullMoves,
                           self.neutralMoves,
                           self.unbeneficialMoves))
