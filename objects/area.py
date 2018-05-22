@@ -13,6 +13,7 @@ class Area(object):
         self.bungalowList = []
         self.familyHomeList = []
         self.allHousesList = []
+        self.price = 0
 
     def place_house(self, house, x, y):
         house.x = x
@@ -84,6 +85,7 @@ class Area(object):
             totalPrice += self.allHousesList[counter].get_price()
             counter += 1
 
+        self.price = totalPrice
         return totalPrice
 
     def sliding_house(self, currentHouse, backupX, backupY):

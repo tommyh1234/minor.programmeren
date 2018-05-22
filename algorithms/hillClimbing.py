@@ -148,7 +148,7 @@ class HillClimbingAlgorithm(object):
                                                 - currentTotalPrice))
         print("-------------------- ")
 
-        if self.tryCount >= 100:
+        if self.tryCount >= 10:
             print("Total price increase: {} "
                   "| In: ✅ {} succesfull | "
                   "😐 {} neutral | ❌ {} unbeneficial moves"

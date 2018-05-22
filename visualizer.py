@@ -1,13 +1,20 @@
 import pygame
+import matplotlib
+import matplotlib.backends.backend_agg as agg
+import pylab
 
 
 class Visualizer:
     def __init__(self, area, algorithm):
         self._running = True
         self._display_surf = None
-        self.size = self.width, self.height = 640, 770
+        self.size = self.width, self.height = 1040, 770
         self.area = area
         self.algorithm = algorithm
+        self.lastPrice = 0
+        self.scores = []
+
+        matplotlib.use("Agg")
 
     def on_init(self):
         pygame.init()
@@ -28,6 +35,9 @@ class Visualizer:
             self.area = event.area
 
     def on_render(self):
+        pygame.font.init()
+        font = pygame.font.SysFont('Arial', 30)
+
         if self.algorithm.isDone is False:
             self.algorithm.execute()
 
@@ -93,11 +103,50 @@ class Visualizer:
                         house.width*2,
                         house.height*2)
                     )
+        # Draw a black bar at the bottom of the screen
         pygame.draw.rect(
             self.screen,
             (0, 0, 0),
             (0, self.height-50, self.width, 50)
             )
+
+        # Draw the score and the last increase
+        textSurface = font.render('Score: ' + str(self.area.price),
+                                  True, (255, 255, 255))
+        self.screen.blit(textSurface, (10, self.height-35))
+
+        increaseColor = (255, 255, 255)
+        if (self.area.price - self.lastPrice < 1):
+            increaseColor = (80, 80, 80)
+
+        textSurface = font.render('Increase: ' +
+                                  str(self.area.price - self.lastPrice),
+                                  True, increaseColor)
+        self.screen.blit(textSurface, (330, self.height-35))
+        pygame.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            (640, 0, 400, self.height)
+            )
+
+        if (self.area.price >= self.lastPrice and
+                self.algorithm.isDone is False):
+
+            self.scores.append(self.area.price)
+            self.lastPrice = self.area.price
+
+        fig = pylab.figure(figsize=[4, 4],  # Inches
+                           dpi=100)  # 100 dots per inch
+        ax = fig.gca()
+        ax.plot(self.scores)
+
+        canvas = agg.FigureCanvasAgg(fig)
+        canvas.draw()
+        renderer = canvas.get_renderer()
+        raw_data = renderer.tostring_rgb()
+
+        surf = pygame.image.fromstring(raw_data, (400, 400), "RGB")
+        self.screen.blit(surf, (640, 0))
 
         pygame.display.flip()
         pass
