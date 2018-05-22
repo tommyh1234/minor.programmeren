@@ -22,11 +22,11 @@ def main():
     # print('50 runs | Highest: {} | Lowest: {}'
     #       .format(max(gridValues), min(gridValues)))
 
-    # just SpeedRandom Algorithm ###
-    grid = Area()
-    algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
-    visualizer = BulkVisualizer(grid, algorithm, 10)
-    visualizer.on_execute()
+    # # just SpeedRandom Algorithm ###
+    # grid = Area()
+    # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
+    # visualizer = BulkVisualizer(grid, algorithm, 10)
+    # visualizer.on_execute()
 
     # # just Random algorithm
     # grid = Area()
@@ -49,7 +49,7 @@ def main():
     algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)  # 20h: 12, 5, 3
     #                                                   # 40: 24, 10, 6
     #                                                   # 60: 36, 15, 9
-    visualizer = Visualizer(grid, algorithm)
+    visualizer = BulkVisualizer(grid, algorithm, 10)
     visualizer.on_execute()
 
 
