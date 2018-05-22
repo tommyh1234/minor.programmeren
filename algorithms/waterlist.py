@@ -19,7 +19,8 @@ def water_list(area, waterAmount):
         prospectiveHeight = random.randint(1, int(math.sqrt(surfaceoToFlood)))
         prospectiveRatio = prospectiveWidth / prospectiveHeight
 
-        # check for max. aspect ratio of 1:4 || 4:1 in width:height || height:width
+        # check for max. aspect ratio of 1:4 || 4:1
+        # in width:height || height:width
         while (prospectiveRatio < 1/4 or prospectiveRatio > 4):
 
             prospectiveWidth = random.randint(1,

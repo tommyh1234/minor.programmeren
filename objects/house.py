@@ -1,5 +1,4 @@
 from objects.water import Water
-import inspect
 
 
 class House(object):
