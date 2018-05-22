@@ -30,7 +30,7 @@ class HillClimbingAlgorithm(object):
 
         # random choice wich type of move: switch,
         # turn, move house in direction
-        randomTypeOfMove = random.randint(0, 2)
+        randomTypeOfMove = random.randint(2, 2)
 
         # move house in a certain direction
         if randomTypeOfMove == 0:
@@ -90,7 +90,6 @@ class HillClimbingAlgorithm(object):
             # backup coordinates of houses
             backUpHouseAX = houseA.x
             backUpHouseAY = houseA.y
-
             backUpHouseBX = houseB.x
             backUpHouseBY = houseB.y
 

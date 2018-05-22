@@ -207,7 +207,6 @@ class Area(object):
         # backup coordination of houses
         backUpHouseAX = houseA.x
         backUpHouseAY = houseA.y
-
         backUpHouseBX = houseB.x
         backUpHouseBY = houseB.y
 
@@ -221,34 +220,41 @@ class Area(object):
         houseB.x = backUpHouseAX
         houseB.y = backUpHouseAY
 
-        # place house at new location
-        aSucces = self.place_house(houseA, houseA.x, houseA.y)
-        bSucces = self.place_house(houseB, houseB.x, houseB.y)
+        # check if house coud valid placed on grid
+        checkValidityBoundarySwitchA = self.check_house_is_inside_grid(houseA)
+        checkValidityBoundarySwitchB = self.check_house_is_inside_grid(houseB)
 
-        print("before")
-        print(aSucces)
-        print(bSucces)
-        # check if houses are placed succesful, if not remove two houses
-        if any([aSucces is False, bSucces is False]):
+        if (checkValidityBoundarySwitchA is True and
+           checkValidityBoundarySwitchB is True):
 
-            print("after")
-            print(aSucces)
-            print(bSucces)
+            aSucces = self.place_house(houseA, houseA.x, houseA.y)
+            bSucces = self.place_house(houseB, houseB.x, houseB.y)
 
-            if bSucces is False:
-                self.remove_house(houseA)
-                print("removed A")
+            # check if houses are placed succesful, if not remove two houses
+            if any([aSucces is False, bSucces is False]):
 
-            if aSucces is False:
-                self.remove_house(houseB)
-                print("removed B")
+                if bSucces is False:
+                    self.remove_house(houseA)
 
-            # give houses oringnal location back
-            houseA.x = backUpHouseAX
-            houseA.y = backUpHouseAY
-            houseB.x = backUpHouseBX
-            houseB.y = backUpHouseBY
+                if aSucces is False:
+                    self.remove_house(houseB)
 
+                # place house back at orignal location
+                self.place_house(houseA, backUpHouseAX, backUpHouseAY)
+                self.place_house(houseB, backUpHouseBX, backUpHouseBY)
+
+        # give houses oringnal location back
+        else:
             # place house back at orignal location
-            self.place_house(houseA, houseA.x, houseA.y)
-            self.place_house(houseB, houseB.x, houseB.y)
+            self.place_house(houseA, backUpHouseAX, backUpHouseAY)
+            self.place_house(houseB, backUpHouseBX, backUpHouseBY)
+
+    def check_house_is_inside_grid(self, house):
+
+        # check if house is entirely inside the grid
+        if house.x > (self.width - house.width - house.minimumSpace):
+            return False
+        if house.y > (self.height - house.height - house.minimumSpace):
+            return False
+        else:
+            return True
