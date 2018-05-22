@@ -5,3 +5,4 @@ algorithms/__pycache__
 objects/__pycache__
 *.pyo
 *.pyc
+*.DS_Store
