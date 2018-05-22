@@ -129,7 +129,6 @@ class HillClimbingAlgorithm(object):
                                       backUpHouseBX,
                                       backUpHouseBY)
 
-
             # place house back at original location
             if not self.area.place_house(currentHouse,
                                          backupX,
