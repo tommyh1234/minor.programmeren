@@ -13,6 +13,7 @@ class HillClimbingAlgorithm(object):
         self.succesfullMoves = 0
         self.neutralMoves = 0
         self.unbeneficialMoves = 0
+        self.totalHouseAmount = fhAmount + bAmount + mAmount
         self.pickHouseList = []
         # fill grid random
         self.randomAlg = RandomAlgorithm(self.area,
@@ -28,16 +29,18 @@ class HillClimbingAlgorithm(object):
         if self.tryCount == 0:
             self.initialGridPrice = self.area.get_area_price()
 
-        # keep track of amount of moved made
-        self.tryCount += 1
-        print("Move: {}".format(self.tryCount))
-
         # total price grid
         currentTotalPrice = self.area.get_area_price()
 
-        # pick random houses from list of placed houses
-        if self.tryCount % 20 == 1:
+        # pick random hous from list of placed houses,
+        # making sure that all houses are visited once
+        # before a house is revisited
+        if self.tryCount % self.totalHouseAmount == 0:
             self.pickHouseList.extend(self.area.allHousesList)
+
+        # keep track of amount of moves made
+        self.tryCount += 1
+        print("Move: {}".format(self.tryCount))
 
         currentHouse = random.choice(self.pickHouseList)
 
@@ -76,14 +79,13 @@ class HillClimbingAlgorithm(object):
                           - currentTotalPrice,
                           currentTotalPrice))
 
-        # remove last house from available options in next runs
+        # remove last house from list of available options in next runs
         self.pickHouseList.remove(currentHouse)
 
         print("-------------------- ")
 
-        if self.tryCount >= 3000:
-            print("Final grid value: {} | "
-                  "Total price increase: {} "
+        if self.tryCount >= 2000:
+            print("Total price increase: {} "
                   "| In: ✅ {} succesfull | "
                   "😐 {} neutral | ❌ {} unbeneficial moves"
                   .format(currentTotalPrice,
