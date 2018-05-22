@@ -41,7 +41,7 @@ class Visualizer:
         for water in waterList:
             # place water
             pygame.draw.rect(
-                self.screen, (30, 144, 255),
+                self.screen, (0, 0, 128),
                 (water.x * 2,
                  water.y * 2,
                  water.width * 2,
