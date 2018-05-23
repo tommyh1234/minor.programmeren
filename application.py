@@ -4,53 +4,34 @@ from algorithms.hillClimbing import HillClimbingAlgorithm
 # from algorithms.randomalg import RandomAlgorithm
 from bulkvisualizer import BulkVisualizer
 
+from datahelper import DataHelper
+
 
 def main():
 
-    # looping the random algorithm 50 times ###
-    # gridValues = []
+    # just Random algorithm
+    grid = Area()
+    algorithm = HillClimbingAlgorithm(grid, 36, 15, 9, True)  # 20h: 12, 5, 3
+    #                                                         # 40: 24, 10, 6
+    #                                                         # 60: 36, 15, 9
+    visualizer = BulkVisualizer(grid, algorithm, 1)
+    visualizer.on_execute()
 
-    # for i in range(0, 50):
-    #     print("Run: {} | Start planning ...".format(i))
-    #     grid = Area()
-    #     algorithm = SpeedRandomAlgorithm()
-    #     algorithm.execute(grid, 12, 5, 3)  # 20h: 12, 5, 3
-    # #                                      # 40: 24, 10, 6
-    # #                                      # 60: 36, 15, 9
-    #     gridValues.append(grid.get_area_price())
-    # print('#########################################')
-    # print('50 runs | Highest: {} | Lowest: {}'
-    #       .format(max(gridValues), min(gridValues)))
-
-    # # just SpeedRandom Algorithm ###
+    # # just SpeedRandom Algorithm
     # grid = Area()
-    # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)
+    # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9)  # 20h: 12, 5, 3
+    # #                                                  # 40: 24, 10, 6
+    # #                                                  # 60: 36, 15, 9
     # visualizer = BulkVisualizer(grid, algorithm, 10)
     # visualizer.on_execute()
 
-    # # just Random algorithm
+    # # just a HillClimbing algorithm
     # grid = Area()
-    # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9)  # 20h: 12, 5, 3
+    # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)  # 20h: 12, 5, 3
     # #                                                   # 40: 24, 10, 6
-    # #                                                  # 60: 36, 15, 9
-    # visualizer = Visualizer(grid, algorithm)
+    # #                                                   # 60: 36, 15, 9
+    # visualizer = BulkVisualizer(grid, algorithm, 10)
     # visualizer.on_execute()
-
-    # # just Random algorithm
-    # grid = Area()
-    # algorithm = RandomAlgorithm(grid, 36, 15, 9)  # 20h: 12, 5, 3
-    # #                                             # 40: 24, 10, 6
-    # #                                             # 60: 36, 15, 9
-    # visualizer = Visualizer(grid, algorithm)
-    # visualizer.on_execute()
-
-    # just a HillClimbing algorithm
-    grid = Area()
-    algorithm = HillClimbingAlgorithm(grid, 36, 15, 9)  # 20h: 12, 5, 3
-    #                                                   # 40: 24, 10, 6
-    #                                                   # 60: 36, 15, 9
-    visualizer = BulkVisualizer(grid, algorithm, 10)
-    visualizer.on_execute()
 
 
 if __name__ == "__main__":

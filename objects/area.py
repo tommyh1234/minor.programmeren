@@ -15,6 +15,7 @@ class Area(object):
         self.familyHomeList = []
         self.allHousesList = []
         self.price = 0
+        self.recursiveCount = 0
 
     def surface(self):
         return self.width * self.height
@@ -115,7 +116,7 @@ class Area(object):
 
         # determine distance to move and update house coordinates
         directionShift = None
-        houseIsBlocked = None
+        houseIsBlocked = 0
         currentHouse = self.determineShift(currentHouse, directionShift,
                                            houseIsBlocked)
 
@@ -123,15 +124,15 @@ class Area(object):
         if self.place_house(currentHouse,
                             currentHouse.x,
                             currentHouse.y) is False:
-            print("✘ Cannot validly place house at \
-                  ({}, {})".format(currentHouse.x, currentHouse.y))
+            print("✘ Cannot validly place house at "
+                  "({}, {})".format(currentHouse.x, currentHouse.y))
             if self.place_house(currentHouse, backupX, backupY):
-                print("✔ Put house back at \
-                       original location ({}, {})"
+                print("✔ Put house back at "
+                      "original location ({}, {})"
                       .format(backupX, backupY))
             else:
-                print("✘ Could not put house back \
-                      at original location ({}, {})"
+                print("✘ Could not put house back "
+                      "at original location ({}, {})"
                       .format(backupX, backupY))
         else:
             print("✔ House placed at new location ({}, {})"
@@ -144,20 +145,20 @@ class Area(object):
             directionShift = random.randint(0, 1)
             print("Direction: {}".format(directionShift))
 
-        if houseIsBlocked is None:
-            houseIsBlocked = 0
-
         # pick random distance to shift the house with
         amountShift = random.randint(-5, 5)
         print("amountShift: {}".format(amountShift))
 
         # move house in chosen direction,
         # but only if it still falls within the map
-        recursiveCount = 0
+        self.recursiveCount = 0
 
+        # if house is surrounded by other houses and
+        # thus cannot move
         if houseIsBlocked > 1:
-            print("SWIFTHOUSE FUNCTION NOT POSSIBLE")
-            return
+            print("SWIFTHOUSE FUNCTION NOT POSSIBLE - House is locked in")
+            # return last (invalid) currentHouse
+            return currentHouse
 
         if directionShift == 0:
             tempCurrentHouseX = currentHouse.x + amountShift
@@ -171,12 +172,14 @@ class Area(object):
             else:
                 print("❌ amountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
-                recursiveCount += 1
+                self.recursiveCount += 1
 
                 # change directoin from horizontal to vertical after 50 tries
-                if recursiveCount > 50:
+                if self.recursiveCount > 50:
+                    print("Recursion! (dir 0")
                     directionShift = 1
                     houseIsBlocked += 1
+                    print(houseIsBlocked)
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
                 else:
@@ -195,12 +198,14 @@ class Area(object):
             else:
                 print("❌ AmountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
-                recursiveCount += 1
+                self.recursiveCount += 1
 
                 # change directoin from vertical to horizontal after 50 tries
-                if recursiveCount > 50:
+                if self.recursiveCount > 50:
+                    print("Recursion! dir 1")
                     directionShift = 0
                     houseIsBlocked += 1
+                    print(houseIsBlocked)
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
                 else:
@@ -251,7 +256,7 @@ class Area(object):
         checkValidityBoundarySwitchB = self.check_house_is_inside_grid(houseB)
 
         if (checkValidityBoundarySwitchA is True and
-           checkValidityBoundarySwitchB is True):
+            checkValidityBoundarySwitchB is True):
 
             # backup coordination of houses
             backUpHouseAX = houseA.x
