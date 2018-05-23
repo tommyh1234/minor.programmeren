@@ -1,11 +1,12 @@
 # -*- coding: UTF-8 -*-
 import random
+from algorithms.algorithm import Algorithm
 # from algorithms.randomalg import RandomAlgorithm
 from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
-class HillClimbingAlgorithm(object):
-    def __init__(self, area, fhAmount, bAmount, mAmount):
+class HillClimbingAlgorithm(Algorithm):
+    def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=True):
         self.isDone = False
         self.tryCount = 0
         self.initialGridPrice = 0
@@ -15,13 +16,15 @@ class HillClimbingAlgorithm(object):
         self.unbeneficialMoves = 0
         self.totalHouseAmount = fhAmount + bAmount + mAmount
         self.pickHouseList = []
-        # fill grid random
-        self.randomAlg = SpeedRandomAlgorithm(self.area,
-                                              fhAmount,
-                                              bAmount,
-                                              mAmount)
-        while(self.randomAlg.isDone is False):
-            self.randomAlg.execute()
+
+        if isEmpty is True:
+            # fill grid random
+            self.randomAlg = SpeedRandomAlgorithm(self.area,
+                                                  fhAmount,
+                                                  bAmount,
+                                                  mAmount)
+            while(self.randomAlg.isDone is False):
+                self.randomAlg.execute()
 
     def execute(self):
 

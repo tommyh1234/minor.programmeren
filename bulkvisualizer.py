@@ -1,5 +1,6 @@
 from visualizer import Visualizer
 import copy
+from datahelper import DataHelper
 
 
 class BulkVisualizer(Visualizer):
@@ -10,6 +11,7 @@ class BulkVisualizer(Visualizer):
         self.originalAlgorithm = copy.copy(algorithm)
         self.runs = 0
         self.allTimeHigh = 0
+        self.dataHelper = DataHelper()
 
     def on_render(self):
         super().on_render()
@@ -22,3 +24,4 @@ class BulkVisualizer(Visualizer):
             self.algorithm.area = self.area
             self.scores = []
             self.lastPrice = 0
+            self.dataHelper.writeArea(self.area)
