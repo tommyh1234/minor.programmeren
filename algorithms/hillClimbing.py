@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
 import random
 # from algorithms.randomalg import RandomAlgorithm
-from algorithms.speedrandom import SpeedRandomAlgorithm
+# from algorithms.speedrandom import SpeedRandomAlgorithm
+from algorithms.greedy import GreedyAlgorithm
+
 
 
 class HillClimbingAlgorithm(object):
@@ -16,10 +18,10 @@ class HillClimbingAlgorithm(object):
         self.totalHouseAmount = fhAmount + bAmount + mAmount
         self.pickHouseList = []
         # fill grid random
-        self.randomAlg = SpeedRandomAlgorithm(self.area,
-                                              fhAmount,
-                                              bAmount,
-                                              mAmount)
+        self.randomAlg = GreedyAlgorithm(self.area,
+                                         fhAmount,
+                                         bAmount,
+                                         mAmount)
         while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 

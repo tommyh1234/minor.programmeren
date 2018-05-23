@@ -22,34 +22,34 @@ class RandomAlgorithm(Algorithm):
 
         # determine amount of water to place and
         # make list with that many water objects
-        if self.waterAmount == 0:
-            self.waterAmount = random.randint(1, 4)
-            self.watersToPlace = water_list(self.area, self.waterAmount)
+        # if self.waterAmount == 0:
+        #     self.waterAmount = random.randint(1, 1)
+        #     self.watersToPlace = water_list(self.area, self.waterAmount)
 
-        # place water on map
-        while len(self.watersToPlace) > 0:
+        # # place water on map
+        # while len(self.watersToPlace) > 0:
 
-            print('Run {} | Waters left: {}'.format(
-                self.waterPlacementRuns, len(self.watersToPlace)))
+        #     print('Run {} | Waters left: {}'.format(
+        #         self.waterPlacementRuns, len(self.watersToPlace)))
 
-            # choose first water from the list
-            currentWater = random.choice(self.watersToPlace)
+        #     # choose first water from the list
+        #     currentWater = random.choice(self.watersToPlace)
 
-            # choose random x and y coordinates on the map
-            xCor = random.randint(0, self.area.width - currentWater.width)
-            yCor = random.randint(0, self.area.height - currentWater.height)
-            print('Trying to place "{}" on ({}, {})'.format(currentWater,
-                                                            xCor,
-                                                            yCor))
+        #     # choose random x and y coordinates on the map
+        #     xCor = random.randint(0, self.area.width - currentWater.width)
+        #     yCor = random.randint(0, self.area.height - currentWater.height)
+        #     print('Trying to place "{}" on ({}, {})'.format(currentWater,
+        #                                                     xCor,
+        #                                                     yCor))
 
-            # only remove water from list if validly placed
-            if not self.area.place_water(currentWater, xCor, yCor):
-                print("✘ Cannot validly place water at"
-                      " ({}, {})".format(xCor, yCor))
-            else:
-                self.watersToPlace.remove(currentWater)
+        #     # only remove water from list if validly placed
+        #     if not self.area.place_water(currentWater, xCor, yCor):
+        #         print("✘ Cannot validly place water at"
+        #               " ({}, {})".format(xCor, yCor))
+        #     else:
+        #         self.watersToPlace.remove(currentWater)
 
-            self.waterPlacementRuns += 1
+        #     self.waterPlacementRuns += 1
 
         # place a house from the list on random coordinates
         if len(self.housesToPlace) > 0:
