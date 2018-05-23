@@ -55,7 +55,6 @@ class HillClimbingAlgorithm(object):
         # turn, move house in direction
         randomTypeOfMove = random.randint(0, 2)
 
-
         # move house in a certain direction
         if randomTypeOfMove == 0:
             print("Move: SLIDING HOUSE")
@@ -79,7 +78,6 @@ class HillClimbingAlgorithm(object):
                 self.unbeneficialMoves += 1
                 print("❌ Unbeneficial move. Has been undone.")
 
-                    
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
                 print("😐 Neutral move. Allow to overcome local minima.")
@@ -117,12 +115,11 @@ class HillClimbingAlgorithm(object):
                 # turn house back to orignal height and length
                 if not self.area.turn_house(currentHouse, currentHouse.width,
                                             currentHouse.height):
-                    print("✘ Cannot validly place house at "
-                          "({}, {})".format(currentHouse.x, currentHouse.y))
+                    print("✘ Cannot validly place house at \
+                          ({}, {})".format(currentHouse.x, currentHouse.y))
 
                 self.unbeneficialMoves += 1
                 print("❌ Unbeneficial move. Has been undone.")
-
 
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
@@ -168,16 +165,18 @@ class HillClimbingAlgorithm(object):
 
                 # place orignal houses back on grid
                 if not self.area.place_house(houseA,
-                                      backupHouseAX,
-                                      backupHouseAY):
-                        print("✘ Cannot validly place house at "
-                                  "({}, {})".format(currentHouse.x, currentHouse.y))
+                                             backupHouseAX,
+                                             backupHouseAY):
+                    print("✘ Cannot validly place house at \
+                          ({}, {})".format(currentHouse.x,
+                                           currentHouse.y))
 
                 if not self.area.place_house(houseB,
-                                      backupHouseBX,
-                                      backupHouseBY):
-                        print("✘ Cannot validly place house at "
-                        "({}, {})".format(currentHouse.x, currentHouse.y))
+                                             backupHouseBX,
+                                             backupHouseBY):
+                    print("✘ Cannot validly place house at \
+                        ({}, {})".format(currentHouse.x,
+                                         currentHouse.y))
 
                 self.unbeneficialMoves += 1
                 print("❌ Unbeneficial move. Has been undone.")

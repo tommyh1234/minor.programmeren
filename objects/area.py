@@ -115,32 +115,37 @@ class Area(object):
 
         # determine distance to move and update house coordinates
         directionShift = None
-        currentHouse = self.determineShift(currentHouse, directionShift)
+        houseIsBlocked = None
+        currentHouse = self.determineShift(currentHouse, directionShift,
+                                           houseIsBlocked)
 
         # if house cannot be placed at new coordinates, put it back
         if self.place_house(currentHouse,
                             currentHouse.x,
                             currentHouse.y) is False:
-            print("✘ Cannot validly place house at"
-                  " ({}, {})".format(currentHouse.x, currentHouse.y))
+            print("✘ Cannot validly place house at \
+                  ({}, {})".format(currentHouse.x, currentHouse.y))
             if self.place_house(currentHouse, backupX, backupY):
-                print("✔ Put house back at "
-                      "original location ({}, {})"
+                print("✔ Put house back at \
+                       original location ({}, {})"
                       .format(backupX, backupY))
             else:
-                print("✘ Could not put house back "
-                      "at original location ({}, {})"
+                print("✘ Could not put house back \
+                      at original location ({}, {})"
                       .format(backupX, backupY))
         else:
             print("✔ House placed at new location ({}, {})"
                   .format(currentHouse.x, currentHouse.y))
 
-    def determineShift(self, currentHouse, directionShift):
+    def determineShift(self, currentHouse, directionShift, houseIsBlocked):
 
         # choose to move horizontal or vertical
         if directionShift is None:
             directionShift = random.randint(0, 1)
             print("Direction: {}".format(directionShift))
+
+        if houseIsBlocked is None:
+            houseIsBlocked = 0
 
         # pick random distance to shift the house with
         amountShift = random.randint(-5, 5)
@@ -149,9 +154,9 @@ class Area(object):
         # move house in chosen direction,
         # but only if it still falls within the map
         recursiveCount = 0
-        houseIsBlocked = 0
 
         if houseIsBlocked > 1:
+            print("SWIFTHOUSE FUNCTION NOT POSSIBLE")
             return
 
         if directionShift == 0:
@@ -172,10 +177,11 @@ class Area(object):
                 if recursiveCount > 50:
                     directionShift = 1
                     houseIsBlocked += 1
-                    self.determineShift(currentHouse, directionShift)
+                    self.determineShift(currentHouse, directionShift,
+                                        houseIsBlocked)
                 else:
-                    self.determineShift(currentHouse, directionShift)
-
+                    self.determineShift(currentHouse, directionShift,
+                                        houseIsBlocked)
 
         else:
             tempCurrentHouseY = currentHouse.y + amountShift
@@ -195,9 +201,11 @@ class Area(object):
                 if recursiveCount > 50:
                     directionShift = 0
                     houseIsBlocked += 1
-                    self.determineShift(currentHouse, directionShift)
+                    self.determineShift(currentHouse, directionShift,
+                                        houseIsBlocked)
                 else:
-                    self.determineShift(currentHouse, directionShift)
+                    self.determineShift(currentHouse, directionShift,
+                                        houseIsBlocked)
 
         # recursive error catching
         # returning currenthouse from last valid determineShift attempt
@@ -224,9 +232,9 @@ class Area(object):
             if self.place_house(currentHouse, currentHouse.x, currentHouse.y):
                 print("✓ Put house back at "
                       "original location ({}, {}) Height: {}  Width: {}"
-                      .format(currentHouse.x, 
-                              currentHouse.y, 
-                              currentHouse.height, 
+                      .format(currentHouse.x,
+                              currentHouse.y,
+                              currentHouse.height,
                               currentHouse.width))
             else:
                 print("Could not put house back "
@@ -243,7 +251,7 @@ class Area(object):
         checkValidityBoundarySwitchB = self.check_house_is_inside_grid(houseB)
 
         if (checkValidityBoundarySwitchA is True and
-            checkValidityBoundarySwitchB is True):
+           checkValidityBoundarySwitchB is True):
 
             # backup coordination of houses
             backUpHouseAX = houseA.x
@@ -278,7 +286,7 @@ class Area(object):
                 self.place_house(houseB, backUpHouseBX, backUpHouseBY)
 
             if any([aSucces is False and bSucces is False]):
-               # place house back at orignal location
+                # place house back at orignal location
                 self.place_house(houseA, backUpHouseAX, backUpHouseAY)
                 self.place_house(houseB, backUpHouseBX, backUpHouseBY)
 
