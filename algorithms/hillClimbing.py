@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import random
-from algorithms.randomalg import RandomAlgorithm
-# from algorithms.speedrandom import SpeedRandomAlgorithm
+# from algorithms.randomalg import RandomAlgorithm
+from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(object):
@@ -16,10 +16,10 @@ class HillClimbingAlgorithm(object):
         self.totalHouseAmount = fhAmount + bAmount + mAmount
         self.pickHouseList = []
         # fill grid random
-        self.randomAlg = RandomAlgorithm(self.area,
-                                         fhAmount,
-                                         bAmount,
-                                         mAmount)
+        self.randomAlg = SpeedRandomAlgorithm(self.area,
+                                              fhAmount,
+                                              bAmount,
+                                              mAmount)
         while(self.randomAlg.isDone is False):
             self.randomAlg.execute()
 
@@ -85,7 +85,8 @@ class HillClimbingAlgorithm(object):
         print("-------------------- ")
 
         if self.tryCount >= 2000:
-            print("Total price increase: {} "
+            print("Total price: {} "
+                  "Total price increase: {} "
                   "| In: ✅ {} succesfull | "
                   "😐 {} neutral | ❌ {} unbeneficial moves"
                   .format(currentTotalPrice,
