@@ -9,9 +9,12 @@ class BulkVisualizer(Visualizer):
         self.originalArea = copy.deepcopy(area)
         self.originalAlgorithm = copy.copy(algorithm)
         self.runs = 0
+        self.allTimeHigh = 0
 
     def on_render(self):
         super().on_render()
+        if self.area.price > self.allTimeHigh:
+            self.allTimeHigh = self.area.price
 
         if self.algorithm.isDone is True:
             self.area = copy.deepcopy(self.originalArea)
