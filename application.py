@@ -3,8 +3,7 @@ from objects.area import Area
 from algorithms.hillClimbing import HillClimbingAlgorithm
 # from algorithms.randomalg import RandomAlgorithm
 from bulkvisualizer import BulkVisualizer
-
-from datahelper import DataHelper
+# from datahelper import DataHelper
 
 
 def main():

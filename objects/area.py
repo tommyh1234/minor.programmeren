@@ -255,8 +255,8 @@ class Area(object):
         checkValidityBoundarySwitchA = self.check_house_is_inside_grid(houseA)
         checkValidityBoundarySwitchB = self.check_house_is_inside_grid(houseB)
 
-        if (checkValidityBoundarySwitchA is True and
-            checkValidityBoundarySwitchB is True):
+        if ((checkValidityBoundarySwitchA is True and
+             checkValidityBoundarySwitchB is True)):
 
             # backup coordination of houses
             backUpHouseAX = houseA.x

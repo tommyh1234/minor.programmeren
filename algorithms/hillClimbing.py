@@ -2,7 +2,7 @@
 import random
 from algorithms.randomalg import RandomAlgorithm
 from algorithms.algorithm import Algorithm
-#from algorithms.speedrandom import SpeedRandomAlgorithm
+# from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(Algorithm):
@@ -163,7 +163,8 @@ class HillClimbingAlgorithm(Algorithm):
             # make shure you pick two different houses
             while type(houseA).__name__ == type(houseB).__name__:
                 houseB = random.choice(self.area.allHousesList)
-                print("Chose house of same type to switch with, picking new house")
+                print("Chose house of same type to switch with, "
+                      "picking new house")
 
             # backup coordinates of houses
             backupHouseAX = houseA.x
@@ -221,22 +222,25 @@ class HillClimbingAlgorithm(Algorithm):
         print("-------------------- ")
 
         if self.tryCount >= 10:
-            print("Total price: {} "
+            print("Total price: {} | "
                   "Total price increase: {} "
-                  "| In: ✅ {} succesfull ({} slide(s), {} turn(s), {} switche(s) | "
-                  "😐 {} neutral or impossible ({} slide(s), {} turn(s), {} switche(s)) | "
-                  "❌ {} unbeneficial move(s) ({} slide(s), {} turn(s), {} switche(s))"
                   .format(currentTotalPrice,
-                          currentTotalPrice - self.initialGridPrice,
-                          self.succesfullMoves,
+                          currentTotalPrice - self.initialGridPrice))
+            print("In: ✅ {} succesfull moves "
+                  "({} slide(s), {} turn(s), {} switche(s)"
+                  .format(self.succesfullMoves,
                           self.succesfullSlideCount,
                           self.succesfullTurnCount,
-                          self.succesfullSwitchCount,
-                          self.neutralMoves,
+                          self.succesfullSwitchCount))
+            print("    😐 {} neutral or impossible moves "
+                  "({} slide(s), {} turn(s), {} switche(s))"
+                  .format(self.neutralMoves,
                           self.neutralSlideCount,
                           self.neutralTurnCount,
-                          self.neutralSwitchCount,
-                          self.unbeneficialMoves,
+                          self.neutralSwitchCount))
+            print("    ❌ {} unbeneficial moves "
+                  "({} slide(s), {} turn(s), {} switche(s))"
+                  .format(self.unbeneficialMoves,
                           self.unsuccesfullSlideCount,
                           self.unsuccesfullTurnCount,
                           self.unsuccesfullSwitchCount))
