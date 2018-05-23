@@ -149,6 +149,11 @@ class Area(object):
         # move house in chosen direction,
         # but only if it still falls within the map
         recursiveCount = 0
+        houseIsBlocked = 0
+
+        if houseIsBlocked > 1:
+            return
+
         if directionShift == 0:
             tempCurrentHouseX = currentHouse.x + amountShift
             tempBoundry = (self.width
@@ -166,9 +171,11 @@ class Area(object):
                 # change directoin from horizontal to vertical after 50 tries
                 if recursiveCount > 50:
                     directionShift = 1
+                    houseIsBlocked += 1
                     self.determineShift(currentHouse, directionShift)
                 else:
                     self.determineShift(currentHouse, directionShift)
+
 
         else:
             tempCurrentHouseY = currentHouse.y + amountShift
@@ -187,6 +194,7 @@ class Area(object):
                 # change directoin from vertical to horizontal after 50 tries
                 if recursiveCount > 50:
                     directionShift = 0
+                    houseIsBlocked += 1
                     self.determineShift(currentHouse, directionShift)
                 else:
                     self.determineShift(currentHouse, directionShift)
@@ -215,8 +223,11 @@ class Area(object):
 
             if self.place_house(currentHouse, currentHouse.x, currentHouse.y):
                 print("✓ Put house back at "
-                      "original location ({}, {})"
-                      .format(currentHouse.x, currentHouse.y))
+                      "original location ({}, {}) Height: {}  Width: {}"
+                      .format(currentHouse.x, 
+                              currentHouse.y, 
+                              currentHouse.height, 
+                              currentHouse.width))
             else:
                 print("Could not put house back "
                       "at original location ({}, {})"
@@ -226,35 +237,36 @@ class Area(object):
                   .format(currentHouse.x, currentHouse.y))
 
     def switch_house(self, houseA, houseB):
-        # backup coordination of houses
-        backUpHouseAX = houseA.x
-        backUpHouseAY = houseA.y
-        backUpHouseBX = houseB.x
-        backUpHouseBY = houseB.y
-
-        # remove houses from grid
-        self.remove_house(houseA)
-        self.remove_house(houseB)
-
-        # switch coordinates of the houses
-        houseA.x = backUpHouseBX
-        houseA.y = backUpHouseBY
-        houseB.x = backUpHouseAX
-        houseB.y = backUpHouseAY
 
         # check if house coud valid placed on grid
         checkValidityBoundarySwitchA = self.check_house_is_inside_grid(houseA)
         checkValidityBoundarySwitchB = self.check_house_is_inside_grid(houseB)
 
         if (checkValidityBoundarySwitchA is True and
-           checkValidityBoundarySwitchB is True):
+            checkValidityBoundarySwitchB is True):
+
+            # backup coordination of houses
+            backUpHouseAX = houseA.x
+            backUpHouseAY = houseA.y
+            backUpHouseBX = houseB.x
+            backUpHouseBY = houseB.y
+
+            # remove houses from grid
+            self.remove_house(houseA)
+            self.remove_house(houseB)
+
+            # switch coordinates of the houses
+            houseA.x = backUpHouseBX
+            houseA.y = backUpHouseBY
+            houseB.x = backUpHouseAX
+            houseB.y = backUpHouseAY
 
             aSucces = self.place_house(houseA, houseA.x, houseA.y)
             bSucces = self.place_house(houseB, houseB.x, houseB.y)
 
             # check if houses are placed succesful, if not remove two houses
-            if any([aSucces is False, bSucces is False]):
-
+            if any([(aSucces is False and bSucces is True),
+                    (bSucces is False and aSucces is True)]):
                 if bSucces is False:
                     self.remove_house(houseA)
 
@@ -265,11 +277,10 @@ class Area(object):
                 self.place_house(houseA, backUpHouseAX, backUpHouseAY)
                 self.place_house(houseB, backUpHouseBX, backUpHouseBY)
 
-        # give houses oringnal location back
-        else:
-            # place house back at orignal location
-            self.place_house(houseA, backUpHouseAX, backUpHouseAY)
-            self.place_house(houseB, backUpHouseBX, backUpHouseBY)
+            if any([aSucces is False and bSucces is False]):
+               # place house back at orignal location
+                self.place_house(houseA, backUpHouseAX, backUpHouseAY)
+                self.place_house(houseB, backUpHouseBX, backUpHouseBY)
 
     def check_house_is_inside_grid(self, house):
 

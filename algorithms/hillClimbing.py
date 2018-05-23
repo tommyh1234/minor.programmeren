@@ -14,7 +14,7 @@ class HillClimbingAlgorithm(object):
         self.neutralMoves = 0
         self.unbeneficialMoves = 0
         self.totalHouseAmount = fhAmount + bAmount + mAmount
-        self.pickHouseList = []
+        # self.pickHouseList = []
         # fill grid random
         self.randomAlg = SpeedRandomAlgorithm(self.area,
                                               fhAmount,
@@ -32,17 +32,18 @@ class HillClimbingAlgorithm(object):
         # total price grid
         currentTotalPrice = self.area.get_area_price()
 
-        # pick random hous from list of placed houses,
+        # pick random house from list of placed houses,
         # making sure that all houses are visited once
         # before a house is revisited
-        if self.tryCount % self.totalHouseAmount == 0:
-            self.pickHouseList.extend(self.area.allHousesList)
+        # if self.tryCount % self.totalHouseAmount == 0:
+        #     self.pickHouseList.extend(self.area.allHousesList)
 
         # keep track of amount of moves made
         self.tryCount += 1
         print("Move: {}".format(self.tryCount))
 
-        currentHouse = random.choice(self.pickHouseList)
+        # currentHouse = random.choice(self.pickHouseList)
+        currentHouse = random.choice(self.area.allHousesList)
 
         # save coordinates of current house
         backupX = currentHouse.x
@@ -54,31 +55,51 @@ class HillClimbingAlgorithm(object):
         # turn, move house in direction
         randomTypeOfMove = random.randint(0, 2)
 
+
         # move house in a certain direction
         if randomTypeOfMove == 0:
+            print("Move: SLIDING HOUSE")
             self.area.sliding_house(currentHouse, backupX, backupY)
 
             # if the price from the grid didn't increased
             # go back to orignal location
             newTotalPrice = self.area.get_area_price()
 
+            # check if grid is increased
             if currentTotalPrice > newTotalPrice:
-                # remove moved house
+
+                # remove current house
                 self.area.remove_house(currentHouse)
 
-                # place house back at original location
-                self.area.place_house(currentHouse,
-                                      backupX,
-                                      backupY)
+                # place house back at origanal coordinates
+                if not self.area.place_house(currentHouse, backupX, backupY):
+                    print("✘ Cannot validly place house at "
+                          "({}, {})".format(currentHouse.x, currentHouse.y))
+
+                self.unbeneficialMoves += 1
+                print("❌ Unbeneficial move. Has been undone.")
+
+                    
+            elif currentTotalPrice == newTotalPrice:
+                self.neutralMoves += 1
+                print("😐 Neutral move. Allow to overcome local minima.")
+            else:
+                self.succesfullMoves += 1
+                print("✅ Price increase: {} | New grid value: {}"
+                      .format(newTotalPrice
+                              - currentTotalPrice,
+                              currentTotalPrice))
 
         # turn house on the same location
         if randomTypeOfMove == 1:
 
-            # check if the house is a not square (familiehome),
+            print("Move: TURN HOUSE")
+            # check if the house is a not square (familyhome),
             # turning no value
             kind = type(currentHouse).__name__
             while kind == "familyHome":
-                currentHouse = random.choice(self.pickHouseList)
+                # currentHouse = random.choice(self.pickHouseList)
+                currentHouse = random.choice(self.area.allHousesList)
 
             backupHeight = currentHouse.height
             backupWidth = currentHouse.width
@@ -90,15 +111,33 @@ class HillClimbingAlgorithm(object):
             # go back to orignal location
             newTotalPrice = self.area.get_area_price()
 
+            # check if grid is increased
             if currentTotalPrice > newTotalPrice:
 
                 # turn house back to orignal height and length
-                self.area.turn_house(currentHouse, currentHouse.width,
-                                     currentHouse.height)
+                if not self.area.turn_house(currentHouse, currentHouse.width,
+                                            currentHouse.height):
+                    print("✘ Cannot validly place house at "
+                          "({}, {})".format(currentHouse.x, currentHouse.y))
+
+                self.unbeneficialMoves += 1
+                print("❌ Unbeneficial move. Has been undone.")
+
+
+            elif currentTotalPrice == newTotalPrice:
+                self.neutralMoves += 1
+                print("😐 Back to orignal location or equal move")
+            else:
+                self.succesfullMoves += 1
+                print("✅ Price increase: {} | New grid value: {}"
+                      .format(newTotalPrice
+                              - currentTotalPrice,
+                              currentTotalPrice))
 
         # switch two houses
         if randomTypeOfMove == 2:
 
+            print("Move: SWITCH HOUSE")
             houseA = currentHouse
 
             # pick random houses from list of houses
@@ -110,10 +149,10 @@ class HillClimbingAlgorithm(object):
                 print("the same type house, so pick random new house")
 
             # backup coordinates of houses
-            backUpHouseAX = houseA.x
-            backUpHouseAY = houseA.y
-            backUpHouseBX = houseB.x
-            backUpHouseBY = houseB.y
+            backupHouseAX = houseA.x
+            backupHouseAY = houseA.y
+            backupHouseBX = houseB.x
+            backupHouseBY = houseB.y
 
             # switch houses
             self.area.switch_house(houseA, houseB)
@@ -123,44 +162,41 @@ class HillClimbingAlgorithm(object):
 
             # check if price grid is increased
             if currentTotalPrice > newTotalPrice:
-
                 # remove houses from grid if not increased
                 self.area.remove_house(houseA)
                 self.area.remove_house(houseB)
 
                 # place orignal houses back on grid
-                self.area.place_house(houseA,
-                                      backUpHouseAX,
-                                      backUpHouseAY)
-                self.area.place_house(houseB,
-                                      backUpHouseBX,
-                                      backUpHouseBY)
+                if not self.area.place_house(houseA,
+                                      backupHouseAX,
+                                      backupHouseAY):
+                        print("✘ Cannot validly place house at "
+                                  "({}, {})".format(currentHouse.x, currentHouse.y))
 
-            # place house back at original location
-            if not self.area.place_house(currentHouse,
-                                         backupX,
-                                         backupY):
-                print("✘ Cannot validly place house at "
-                      "({}, {})".format(currentHouse.x, currentHouse.y))
-            else:
+                if not self.area.place_house(houseB,
+                                      backupHouseBX,
+                                      backupHouseBY):
+                        print("✘ Cannot validly place house at "
+                        "({}, {})".format(currentHouse.x, currentHouse.y))
+
                 self.unbeneficialMoves += 1
                 print("❌ Unbeneficial move. Has been undone.")
-        elif currentTotalPrice == newTotalPrice:
-            self.neutralMoves += 1
-            print("😐 Neutral move. Allow to overcome local minima.")
-        else:
-            self.succesfullMoves += 1
-            print("✅ Price increase: {} | New grid value: {}"
-                  .format(newTotalPrice
-                          - currentTotalPrice,
-                          currentTotalPrice))
+            elif currentTotalPrice == newTotalPrice:
+                self.neutralMoves += 1
+                print("😐 Back to orignal location or equal move.")
+            else:
+                self.succesfullMoves += 1
+                print("✅ Price increase: {} | New grid value: {}"
+                      .format(newTotalPrice
+                              - currentTotalPrice,
+                              currentTotalPrice))
 
-        # remove last house from list of available options in next runs
-        self.pickHouseList.remove(currentHouse)
+        # # remove last house from list of available options in next runs
+        # self.pickHouseList.remove(currentHouse)
 
         print("-------------------- ")
 
-        if self.tryCount >= 100:
+        if self.tryCount >= 1000:
             print("Total price increase: {} "
                   "| In: ✅ {} succesfull | "
                   "😐 {} neutral | ❌ {} unbeneficial moves"
