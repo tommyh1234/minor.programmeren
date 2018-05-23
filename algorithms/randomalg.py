@@ -12,16 +12,21 @@ class RandomAlgorithm(Algorithm):
                                                fhAmount,
                                                bAmount,
                                                mAmount)
-        self.waterAmount = random.randint(1, 4)
-        self.watersToPlace = water_list(area,
-                                        self.waterAmount)
+        self.waterAmount = 0
+        self.watersToPlace = []
         self.waterPlacementRuns = 1
         self.housePlacementRuns = 1
         self.area = area
 
     def execute(self):
 
-        # place required amount of water on map
+        # determine amount of water to place and
+        # make list with that many water objects
+        if self.waterAmount == 0:
+            self.waterAmount = random.randint(1, 4)
+            self.watersToPlace = water_list(self.area, self.waterAmount)
+
+        # place water on map
         while len(self.watersToPlace) > 0:
 
             print('Run {} | Waters left: {}'.format(

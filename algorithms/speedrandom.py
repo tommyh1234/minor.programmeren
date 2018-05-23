@@ -84,7 +84,8 @@ class SpeedRandomAlgorithm(Algorithm):
                     self.housesToPlace.append(house)
 
             if len(self.housesToPlace) == 0:
-                print('Placed {} houses in {} runs and {} water area(s) in {} runs | '
+                print('Placed {} houses in {} runs and '
+                      '{} water area(s) in {} runs | '
                       'Grid value: {} | '
                       '{} failed initial placements'
                       .format(len(self.area.allHousesList),
