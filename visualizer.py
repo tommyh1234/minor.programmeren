@@ -13,6 +13,7 @@ class Visualizer:
         self.algorithm = algorithm
         self.lastPrice = 0
         self.scores = []
+        self.allTimeHigh = 0
 
         matplotlib.use("Agg")
 
@@ -36,7 +37,7 @@ class Visualizer:
 
     def on_render(self):
         pygame.font.init()
-        font = pygame.font.SysFont('Arial', 30)
+        font = pygame.font.SysFont('Arial', 24)
 
         if self.algorithm.isDone is False:
             self.algorithm.execute()
@@ -164,6 +165,14 @@ class Visualizer:
 
         surf = pygame.image.fromstring(raw_data, (400, 400), "RGB")
         self.screen.blit(surf, (640, 0))
+        matplotlib.pyplot.close(fig)
+
+        # Draw the all time highest score if that's set
+        if self.allTimeHigh is not 0:
+            textSurface = font.render('Highest score: ' +
+                                      str(self.allTimeHigh),
+                                      True, (255, 255, 255))
+            self.screen.blit(textSurface, (650, 410))
 
         pygame.display.flip()
         pass
