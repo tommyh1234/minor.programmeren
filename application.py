@@ -1,15 +1,17 @@
-from objects.area import Area
+# from objects.area import Area
 # from algorithms.speedrandom import SpeedRandomAlgorithm
-# from algorithms.hillClimbing import HillClimbingAlgorithm
-from algorithms.randomalg import RandomAlgorithm
+from algorithms.hillClimbing import HillClimbingAlgorithm
+# from algorithms.randomalg import RandomAlgorithm
 from bulkvisualizer import BulkVisualizer
+
+from datahelper import DataHelper
 
 
 def main():
 
     # just Random algorithm
-    grid = Area()
-    algorithm = RandomAlgorithm(grid, 36, 15, 9)  # 20h: 12, 5, 3
+    grid = DataHelper('veranderdit').getArea()
+    algorithm = HillClimbingAlgorithm(grid, 36, 15, 9, False)  # 20h: 12, 5, 3
     #                                             # 40: 24, 10, 6
     #                                             # 60: 36, 15, 9
     visualizer = BulkVisualizer(grid, algorithm, 1)
