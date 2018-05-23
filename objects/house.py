@@ -80,7 +80,7 @@ class House(object):
             else:
                 break
 
-        return space
+        return space - 1
 
     def get_price(self):
         # The value of a house is calculated by taking the base value an
