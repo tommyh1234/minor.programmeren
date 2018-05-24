@@ -81,12 +81,6 @@ class SpeedRandomAlgorithm(Algorithm):
             print("Houses left to place: {}  "
                   .format(len(self.housesToPlace)), end="\r")
 
-<<<<<<< HEAD
-            # if no valid map in 1500 runs, exit the program
-            if self.housePlacementRuns >= totalIteration:
-                self.isDone = True
-                raise RuntimeError("1500 Runs, can't create valid map")
-=======
             # if a valid map can't be created in 1500 runs,
             # retry with a new random amount of water & and
             # the same amount of houses
@@ -111,7 +105,6 @@ class SpeedRandomAlgorithm(Algorithm):
                                                        self.fhAmount,
                                                        self.bAmount,
                                                        self.mAmount)
->>>>>>> master
 
         else:
             # Recheck the validity of all houses (important to catch

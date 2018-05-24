@@ -2,6 +2,7 @@ from objects.area import Area
 from algorithms.speedrandom import SpeedRandomAlgorithm
 from algorithms.hillClimbing import HillClimbingAlgorithm
 from algorithms.randomalg import RandomAlgorithm
+from algorithms.greedy import GreedyAlgorithm
 from visualizer import Visualizer
 from bulkvisualizer import BulkVisualizer
 from datahelper import DataHelper
@@ -18,9 +19,10 @@ def main():
     print("")
     algorithmChoice = int(input('What algorithm do you want to run?\n'
                                 '1: Random \n'
-                                '2: SpeedRandom\n'
-                                '3: HillClimbing\n'
-                                '4: Simmulated Annealing\n'
+                                '2: Greedy \n'
+                                '3: SpeedRandom\n'
+                                '4: HillClimbing\n'
+                                '5: Simmulated Annealing\n'
                                 'Your choice: '))
     print("")
     visualizerChoice = int(input('What visualizer do you want?\n'
@@ -64,12 +66,15 @@ def main():
         algorithm = RandomAlgorithm(area, fhAmount,
                                     bAmount, mAmount, isEmpty)
     elif algorithmChoice == 2:
+        algorithm = GreedyAlgorithm(area, fhAmount,
+                                    bAmount, mAmount, isEmpty)
+    elif algorithmChoice == 3:
         algorithm = SpeedRandomAlgorithm(area, fhAmount,
                                          bAmount, mAmount, isEmpty)
-    elif algorithmChoice == 3:
+    elif algorithmChoice == 4:
         algorithm = HillClimbingAlgorithm(area, fhAmount,
                                           bAmount, mAmount, isEmpty)
-    elif algorithmChoice == 4:
+    elif algorithmChoice == 5:
         # SIMMULATED ANNEALING
         pass
 
