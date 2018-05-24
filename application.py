@@ -9,14 +9,20 @@ from datahelper import DataHelper
 
 
 def main():
+    """Present the user with choices about the algorithm to run"""
+
     print("----------------------")
     print("WELCOME TO AMSTELHAEGE \n")
+
+    # let the user choose a new or existing grid
     gridChoice = int(input('Do you want to load in a grid '
                            'or start from scratch?\n'
                            '1: Load a grid\n'
                            '2: Start from scratch\n'
                            'Your choice: '))
     print("")
+
+    # let the user choose an algorithm
     algorithmChoice = int(input('What algorithm do you want to run?\n'
                                 '1: Random \n'
                                 '2: Greedy \n'
@@ -25,6 +31,10 @@ def main():
                                 '5: Simmulated Annealing\n'
                                 'Your choice: '))
     print("")
+
+    # let the user choose a type of visualization.
+    # Normal visualizer renders a single visualisation
+    # Bulk visualizer can render several maps after one another
     visualizerChoice = int(input('What visualizer do you want?\n'
                                  '1: Normal visualizer\n'
                                  '2: Bulk visualizer\n'
@@ -34,12 +44,15 @@ def main():
     fhAmount = 0
     bAmount = 0
     mAmount = 0
+
     if gridChoice == 1:
-        fileName = str(input('Please give me a file name: \n'
+        # ask the user for the file where the existing grid is stored
+        fileName = str(input('Please provide a file name: \n'
                              'Your choice: '))
         area = DataHelper(fileName).getArea()
         isEmpty = False
     else:
+        # or create a new grid
         area = Area()
         houseAmountChoice = int(input('How many houses do you want? \n'
                                       '1: 20\n'
@@ -47,6 +60,8 @@ def main():
                                       '3: 60\n'
                                       'Your choice: '))
         print("")
+        # set the correct ratio of house types
+        # for different amounts of houses
         if houseAmountChoice == 1:
             fhAmount = 12
             bAmount = 5
@@ -60,6 +75,7 @@ def main():
             bAmount = 15
             mAmount = 9
 
+    # if applicable for the algorithm chosen, provide further choices
     if algorithmChoice != 2:
         placementOrder = int(input('In what order do you want houses '
                                    'to be placed on the map?\n'
@@ -80,6 +96,7 @@ def main():
             waterAmountChoise = "Random"
         print("")
 
+    # initiate the algorithm chosen by the user
     if algorithmChoice == 1:
         algorithm = RandomAlgorithm(area, fhAmount,
                                     bAmount, mAmount,
@@ -102,6 +119,7 @@ def main():
         # SIMMULATED ANNEALING
         pass
 
+    # initiate the visualization requested by the user
     if visualizerChoice == 1:
         visualizer = Visualizer(area, algorithm)
     elif visualizerChoice == 2:
@@ -109,6 +127,7 @@ def main():
                          'Your choice: '))
         visualizer = BulkVisualizer(area, algorithm, runs)
 
+    # notify the user of the end of the menu
     print("Starting your Algorithm...")
     print("----------------------")
     visualizer.on_execute()
