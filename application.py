@@ -10,7 +10,8 @@ from datahelper import DataHelper
 def main():
     print("----------------------")
     print("WELCOME TO AMSTELHAEGE \n")
-    gridChoice = int(input('Do you want to load in a grid or start from scratch?\n'
+    gridChoice = int(input('Do you want to load in a grid '
+                           'or start from scratch?\n'
                            '1: Load a grid\n'
                            '2: Start from scratch\n'
                            'Your choice: '))
