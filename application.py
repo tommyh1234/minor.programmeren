@@ -1,7 +1,7 @@
 from objects.area import Area
 # from algorithms.speedrandom import SpeedRandomAlgorithm
-# from algorithms.hillClimbing import HillClimbingAlgorithm
-from algorithms.randomalg import RandomAlgorithm
+from algorithms.hillClimbing import HillClimbingAlgorithm
+# from algorithms.randomalg import RandomAlgorithm
 from bulkvisualizer import BulkVisualizer
 from algorithms.hillClimbing import HillClimbingAlgorithm 
 from algorithms.simulatedannealing import simulatedAnnealing
@@ -11,7 +11,6 @@ def main():
     lowestTemp = None
     highestTemp = None
     typeOfSimulatedAnnealing = None
-
     totalIteration = int(input("how many interation?: "))
 
     hillClimbingOrSimulatedAnnealing = int(input( 
@@ -32,6 +31,7 @@ def main():
 
         endTemp = input("------------------------------------\n"
                             "What is the end temperature? ")
+
         typeOfSimulatedAnnealing = input("------------------------------------\n"
                                          "1 = Lineair\n" 
                                          "2 = Exponential\n" 
@@ -40,14 +40,17 @@ def main():
 
     # # just Random algorithm
     # grid = Area()
-    algorithm = simulatedAnnealing(beginLength,\
-                                   endLength,\
-                                   beginTemp,\
-                                   endTemp,\
-                                   typeOfSimulatedAnnealing,\
-                                   totalIteration,\
-                                   currentIteration)
-                       
+    algorithm = HillClimbingAlgorithm(self,\
+                                      area,\
+                                      fhAmount,\
+                                      bAmount,\
+                                      mAmount,\
+                                      isEmpty,\
+                                      beginTemp,\
+                                      endTemp,\
+                                      totalIteration,\
+                                      currentIteration)
+                           
     # # algorithm = RandomAlgorithm(grid, 36, 15, 9, totalIteration)       
     # # #                                                  # 20h: 12, 5, 3
     # # #                                                  # 40: 24, 10, 6

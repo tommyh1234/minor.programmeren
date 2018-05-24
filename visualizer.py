@@ -15,8 +15,6 @@ class Visualizer:
         self.scores = []
         self.allTimeHigh = 0
 
-        matplotlib.use("Agg")
-
     def on_init(self):
         pygame.init()
         self.screen = pygame.display.set_mode(
