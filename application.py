@@ -41,21 +41,21 @@ def main():
         isEmpty = False
     else:
         area = Area()
-        amountChoice = int(input('How many houses do you want? \n'
+        houseAmountChoice = int(input('How many houses do you want? \n'
                                  '1: 20\n'
                                  '2: 40\n'
                                  '3: 60\n'
                                  'Your choice: '))
         print("")
-        if amountChoice == 1:
+        if houseAmountChoice == 1:
             fhAmount = 12
             bAmount = 5
             mAmount = 3
-        elif amountChoice == 2:
+        elif houseAmountChoice == 2:
             fhAmount = 24
             bAmount = 10
             mAmount = 6
-        elif amountChoice == 3:
+        elif houseAmountChoice == 3:
             fhAmount = 36
             bAmount = 15
             mAmount = 9
@@ -64,7 +64,8 @@ def main():
         placementOrder = int(input('In what order do you want houses '
                                    'to be placed on the map?\n'
                                    '1: Random \n'
-                                   '2: Mansions > Bungalows > Family homes \n'
+                                   '2: First Mansions, then Bungalows, '
+                                   'then Family homes \n'
                                    'Your choice: '))
         print("")
         waterAmountChoise = int(input('How many water areas'
