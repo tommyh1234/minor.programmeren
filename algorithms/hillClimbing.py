@@ -63,10 +63,10 @@ class HillClimbingAlgorithm(Algorithm):
 
         # random choice wich type of move: switch,
         # turn, move house in direction
-        randomTypeOfMove = random.randint(0, 2)
+        randomTypeOfMove = random.randint(0, 11)
 
         # move house in a certain direction
-        if randomTypeOfMove == 0:
+        if 0 <= randomTypeOfMove <= 5:
             print("SLIDING HOUSE")
             print('Original location house: ({}, {})'
                   .format(currentHouse.x, currentHouse.y))
@@ -104,7 +104,7 @@ class HillClimbingAlgorithm(Algorithm):
                               currentTotalPrice))
 
         # turn house on the same location
-        if randomTypeOfMove == 1:
+        if 6 <= randomTypeOfMove <= 8:
 
             print("TURN HOUSE")
             # check if the house is a not square (familyhome),
@@ -152,7 +152,7 @@ class HillClimbingAlgorithm(Algorithm):
                               currentTotalPrice))
 
         # switch two houses
-        if randomTypeOfMove == 2:
+        if 9 <= randomTypeOfMove <= 11:
 
             print("SWITCH HOUSE")
             houseA = currentHouse
@@ -221,7 +221,7 @@ class HillClimbingAlgorithm(Algorithm):
 
         print("-------------------- ")
 
-        if self.tryCount >= 10:
+        if self.tryCount >= 1000:
             print("Total price: {} | "
                   "Total price increase: {} "
                   .format(currentTotalPrice,
