@@ -1,9 +1,7 @@
 from objects.area import Area
-
 from algorithms.speedrandom import SpeedRandomAlgorithm
 from algorithms.hillClimbing import HillClimbingAlgorithm
 from algorithms.randomalg import RandomAlgorithm
-
 from visualizer import Visualizer
 from bulkvisualizer import BulkVisualizer
 from datahelper import DataHelper

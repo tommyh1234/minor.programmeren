@@ -43,7 +43,7 @@ def water_list(area, waterAmount):
     waterSurface = currentWater.width * currentWater.height
     surfaceoLeftToFlood = surfaceoLeftToFlood - waterSurface
 
-    print("Flooded {}m2 with {} water area(s)"
+    print("Flooded {}m2 (20% of the map) with {} water area(s)"
           .format(surfaceoToFlood / 4, waterAmount))
 
     return waters
