@@ -6,7 +6,7 @@ from algorithms.randomalg import RandomAlgorithm
 
 from visualizer import Visualizer
 from bulkvisualizer import BulkVisualizer
-# from datahelper import DataHelper
+from datahelper import DataHelper
 
 
 def main():
