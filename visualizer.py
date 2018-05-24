@@ -15,8 +15,6 @@ class Visualizer:
         self.scores = []
         self.allTimeHigh = 0
 
-        matplotlib.use("Agg")
-
     def on_init(self):
         pygame.init()
         self.screen = pygame.display.set_mode(
@@ -46,10 +44,10 @@ class Visualizer:
             for j in range(0, 3):
                 self.screen.blit(self.img_grass, (i * 270, j * 270))
 
-        waterList = []
-        waterList.extend(self.area.waterList)
+        allWatersList = []
+        allWatersList.extend(self.area.allWatersList)
 
-        for water in waterList:
+        for water in allWatersList:
             # place water
             pygame.draw.rect(
                 self.screen, (0, 0, 128),

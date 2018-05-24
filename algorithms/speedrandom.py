@@ -7,11 +7,14 @@ import random
 
 class SpeedRandomAlgorithm(Algorithm):
 
-    def __init__(self, area, fhAmount, bAmount, mAmount):
+    def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=False):
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
                                                mAmount)
+        self.fhAmount = fhAmount
+        self.bAmount = bAmount
+        self.mAmount = mAmount
         self.waterAmount = 0
         self.watersToPlace = []
         self.waterPlacementRuns = 1
@@ -50,7 +53,10 @@ class SpeedRandomAlgorithm(Algorithm):
         if len(self.housesToPlace) > 0:
 
             # choose first house from the list, resulting in FH > Bung > Man
-            currentHouse = random.choice(self.housesToPlace)
+            currentHouse = self.housesToPlace[0]
+
+            # choose random house from the list
+            # currentHouse = random.choice(self.housesToPlace)
 
             # choose random x and y coordinates on the map
             xCor = random.randint(currentHouse.minimumSpace,
@@ -67,11 +73,33 @@ class SpeedRandomAlgorithm(Algorithm):
                 self.housesToPlace.remove(currentHouse)
 
             self.housePlacementRuns += 1
+            print("Houses left to place: {}  "
+                  .format(len(self.housesToPlace)), end="\r")
 
-            # if no valid map in 1500 runs, exit the program
+            # if a valid map can't be created in 1500 runs,
+            # retry with a new random amount of water & and
+            # the same amount of houses
             if self.housePlacementRuns >= 1500:
-                self.isDone = True
-                raise RuntimeError("1500 Runs, can't create valid map")
+                print("✘ Could not make valid map in 1500 runs. Retrying...")
+
+                # while-loop ensures all houses are removed
+                while len(self.area.allHousesList) > 0:
+                    for house in self.area.allHousesList:
+                        self.area.remove_house(house)
+
+                while len(self.area.allWatersList) > 0:
+                    for water in self.area.allWatersList:
+                        self.area.remove_water(water)
+
+                self.waterAmount = 0
+                self.watersToPlace = []
+                self.waterPlacementRuns = 1
+                self.housePlacementRuns = 1
+                self.housesToPlace = []
+                self.housesToPlace = construction_list(self.area,
+                                                       self.fhAmount,
+                                                       self.bAmount,
+                                                       self.mAmount)
 
         else:
             # Recheck the validity of all houses (important to catch
