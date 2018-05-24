@@ -9,20 +9,20 @@ class HillClimbingAlgorithm(Algorithm):
     def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=True):
         self.isDone = False
         self.tryCount = 0
+        self.succesfullMoves = 0
         self.succesfullSwitchCount = 0
         self.succesfullTurnCount = 0
         self.succesfullSlideCount = 0
+        self.neutralMoves = 0
         self.neutralSlideCount = 0
         self.neutralTurnCount = 0
         self.neutralSwitchCount = 0
-        self.unsuccesfullSwitchCount = 0
-        self.unsuccesfullTurnCount = 0
-        self.unsuccesfullSlideCount = 0
+        self.unbeneficialMoves = 0
+        self.unbeneficialSwitchCount = 0
+        self.unbeneficialTurnCount = 0
+        self.unbeneficialSlideCount = 0
         self.initialGridPrice = 0
         self.area = area
-        self.succesfullMoves = 0
-        self.neutralMoves = 0
-        self.unbeneficialMoves = 0
         self.totalHouseAmount = fhAmount + bAmount + mAmount
         self.pickHouseList = []
 
@@ -88,7 +88,7 @@ class HillClimbingAlgorithm(Algorithm):
                           "({}, {})".format(currentHouse.x, currentHouse.y))
 
                 self.unbeneficialMoves += 1
-                self.unsuccesfullSlideCount += 1
+                self.unbeneficialSlideCount += 1
                 print("❌ Unbeneficial move. Has been undone.")
 
             elif currentTotalPrice == newTotalPrice:
@@ -136,7 +136,7 @@ class HillClimbingAlgorithm(Algorithm):
                           "({}, {})".format(currentHouse.x, currentHouse.y))
 
                 self.unbeneficialMoves += 1
-                self.unsuccesfullTurnCount += 1
+                self.unbeneficialTurnCount += 1
                 print("❌ Unbeneficial move. Has been undone.")
 
             elif currentTotalPrice == newTotalPrice:
@@ -202,7 +202,7 @@ class HillClimbingAlgorithm(Algorithm):
                                             currentHouse.y))
 
                 self.unbeneficialMoves += 1
-                self.unsuccesfullSwitchCount += 1
+                self.unbeneficialSwitchCount += 1
                 print("❌ Unbeneficial move. Has been undone.")
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
@@ -241,8 +241,8 @@ class HillClimbingAlgorithm(Algorithm):
             print("    ❌ {} unbeneficial moves "
                   "({} slide(s), {} turn(s), {} switche(s))"
                   .format(self.unbeneficialMoves,
-                          self.unsuccesfullSlideCount,
-                          self.unsuccesfullTurnCount,
-                          self.unsuccesfullSwitchCount))
+                          self.unbeneficialSlideCount,
+                          self.unbeneficialTurnCount,
+                          self.unbeneficialSwitchCount))
 
             self.isDone = True
