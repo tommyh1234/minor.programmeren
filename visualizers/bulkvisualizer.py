@@ -1,6 +1,6 @@
-from visualizer import Visualizer
-import copy
+from visualizers.visualizer import Visualizer
 from datahelper import DataHelper
+import copy
 
 
 class BulkVisualizer(Visualizer):
@@ -13,7 +13,6 @@ class BulkVisualizer(Visualizer):
         self.allTimeHigh = 0
         self.dataHelper = DataHelper()
         self.maxRuns = runs
-        self.area = area
 
     def on_render(self):
         # run and render the algorithm
