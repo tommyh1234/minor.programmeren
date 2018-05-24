@@ -2,11 +2,12 @@
 import random
 from algorithms.randomalg import RandomAlgorithm
 from algorithms.algorithm import Algorithm
-# from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(Algorithm):
-    def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=True):
+    def __init__(self, area, fhAmount, bAmount, mAmount,
+                 placementOrder, waterAmountChoise, isEmpty=True):
+        self.placementOrder = placementOrder
         self.isDone = False
         self.tryCount = 0
         self.succesfullMoves = 0
@@ -30,7 +31,9 @@ class HillClimbingAlgorithm(Algorithm):
             self.randomAlg = RandomAlgorithm(self.area,
                                              fhAmount,
                                              bAmount,
-                                             mAmount)
+                                             mAmount,
+                                             placementOrder,
+                                             waterAmountChoise)
             while self.randomAlg.isDone is False:
                 self.randomAlg.execute()
 
@@ -102,12 +105,11 @@ class HillClimbingAlgorithm(Algorithm):
                               - currentTotalPrice,
                               currentTotalPrice))
 
-        # turn house on the same location
+        # turn a house 90degrees at its location
         if 6 <= randomTypeOfMove <= 8:
 
             print("TURN HOUSE")
             # check if the house is a not square (familyhome),
-            # turning no value
             kind = type(currentHouse).__name__
             while kind == "familyHome":
                 # currentHouse = random.choice(self.pickHouseList)
@@ -150,7 +152,7 @@ class HillClimbingAlgorithm(Algorithm):
                               - currentTotalPrice,
                               currentTotalPrice))
 
-        # switch two houses
+        # switch the position of two houses
         if 9 <= randomTypeOfMove <= 11:
 
             print("SWITCH HOUSE")

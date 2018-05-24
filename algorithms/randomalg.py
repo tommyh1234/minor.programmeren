@@ -1,12 +1,14 @@
 # -*- coding: UTF-8 -*-
 from algorithms.algorithm import Algorithm
 from algorithms.constructionlist import construction_list
+from algorithms.waterlist import water_list
 import random
 
 
 class RandomAlgorithm(Algorithm):
 
-    def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=False):
+    def __init__(self, area, fhAmount, bAmount, mAmount,
+                 placementOrder, waterAmountChoise, isEmpty=False):
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
@@ -19,50 +21,57 @@ class RandomAlgorithm(Algorithm):
         self.waterPlacementRuns = 1
         self.housePlacementRuns = 1
         self.area = area
+        self.placementOrder = placementOrder
+        if waterAmountChoise <= 4:
+            self.waterAmountChoise = waterAmountChoise
+        else:
+            self.waterAmountChoise = random.randint(1, 4)
 
     def execute(self):
 
         # determine amount of water to place and
         # make list with that many water objects
-        # if self.waterAmount == 0:
-        #     self.waterAmount = random.randint(1, 1)
-        #     self.watersToPlace = water_list(self.area, self.waterAmount)
+        if self.waterAmount == 0:
+            self.waterAmount = self.waterAmountChoise
+            self.watersToPlace = water_list(self.area, self.waterAmount)
 
-        # # place water on map
-        # while len(self.watersToPlace) > 0:
+        # place water on map
+        while len(self.watersToPlace) > 0:
 
-        #     print('Run {} | Waters left: {}'.format(
-        #         self.waterPlacementRuns, len(self.watersToPlace)))
+            print('Run {} | Waters left: {}'.format(
+                self.waterPlacementRuns, len(self.watersToPlace)))
 
-        #     # choose first water from the list
-        #     currentWater = random.choice(self.watersToPlace)
+            # choose first water from the list
+            currentWater = random.choice(self.watersToPlace)
 
-        #     # choose random x and y coordinates on the map
-        #     xCor = random.randint(0, self.area.width - currentWater.width)
-        #     yCor = random.randint(0, self.area.height - currentWater.height)
-        #     print('Trying to place "{}" on ({}, {})'.format(currentWater,
-        #                                                     xCor,
-        #                                                     yCor))
+            # choose random x and y coordinates on the map
+            xCor = random.randint(0, self.area.width - currentWater.width)
+            yCor = random.randint(0, self.area.height - currentWater.height)
+            print('Trying to place "{}" on ({}, {})'.format(currentWater,
+                                                            xCor,
+                                                            yCor))
 
-        #     # only remove water from list if validly placed
-        #     if not self.area.place_water(currentWater, xCor, yCor):
-        #         print("✘ Cannot validly place water at"
-        #               " ({}, {})".format(xCor, yCor))
-        #     else:
-        #         self.watersToPlace.remove(currentWater)
+            # only remove water from list if validly placed
+            if not self.area.place_water(currentWater, xCor, yCor):
+                print("✘ Cannot validly place water at"
+                      " ({}, {})".format(xCor, yCor))
+            else:
+                self.watersToPlace.remove(currentWater)
 
-        #     self.waterPlacementRuns += 1
+            self.waterPlacementRuns += 1
 
         # place a house from the list on random coordinates
         if len(self.housesToPlace) > 0:
             print('Run {} | Houses left: {}'.format(
                 self.housePlacementRuns, len(self.housesToPlace)))
 
-            # choose first house from the list, resulting in FH > Bung > Man
-            currentHouse = self.housesToPlace[0]
-
-            # choose random house from the list
-            # currentHouse = random.choice(self.housesToPlace)
+            if self.placementOrder == 1:
+                # choose random house from the list
+                currentHouse = random.choice(self.housesToPlace)
+            else:
+                # choose first house from the list,
+                # resulting in FH > Bung > Man
+                currentHouse = self.housesToPlace[0]
 
             # choose random x and y coordinates on the map
             xCor = random.randint(currentHouse.minimumSpace,
@@ -90,7 +99,7 @@ class RandomAlgorithm(Algorithm):
             # retry with a new random amount of water & and
             # the same amount of houses
             if self.housePlacementRuns >= 1500:
-                print("✘ Could not make valid map in 1500 runs. Retrying...")
+                print("❌ Could not make valid map in 1500 runs. Retrying...")
 
                 # while-loop ensures all houses are removed
                 while len(self.area.allHousesList) > 0:

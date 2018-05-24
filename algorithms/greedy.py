@@ -22,11 +22,10 @@ class GreedyAlgorithm(Algorithm):
 
     def execute(self):
 
-        # add some water
+        # add 1 water area in de lower right corner
         if self.housePlacementRuns == 0:
             water = Water(self.area)
             dimension = math.ceil(math.sqrt(self.area.surface() * 0.2))
-            print(dimension)
             water.width = dimension
             water.height = dimension
             self.area.place_water(water,
