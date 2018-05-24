@@ -11,6 +11,11 @@ def main():
     lowestTemp = None
     highestTemp = None
     typeOfSimulatedAnnealing = None
+    area
+    fhAmount
+    bAmount
+                                      mAmount,\
+                                      isEmpty,\
     totalIteration = int(input("how many interation?: "))
 
     hillClimbingOrSimulatedAnnealing = int(input( 
