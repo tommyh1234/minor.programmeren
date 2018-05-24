@@ -7,13 +7,14 @@ import random
 
 class SpeedRandomAlgorithm(Algorithm):
 
-    def __init__(self, area, fhAmount, bAmount, mAmount):
+    def __init__(self, area, fhAmount, bAmount, mAmountm, totalIteration):
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
                                                mAmount)
         self.waterAmount = 0
         self.watersToPlace = []
+        self.totalIteration = totalIteration
         self.waterPlacementRuns = 1
         self.housePlacementRuns = 1
         self.area = area
@@ -69,7 +70,7 @@ class SpeedRandomAlgorithm(Algorithm):
             self.housePlacementRuns += 1
 
             # if no valid map in 1500 runs, exit the program
-            if self.housePlacementRuns >= 1500:
+            if self.housePlacementRuns >= totalIteration:
                 self.isDone = True
                 raise RuntimeError("1500 Runs, can't create valid map")
 

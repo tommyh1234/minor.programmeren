@@ -5,23 +5,24 @@ from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(object):
-    def __init__(self, area, fhAmount, bAmount, mAmount):
-        self.isDone = False
-        self.tryCount = 0
-        self.initialGridPrice = 0
-        self.area = area
-        self.succesfullMoves = 0
-        self.neutralMoves = 0
-        self.unbeneficialMoves = 0
-        self.totalHouseAmount = fhAmount + bAmount + mAmount
-        self.pickHouseList = []
-        # fill grid random
-        self.randomAlg = SpeedRandomAlgorithm(self.area,
-                                              fhAmount,
-                                              bAmount,
-                                              mAmount)
-        while(self.randomAlg.isDone is False):
-            self.randomAlg.execute()
+    def __init__(self, area, fhAmount, bAmount, mAmount, totalIteration):
+          self.isDone = False
+          self.tryCount = 0
+          self.totalIteration = totalIteration
+          self.initialGridPrice = 0
+          self.area = area
+          self.succesfullMoves = 0
+          self.neutralMoves = 0
+          self.unbeneficialMoves = 0
+          self.totalHouseAmount = fhAmount + bAmount + mAmount
+          self.pickHouseList = []
+          # fill grid random
+          self.randomAlg = SpeedRandomAlgorithm(self.area,
+                                                fhAmount,
+                                                bAmount,
+                                                mAmount)
+          while(self.randomAlg.isDone is False):
+              self.randomAlg.execute()
 
     def execute(self):
 
@@ -84,7 +85,7 @@ class HillClimbingAlgorithm(object):
 
         print("-------------------- ")
 
-        if self.tryCount >= 2000:
+        if self.tryCount >= totalIteration:
             print("Total price: {} "
                   "Total price increase: {} "
                   "| In: ✅ {} succesfull | "
