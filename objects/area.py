@@ -144,8 +144,10 @@ class Area(object):
             directionShift = random.randint(0, 1)
             print("Direction: {}".format(directionShift))
 
-        # pick random distance to shift the house with
-        amountShift = random.randint(-5, 5)
+        # pick random distance between -5 and 5 (not 0) to shift house with
+        options = list(range(-5, 5+1))
+        options.remove(0)
+        amountShift = random.choice(options)
         print("amountShift: {}".format(amountShift))
 
         # first time a shift is determined for the same house,
@@ -180,15 +182,13 @@ class Area(object):
                 print("RecursiveCount (dir 0):", self.recursiveCount)
 
                 # change directoin from horizontal to vertical after 50 tries
-                if self.recursiveCount > 50:
-                    print("Recursion! (dir 0, if)")
+                if self.recursiveCount >= 50:
                     directionShift = 1
                     houseIsBlocked += 1
                     print(houseIsBlocked)
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
                 else:
-                    print("Recursion! (dir 0, else)")
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
 
@@ -208,15 +208,13 @@ class Area(object):
                 print("RecursiveCount (dir 1):", self.recursiveCount)
 
                 # change directoin from vertical to horizontal after 50 tries
-                if self.recursiveCount > 50:
-                    print("Recursion! dir 1, if)")
+                if self.recursiveCount >= 50:
                     directionShift = 0
                     houseIsBlocked += 1
                     print(houseIsBlocked)
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
                 else:
-                    print("Recursion! dir 1, else)")
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
 

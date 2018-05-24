@@ -2,11 +2,11 @@
 import random
 from algorithms.randomalg import RandomAlgorithm
 from algorithms.algorithm import Algorithm
-# from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
 class HillClimbingAlgorithm(Algorithm):
-    def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=True):
+    def __init__(self, area, fhAmount, bAmount, mAmount, placementOrder, waterAmountChoise, isEmpty=True):
+        self.placementOrder = placementOrder
         self.isDone = False
         self.tryCount = 0
         self.succesfullMoves = 0
@@ -30,7 +30,9 @@ class HillClimbingAlgorithm(Algorithm):
             self.randomAlg = RandomAlgorithm(self.area,
                                              fhAmount,
                                              bAmount,
-                                             mAmount)
+                                             mAmount,
+                                             placementOrder,
+                                             waterAmountChoise)
             while self.randomAlg.isDone is False:
                 self.randomAlg.execute()
 

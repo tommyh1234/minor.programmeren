@@ -60,18 +60,42 @@ def main():
             bAmount = 15
             mAmount = 9
 
+    if algorithmChoice != 2:
+        placementOrder = int(input('In what order do you want houses '
+                                   'to be placed on the map?\n'
+                                   '1: Random \n'
+                                   '2: Mansions > Bungalows > Family homes \n'
+                                   'Your choice: '))
+        print("")
+        waterAmountChoise = int(input('How many water areas do you want on the map? \n'
+                                      '1: 1 Area \n'
+                                      '2: 2 Area\'s \n'
+                                      '3: 3 Area\'s \n'
+                                      '4: 4 Area\'s \n'
+                                      '5: Random amount of Area\'s \n'
+                                      'Your choice: '))
+        if waterAmountChoise == "5":
+            waterAmountChoise = "Random"
+        print("")
+
     if algorithmChoice == 1:
         algorithm = RandomAlgorithm(area, fhAmount,
-                                    bAmount, mAmount, isEmpty)
+                                    bAmount, mAmount,
+                                    placementOrder, waterAmountChoise,
+                                    isEmpty)
     elif algorithmChoice == 2:
         algorithm = GreedyAlgorithm(area, fhAmount,
                                     bAmount, mAmount, isEmpty)
     elif algorithmChoice == 3:
         algorithm = SpeedRandomAlgorithm(area, fhAmount,
-                                         bAmount, mAmount, isEmpty)
+                                         bAmount, mAmount,
+                                         placementOrder, waterAmountChoise,
+                                         isEmpty)
     elif algorithmChoice == 4:
         algorithm = HillClimbingAlgorithm(area, fhAmount,
-                                          bAmount, mAmount, isEmpty)
+                                          bAmount, mAmount,
+                                          placementOrder, waterAmountChoise,
+                                          isEmpty)
     elif algorithmChoice == 5:
         # SIMMULATED ANNEALING
         pass

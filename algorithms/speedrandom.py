@@ -7,7 +7,7 @@ import random
 
 class SpeedRandomAlgorithm(Algorithm):
 
-    def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=False):
+    def __init__(self, area, fhAmount, bAmount, mAmount, placementOrder, waterAmountChoise, isEmpty=False):
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
@@ -21,6 +21,11 @@ class SpeedRandomAlgorithm(Algorithm):
         self.housePlacementRuns = 1
         self.area = area
         self.initPlacementFail = 0
+        self.placementOrder = placementOrder
+        if waterAmountChoise <= 4:
+            self.waterAmountChoise = waterAmountChoise
+        else:
+            self.waterAmountChoise = random.randint(1, 4)
 
     def execute(self):
 
@@ -30,7 +35,7 @@ class SpeedRandomAlgorithm(Algorithm):
         # determine amount of water to place and
         # make list with that many water objects
         if self.waterAmount == 0:
-            self.waterAmount = random.randint(1, 4)
+            self.waterAmount = self.waterAmountChoise
             self.watersToPlace = water_list(self.area, self.waterAmount)
 
         # place water on map
@@ -52,11 +57,12 @@ class SpeedRandomAlgorithm(Algorithm):
         # place a house from the list on random coordinates
         if len(self.housesToPlace) > 0:
 
-            # choose first house from the list, resulting in FH > Bung > Man
-            currentHouse = self.housesToPlace[0]
-
-            # choose random house from the list
-            # currentHouse = random.choice(self.housesToPlace)
+            if self.placementOrder == 1:
+                # choose random house from the list
+                currentHouse = random.choice(self.housesToPlace)
+            else:
+                # choose first house from the list, resulting in FH > Bung > Man
+                currentHouse = self.housesToPlace[0]
 
             # choose random x and y coordinates on the map
             xCor = random.randint(currentHouse.minimumSpace,
@@ -80,7 +86,7 @@ class SpeedRandomAlgorithm(Algorithm):
             # retry with a new random amount of water & and
             # the same amount of houses
             if self.housePlacementRuns >= 1500:
-                print("✘ Could not make valid map in 1500 runs. Retrying...")
+                print("❌ Could not make valid map in 1500 runs. Retrying...")
 
                 # while-loop ensures all houses are removed
                 while len(self.area.allHousesList) > 0:
