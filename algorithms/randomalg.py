@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 from algorithms.algorithm import Algorithm
 from algorithms.constructionlist import construction_list
-from algorithms.waterlist import water_list
 import random
 
 

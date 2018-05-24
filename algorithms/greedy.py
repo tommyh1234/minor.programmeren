@@ -1,8 +1,6 @@
 from algorithms.algorithm import Algorithm
 from algorithms.constructionlist import construction_list
-from algorithms.waterlist import water_list
 from objects.water import Water
-import random
 import math
 
 
@@ -31,7 +29,9 @@ class GreedyAlgorithm(Algorithm):
             print(dimension)
             water.width = dimension
             water.height = dimension
-            self.area.place_water(water, self.area.width - dimension, self.area.height - dimension)
+            self.area.place_water(water,
+                                  self.area.width - dimension,
+                                  self.area.height - dimension)
 
         # place a house from the list next to previous house
         if len(self.housesToPlace) > 0:
@@ -53,16 +53,24 @@ class GreedyAlgorithm(Algorithm):
             self.currentX = self.currentX + currentHouse.width + 12
 
             # if outside of map on right side, swith to row below
-            if xCor >= self.area.width - currentHouse.width - currentHouse.minimumSpace:
+            if xCor >= (self.area.width
+                        - currentHouse.width
+                        - currentHouse.minimumSpace):
                 print("hier")
                 self.currentX = currentHouse.minimumSpace
-                self.currentY = self.currentY + self.previousHouse.minimumSpace + self.previousHouse.height + self.previousHouse.minimumSpace + 24
+                self.currentY = (self.currentY
+                                 + self.previousHouse.minimumSpace
+                                 + self.previousHouse.height
+                                 + self.previousHouse.minimumSpace
+                                 + 24)
                 xCor = self.currentX
                 yCor = self.currentY + 12
                 self.currentX -= currentHouse.minimumSpace
 
                 # update x with width of house
-                self.currentX = self.currentX + currentHouse.width + currentHouse.minimumSpace
+                self.currentX = (self.currentX
+                                 + currentHouse.width
+                                 + currentHouse.minimumSpace)
 
             print('Trying to place "{}" on ({}, {})'.format(currentHouse,
                                                             xCor,
