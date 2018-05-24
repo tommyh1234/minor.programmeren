@@ -9,13 +9,13 @@ class Area(object):
     def __init__(self):
         self.grid = [[None for y in range(self.height)]
                      for x in range(self.width)]
-        self.waterList = []
+        self.allWatersList = []
         self.mansionList = []
         self.bungalowList = []
         self.familyHomeList = []
         self.allHousesList = []
         self.price = 0
-        self.recursiveCount = 0
+        self.recursiveCount = None
 
     def surface(self):
         return self.width * self.height
@@ -32,10 +32,16 @@ class Area(object):
                 for j in range(y, y + water.height):
                     self.grid[i][j] = water
             # add the water to the list of water instances
-            self.waterList.append(water)
+            self.allWatersList.append(water)
             return True
         else:
             return False
+
+    def remove_water(self, water):
+        for i in range(water.x, water.x + water.width):
+            for j in range(water.y, water.y + water.height):
+                self.grid[i][j] = None
+        self.allWatersList.remove(water)
 
     def place_house(self, house, x, y):
         house.x = x
@@ -46,25 +52,18 @@ class Area(object):
         if house.check_validity():
             # place the house on every coordinate
             # that is covered by the house
-            try:
-                for i in range(x, x + house.width):
-                    for j in range(y, y + house.height):
-                        self.grid[i][j] = house
-                # add the house to the appropriate lists
-                self.allHousesList.append(house)
-                if kind == "Mansion":
-                    self.mansionList.append(house)
-                elif kind == "Bungalow":
-                    self.bungalowList.append(house)
-                elif kind == "FamilyHome":
-                    self.familyHomeList.append(house)
-                return True
-
-            # TODO TRY EXCEPT DOESN'T WORK
-            except IndexError:
-                # catch case where a swapt house would be out if map
-                print("switch out of range")
-                return False
+            for i in range(x, x + house.width):
+                for j in range(y, y + house.height):
+                    self.grid[i][j] = house
+            # add the house to the appropriate lists
+            self.allHousesList.append(house)
+            if kind == "Mansion":
+                self.mansionList.append(house)
+            elif kind == "Bungalow":
+                self.bungalowList.append(house)
+            elif kind == "FamilyHome":
+                self.familyHomeList.append(house)
+            return True
         else:
             return False
 
@@ -116,7 +115,7 @@ class Area(object):
 
         # determine distance to move and update house coordinates
         directionShift = None
-        houseIsBlocked = 0
+        houseIsBlocked = None
         currentHouse = self.determineShift(currentHouse, directionShift,
                                            houseIsBlocked)
 
@@ -140,7 +139,7 @@ class Area(object):
 
     def determineShift(self, currentHouse, directionShift, houseIsBlocked):
 
-        # choose to move horizontal or vertical
+        # choose to move horizontally or verticallly
         if directionShift is None:
             directionShift = random.randint(0, 1)
             print("Direction: {}".format(directionShift))
@@ -149,17 +148,22 @@ class Area(object):
         amountShift = random.randint(-5, 5)
         print("amountShift: {}".format(amountShift))
 
-        # move house in chosen direction,
-        # but only if it still falls within the map
-        self.recursiveCount = 0
+        # first time a shift is determined for the same house,
+        # reset recursive count and house is blocked counter
+        if houseIsBlocked is None:
+            houseIsBlocked = 0
+            self.recursiveCount = 0
 
         # if house is surrounded by other houses and
-        # thus cannot move
+        # thus cannot move, return currentHouse with invalid
+        # coordinates and thus skip the shifiting of this house
         if houseIsBlocked > 1:
             print("SWIFTHOUSE FUNCTION NOT POSSIBLE - House is locked in")
             # return last (invalid) currentHouse
             return currentHouse
 
+        # move house in chosen direction,
+        # but only if it still falls within the map
         if directionShift == 0:
             tempCurrentHouseX = currentHouse.x + amountShift
             tempBoundry = (self.width
@@ -173,16 +177,18 @@ class Area(object):
                 print("❌ amountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
                 self.recursiveCount += 1
+                print("RecursiveCount (dir 0):", self.recursiveCount)
 
                 # change directoin from horizontal to vertical after 50 tries
                 if self.recursiveCount > 50:
-                    print("Recursion! (dir 0")
+                    print("Recursion! (dir 0, if)")
                     directionShift = 1
                     houseIsBlocked += 1
                     print(houseIsBlocked)
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
                 else:
+                    print("Recursion! (dir 0, else)")
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
 
@@ -199,16 +205,18 @@ class Area(object):
                 print("❌ AmountShift ({}) not possible "
                       "(house would be outside map)".format(amountShift))
                 self.recursiveCount += 1
+                print("RecursiveCount (dir 1):", self.recursiveCount)
 
                 # change directoin from vertical to horizontal after 50 tries
                 if self.recursiveCount > 50:
-                    print("Recursion! dir 1")
+                    print("Recursion! dir 1, if)")
                     directionShift = 0
                     houseIsBlocked += 1
                     print(houseIsBlocked)
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
                 else:
+                    print("Recursion! dir 1, else)")
                     self.determineShift(currentHouse, directionShift,
                                         houseIsBlocked)
 
