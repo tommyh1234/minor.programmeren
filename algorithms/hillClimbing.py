@@ -5,7 +5,8 @@ from algorithms.algorithm import Algorithm
 
 
 class HillClimbingAlgorithm(Algorithm):
-    def __init__(self, area, fhAmount, bAmount, mAmount, placementOrder, waterAmountChoise, isEmpty=True):
+    def __init__(self, area, fhAmount, bAmount, mAmount,
+                 placementOrder, waterAmountChoise, isEmpty=True):
         self.placementOrder = placementOrder
         self.isDone = False
         self.tryCount = 0

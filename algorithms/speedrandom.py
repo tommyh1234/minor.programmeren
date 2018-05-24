@@ -7,7 +7,8 @@ import random
 
 class SpeedRandomAlgorithm(Algorithm):
 
-    def __init__(self, area, fhAmount, bAmount, mAmount, placementOrder, waterAmountChoise, isEmpty=False):
+    def __init__(self, area, fhAmount, bAmount, mAmount,
+                 placementOrder, waterAmountChoise, isEmpty=False):
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
@@ -61,7 +62,8 @@ class SpeedRandomAlgorithm(Algorithm):
                 # choose random house from the list
                 currentHouse = random.choice(self.housesToPlace)
             else:
-                # choose first house from the list, resulting in FH > Bung > Man
+                # choose first house from the list,
+                # resulting in FH > Bung > Man
                 currentHouse = self.housesToPlace[0]
 
             # choose random x and y coordinates on the map

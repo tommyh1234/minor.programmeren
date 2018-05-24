@@ -67,7 +67,8 @@ def main():
                                    '2: Mansions > Bungalows > Family homes \n'
                                    'Your choice: '))
         print("")
-        waterAmountChoise = int(input('How many water areas do you want on the map? \n'
+        waterAmountChoise = int(input('How many water areas'
+                                      'do you want on the map? \n'
                                       '1: 1 Area \n'
                                       '2: 2 Area\'s \n'
                                       '3: 3 Area\'s \n'
