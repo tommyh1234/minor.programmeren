@@ -42,10 +42,10 @@ def main():
     else:
         area = Area()
         houseAmountChoice = int(input('How many houses do you want? \n'
-                                 '1: 20\n'
-                                 '2: 40\n'
-                                 '3: 60\n'
-                                 'Your choice: '))
+                                      '1: 20\n'
+                                      '2: 40\n'
+                                      '3: 60\n'
+                                      'Your choice: '))
         print("")
         if houseAmountChoice == 1:
             fhAmount = 12
