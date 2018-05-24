@@ -25,3 +25,4 @@ class NoDrawBulkVisualizer:
             # Save the area after every run
             self.dataHelper.writeArea(self.area)
             self.runs += 1
+            self.on_execute()
