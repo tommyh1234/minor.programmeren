@@ -233,6 +233,14 @@ class Area(object):
         currentHouse.width = backupHeight
         currentHouse.height = backupWidth
 
+        # check if the turned house can be validly placed within the grid
+        turnValidity = self.check_house_is_inside_grid(currentHouse)
+
+        # if it cannot, put it back at original location
+        if turnValidity is False:
+            currentHouse.width = backupWidth
+            currentHouse.height = backupHeight
+
         # if house cannot be placed at new coordinates, put it back
         if self.place_house(currentHouse,
                             currentHouse.x,

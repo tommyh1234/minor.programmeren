@@ -102,12 +102,11 @@ class HillClimbingAlgorithm(Algorithm):
                               - currentTotalPrice,
                               currentTotalPrice))
 
-        # turn house on the same location
+        # turn a house 90degrees at its location
         if 6 <= randomTypeOfMove <= 8:
 
             print("TURN HOUSE")
             # check if the house is a not square (familyhome),
-            # turning no value
             kind = type(currentHouse).__name__
             while kind == "familyHome":
                 # currentHouse = random.choice(self.pickHouseList)
@@ -150,7 +149,7 @@ class HillClimbingAlgorithm(Algorithm):
                               - currentTotalPrice,
                               currentTotalPrice))
 
-        # switch two houses
+        # switch the position of two houses
         if 9 <= randomTypeOfMove <= 11:
 
             print("SWITCH HOUSE")
