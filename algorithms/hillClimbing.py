@@ -25,7 +25,6 @@ class HillClimbingAlgorithm(Algorithm):
         self.area = area
         self.totalHouseAmount = fhAmount + bAmount + mAmount
         self.pickHouseList = []
-
         if isEmpty is True:
             # fill grid random
             self.randomAlg = RandomAlgorithm(self.area,
