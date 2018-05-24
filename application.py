@@ -1,67 +1,89 @@
 from objects.area import Area
-# from algorithms.speedrandom import SpeedRandomAlgorithm
+from algorithms.speedrandom import SpeedRandomAlgorithm
 from algorithms.hillClimbing import HillClimbingAlgorithm
-# from algorithms.randomalg import RandomAlgorithm
+from algorithms.randomalg import RandomAlgorithm
+from visualizer import Visualizer
 from bulkvisualizer import BulkVisualizer
-from algorithms.hillClimbing import HillClimbingAlgorithm 
-from algorithms.simulatedannealing import simulatedAnnealing
+from datahelper import DataHelper
+
 
 def main():
+    print("----------------------")
+    print("WELCOME TO AMSTELHAEGE \n")
+    gridChoice = int(input('Do you want to load in a grid '
+                           'or start from scratch?\n'
+                           '1: Load a grid\n'
+                           '2: Start from scratch\n'
+                           'Your choice: '))
+    print("")
+    algorithmChoice = int(input('What algorithm do you want to run?\n'
+                                '1: Random \n'
+                                '2: SpeedRandom\n'
+                                '3: HillClimbing\n'
+                                '4: Simmulated Annealing\n'
+                                'Your choice: '))
+    print("")
+    visualizerChoice = int(input('What visualizer do you want?\n'
+                                 '1: Normal visualizer\n'
+                                 '2: Bulk visualizer\n'
+                                 'Your choice: '))
+    
+    print("")
+    isEmpty = True
+    fhAmount = 0
+    bAmount = 0
+    mAmount = 0
+    if gridChoice == 1:
+        fileName = str(input('Please give me a file name: \n'
+                             'Your choice: '))
+        area = DataHelper(fileName).getArea()
+        isEmpty = False
+    else:
+        area = Area()
+        amountChoice = int(input('How many houses do you want? \n'
+                                 '1: 20\n'
+                                 '2: 40\n'
+                                 '3: 60\n'
+                                 'Your choice: '))
+        print("")
+        if amountChoice == 1:
+            fhAmount = 12
+            bAmount = 5
+            mAmount = 3
+        elif amountChoice == 2:
+            fhAmount = 24
+            bAmount = 10
+            mAmount = 6
+        elif amountChoice == 3:
+            fhAmount = 36
+            bAmount = 15
+            mAmount = 9
 
-    lowestTemp = None
-    highestTemp = None
-    typeOfSimulatedAnnealing = None
-    area
-    fhAmount
-    bAmount
-                                      mAmount,\
-                                      isEmpty,\
-    totalIteration = int(input("how many interation?: "))
 
-    hillClimbingOrSimulatedAnnealing = int(input( 
-                                            "------------------------------------\n"
-                                            "1 = HillClimbing\n"
-                                            "2 = Simulated Annealing\n"
-                                            "Type number for algorithm: "))
+    if algorithmChoice == 1:
+        algorithm = RandomAlgorithm(area, fhAmount,
+                                    bAmount, mAmount, isEmpty)
+    elif algorithmChoice == 2:
+        algorithm = SpeedRandomAlgorithm(area, fhAmount,
+                                         bAmount, mAmount, isEmpty)
+    elif algorithmChoice == 3:
+        algorithm = HillClimbingAlgorithm(area, fhAmount,
+                                          bAmount, mAmount, isEmpty)
+    elif algorithmChoice == 4:
+        # SIMMULATED ANNEALING
+        pass
 
-    if hillClimbingOrSimulatedAnnealing == 2:
-        beginLength = input("------------------------------------\n"
-                           "What is the begin length? ")
+    if visualizerChoice == 1:
+        visualizer = Visualizer(area, algorithm)
+    elif visualizerChoice == 2:
+        runs = int(input('How many runs do you want to do? \n'
+                         'Your choice: '))
+        visualizer = BulkVisualizer(area, algorithm, runs)
 
-        endLength = input("------------------------------------\n"
-                            "What is the end length? ")
+    print("Starting your Algorithm...")
+    print("----------------------")
+    visualizer.on_execute()
 
-        beginTemp = input("------------------------------------\n"
-                           "What is the begin temperature? ")
-
-        endTemp = input("------------------------------------\n"
-                            "What is the end temperature? ")
-
-        typeOfSimulatedAnnealing = input("------------------------------------\n"
-                                         "1 = Lineair\n" 
-                                         "2 = Exponential\n" 
-                                         "3 = Sigmoidal \n" 
-                                         "What type of simulated annealing?: ")
-
-    # # just Random algorithm
-    # grid = Area()
-    algorithm = HillClimbingAlgorithm(self,\
-                                      area,\
-                                      fhAmount,\
-                                      bAmount,\
-                                      mAmount,\
-                                      isEmpty,\
-                                      beginTemp,\
-                                      endTemp,\
-                                      totalIteration,\
-                                      currentIteration)
-                           
-    # # algorithm = RandomAlgorithm(grid, 36, 15, 9, totalIteration)       
-    # # #                                                  # 20h: 12, 5, 3
-    # # #                                                  # 40: 24, 10, 6
-    # # #                                                  # 60: 36, 15, 9
-    # visualizer = BulkVisualizer(grid, algorithm, 1)
-    # visualizer.on_execute()
 
     # # # just SpeedRandom Algorithm
     # # grid = Area()

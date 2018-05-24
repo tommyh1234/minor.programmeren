@@ -6,7 +6,7 @@ import random
 
 class GreedyAlgorithm(Algorithm):
 
-    def __init__(self, area, fhAmount, bAmount, mAmount):
+    def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=True):
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
