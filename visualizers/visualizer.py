@@ -7,7 +7,7 @@ import pylab
 class Visualizer:
     """Draws a visualisation for a given area"""
 
-    def __init__(self, area, algorithm):
+    def __init__(self, area, algorithm, showDecrease=False):
         """Initiate all elements necessary to create a visualization
 
         Keyword arguments:
@@ -23,6 +23,7 @@ class Visualizer:
         self.lastPrice = 0
         self.scores = []
         self.allTimeHigh = 0
+        self.showDecrease = showDecrease
 
     def on_init(self):
         """Starts pygame"""
@@ -161,8 +162,13 @@ class Visualizer:
 
         # save area values to draw graph
         if (self.area.price >= self.lastPrice and
-                self.algorithm.isDone is False):
+                self.algorithm.isDone is False and
+                self.showDecrease is False):
 
+            self.scores.append(self.area.price)
+            self.lastPrice = self.area.price
+
+        if self.showDecrease is True and self.algorithm.isDone is False:
             self.scores.append(self.area.price)
             self.lastPrice = self.area.price
 

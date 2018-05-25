@@ -164,7 +164,11 @@ def main():
 
     # initiate the visualization requested by the user
     if visualizerChoice == 1:
-        visualizer = Visualizer(area, algorithm)
+        # enable downward graphing
+        if algorithmChoice == 5:
+            visualizer = Visualizer(area, algorithm, True)
+        else:
+            visualizer = Visualizer(area, algorithm, True)
     elif visualizerChoice == 2:
         runs = int(input('How many runs do you want to do? \n'
                          'Your choice: '))

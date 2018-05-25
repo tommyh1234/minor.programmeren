@@ -312,6 +312,7 @@ class HillClimbingAlgorithm(Algorithm):
                         self.SARejectedUnbeneficialMoveCount += 1
                         print('⬇️ ❌️  Unbeneficial move. Has been'
                               'rejected by Simulated Annealing.')
+                        self.area.price = currentTotalPrice
 
                 if simulatedAnnealing is not True:
                     # remove houses from grid if not increased
@@ -337,6 +338,7 @@ class HillClimbingAlgorithm(Algorithm):
                         self.unbeneficialMoves += 1
                         self.unbeneficialSwitchCount += 1
                         print("❌ Unbeneficial move. Has been undone.")
+                        self.area.price = currentTotalPrice
 
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
