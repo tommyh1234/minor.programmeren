@@ -351,9 +351,6 @@ class HillClimbingAlgorithm(Algorithm):
                               - currentTotalPrice,
                               currentTotalPrice))
 
-        # # remove last house from list of available options in next runs
-        # self.pickHouseList.remove(currentHouse)
-
         print("-------------------- ")
 
         if self.tryCount >= self.totalIterations:
@@ -433,10 +430,11 @@ class HillClimbingAlgorithm(Algorithm):
         randomValue = random.random()
 
         print('Grid Difference =', (newTotalPrice - currentTotalPrice),
-              '| Shortening =', shortening, '| Current Temp. =', currentTemp,
-              '| Coolingscheme =', coolingscheme)
-        print('Acceptation Chance', acceptationChance,
-              '| Random Value', randomValue)
+              '| Shortening =', '%.6f' % shortening, '| Current Temp. =',
+              '%.6f' % currentTemp, '| Coolingscheme =',
+              '%.6f' % coolingscheme)
+        print('Acceptation Chance', '%.6f' % acceptationChance,
+              '| Random Value', '%.6f' % randomValue)
 
         if acceptationChance > randomValue:
             return True
