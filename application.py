@@ -1,5 +1,6 @@
 from objects.area import Area
 
+from algorithms.algorithm import Algorithm
 from algorithms.speedrandom import SpeedRandomAlgorithm
 from algorithms.hillClimbing import HillClimbingAlgorithm
 from algorithms.randomalg import RandomAlgorithm
@@ -28,6 +29,7 @@ def main():
                                 '3: SpeedRandom\n'
                                 '4: HillClimbing\n'
                                 '5: Simmulated Annealing\n'
+                                '6: Do Nothing (show only)'
                                 'Your choice: '))
     print("")
     visualizerChoice = int(input('What visualizer do you want?\n'
@@ -108,6 +110,10 @@ def main():
     elif algorithmChoice == 5:
         # SIMMULATED ANNEALING
         pass
+    elif algorithmChoice == 6:
+        algorithm = Algorithm(area, fhAmount,
+                              bAmount, mAmount,
+                              isEmpty)
 
     if visualizerChoice == 1:
         visualizer = Visualizer(area, algorithm)
