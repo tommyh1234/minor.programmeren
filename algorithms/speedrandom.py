@@ -21,6 +21,7 @@ class SpeedRandomAlgorithm(Algorithm):
         isEmpty             -- not used but a standard among algorithms
         """
 
+        # create list of houses to be placed
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
@@ -122,26 +123,18 @@ class SpeedRandomAlgorithm(Algorithm):
                                                        self.bAmount,
                                                        self.mAmount)
 
-        else:
+        if len(self.housesToPlace) == 0:
+            print('✔ All houses placed ✔')
+
             # Recheck the validity of all houses (important to catch
             # invalid free space when houses with smaller free space
             # are placed after houses with larger free space)
             for house in self.area.allHousesList:
                 if not house.check_validity():
-                    self.initPlacementFail += 1
                     self.area.remove_house(house)
                     self.housesToPlace.append(house)
 
+            self.area.get_area_price()
             if len(self.housesToPlace) == 0:
-                print('Placed {} houses in {} runs and '
-                      '{} water area(s) in {} runs | '
-                      'Grid value: {} | '
-                      '{} failed initial placements'
-                      .format(len(self.area.allHousesList),
-                              self.housePlacementRuns,
-                              len(self.watersToPlace),
-                              self.waterPlacementRuns,
-                              self.area.get_area_price(),
-                              self.initPlacementFail))
-                print("-------------------- ")
+                print('Grid value: {}'.format(self.area.get_area_price()))
                 self.isDone = True

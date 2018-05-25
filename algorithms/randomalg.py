@@ -21,7 +21,7 @@ class RandomAlgorithm(Algorithm):
         isEmpty             -- not used but a standard among algorithms
         """
 
-        # create a list of houses that need to be placed
+        # create list of houses to be placed
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
