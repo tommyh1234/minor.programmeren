@@ -19,6 +19,7 @@ class House(object):
         on initialization"""
 
         self.area = area
+        self.space = 0
 
     def surface(self):
         """Calculate the total surface of a house"""
@@ -30,22 +31,25 @@ class House(object):
         by checking if the required minimum space is present
         and if there is nothing else at the coordinates of this house"""
 
-        endX = self.x + self.width
-        endY = self.y + self.height
-
-        # check if necessary minimum space is present
-        self.space = self.get_space()
-        if self.space < self.minimumSpace:
-            return False
+        endX = self.x + self.width + self.minimumSpace
+        endY = self.y + self.height + self.minimumSpace
 
         # check if coordinates covered by house are not
         # covered by something else
-        for i in range(self.x, endX):
-            for j in range(self.y, endY):
+        for i in range(self.x - self.minimumSpace, endX):
+            for j in range(self.y - self.minimumSpace, endY):
+                # if space in grid is not empty or current house itself
                 if (self.area.grid[i][j] is not None and
-                        self.area.grid[i][j] is not self and
-                        isinstance(self.area.grid[i][j], Water)):
-                    return False
+                        self.area.grid[i][j] is not self):
+                    # if a space is water...
+                    if isinstance(self.area.grid[i][j], Water):
+                        # ... and space is inside house
+                        if (i >= self.x and i <= self.x + self.width and
+                                j >= self.y and j <= self.y + self.height):
+                            return False
+                    # or if space is filled by another house
+                    elif isinstance(self.area.grid[i][j], House):
+                        return False
         return True
 
     def get_space(self):
@@ -109,6 +113,9 @@ class House(object):
 
     def get_price(self):
         """Get the value for a house"""
+
+        # (Re)calculate the houses' space
+        self.space = self.get_space()
 
         # calculate value of one m2 extra free space for current house
         addedValue = self.value * self.priceIncrease
