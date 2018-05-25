@@ -15,6 +15,57 @@ class HillClimbingAlgorithm(Algorithm):
                  beginTemp=None, endTemp=None,
                  typeOfSimulatedAnnealing=None,
                  correctionShortening=None):
+        """Initiate all elements necessary for Hillclimbing or
+            Simulated Annealing
+
+            Keyword arguments:
+            placementOrder                  --  determined the order of
+                                                placement of the houses
+            isDone                          --  checks all moves are done
+            tryCount                        --  amount of current move
+            succesfullMoves                 --  amount of succesfull moves
+            succesfullSwitchCount           --  amount of succesfull switches
+            succesfullTurnCount             --  amount of succesfull turns
+            succesfullSlideCount            --  amount of succesfull slides
+            neutralMoves                    --  amount of neutral moves
+            neutralSlideCount               --  amount of neutral slides
+            neutralTurnCount                --  amount of neutral turns
+            neutralSwitchCount              --  amount of neutral switches
+            unbeneficialMoves               --  amount of unbenficial moves
+            unbeneficialSwitchCount         --  amount of unbenficial switches
+            unbeneficialTurnCount           --  amount of unbenficial turn
+            unbeneficialSlideCount          --  amount of unbenficial slides
+            SAAcceptedUnbeneficialMoveCount --  amount of accepted unbenficial
+                                                moves by Simulated Annealing
+            SAAcceptedUnbeneficialSlideCount--  amount of accepted unbenficial
+                                                slides by Simulated Annealing
+            SAAcceptedUnbeneficialTurnCount --  amount of accepted unbenficial
+                                                turns by Simulated Annealing
+            SAAcceptedUnbeneficialSwitchCount-  amount of accepted unbenficial
+                                                switches by Simulated Annealing
+            SARejectedUnbeneficialMoveCount --  amount of rejected unbenficial
+                                                moves by Simulated Annealing
+            SARejectedUnbeneficialSlideCount--  amount of accepted unbenficial
+                                                slides by Simulated Annealing
+            SARejectedUnbeneficialTurnCount --  amount of accepted unbenficial
+                                                turn by Simulated Annealing
+            SARejectedUnbeneficialSwitchCount-- amount of accepted unbenficial
+                                                switches by Simulated Annealing
+            typeOfSimulatedAnnealing         -- the type of Simulated Annealing
+            correctionShortening             -- the correction for the
+                                                shortening, when you use
+                                                Simulated Annealing
+            initialGridPrice                --  orignal price off randomized
+                                                grid
+            area                            --  the area to place houses on
+            beginTemp                       --  begin temperature of the
+                                                Aimulated Annealing
+            endTemp                         --  end temperature of the
+                                                Aimulated Annealing
+            totalIterations                 --  total iterations
+            totalHouseAmount                --  total amount of houses
+            pickHouseList                   --  list of houses
+           """
 
         self.placementOrder = placementOrder
         self.isDone = False
@@ -61,6 +112,8 @@ class HillClimbingAlgorithm(Algorithm):
                 self.randomAlg.execute()
 
     def execute(self):
+        """Runs one steop of the Hillclimber and the Simulated
+        Annealing Algorithm"""
 
         # reset outcome of simulated annealing algorithm
         simulatedAnnealing = None
@@ -132,12 +185,14 @@ class HillClimbingAlgorithm(Algorithm):
                               .format(newTotalPrice - currentTotalPrice,
                                       newTotalPrice))
 
+                    # unbeneficial moves is rejected by simulated annealing
                     if simulatedAnnealing is False:
                         self.SARejectedUnbeneficialSlideCount += 1
                         self.SARejectedUnbeneficialMoveCount += 1
                         print("⬇️ ❌️  Unbeneficial move. Has been rejected by"
                               "Simulated Annealing.")
 
+                # will not accept unbeneficial move
                 if simulatedAnnealing is not True:
                     # remove current house
                     self.area.remove_house(currentHouse)
@@ -154,11 +209,13 @@ class HillClimbingAlgorithm(Algorithm):
                         self.unbeneficialSlideCount += 1
                         print("❌ Unbeneficial move. Has been undone.")
 
+            # neutral moves
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
                 self.neutralSlideCount += 1
                 print("😐 Neutral (allowed) or impossible move (reverted)")
 
+            # beneficial moves
             else:
                 self.succesfullSlideCount += 1
                 self.succesfullMoves += 1
@@ -177,6 +234,7 @@ class HillClimbingAlgorithm(Algorithm):
                 # currentHouse = random.choice(self.pickHouseList)
                 currentHouse = random.choice(self.area.allHousesList)
 
+            # backup height and width of the house
             backupHeight = currentHouse.height
             backupWidth = currentHouse.width
             print('Original location house: ({}, {})'
@@ -217,12 +275,14 @@ class HillClimbingAlgorithm(Algorithm):
                               .format(newTotalPrice - currentTotalPrice,
                                       newTotalPrice))
 
+                    # reject unbeneficial move by simulated annealing
                     if simulatedAnnealing is False:
                         self.SARejectedUnbeneficialTurnCount += 1
                         self.SARejectedUnbeneficialMoveCount += 1
                         print('⬇️ ❌️  Unbeneficial move. Has been rejected by,'
                               'Simulated Annealing.')
 
+                # will not accept unbeneficial move
                 if simulatedAnnealing is not True:
                     # turn house back to orignal height and length
                     if not self.area.turn_house(currentHouse,
@@ -237,10 +297,13 @@ class HillClimbingAlgorithm(Algorithm):
                         self.unbeneficialTurnCount += 1
                         print("❌ Unbeneficial move. Has been undone.")
 
+            # count neutral value moves and turns
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
                 self.neutralTurnCount += 1
                 print("😐 Neutral (allowed) or impossible move (reverted)")
+
+            # count amount of succefull moves and turns
             else:
                 self.succesfullTurnCount += 1
                 self.succesfullMoves += 1
@@ -307,18 +370,20 @@ class HillClimbingAlgorithm(Algorithm):
                               .format(newTotalPrice - currentTotalPrice,
                                       currentTotalPrice))
 
+                    # reject unbeneficial move by simulated annealing
                     if simulatedAnnealing is False:
                         self.SARejectedUnbeneficialSwitchCount += 1
                         self.SARejectedUnbeneficialMoveCount += 1
                         print('⬇️ ❌️  Unbeneficial move. Has been'
                               'rejected by Simulated Annealing.')
 
+                # will not accept unbeneficial move
                 if simulatedAnnealing is not True:
                     # remove houses from grid if not increased
                     self.area.remove_house(houseA)
                     self.area.remove_house(houseB)
 
-                    # place orignal houses back on grid
+                    # place orignal house A back on grid
                     if not self.area.place_house(houseA,
                                                  backupHouseAX,
                                                  backupHouseAY):
@@ -326,6 +391,7 @@ class HillClimbingAlgorithm(Algorithm):
                               "({}, {})".format(currentHouse.x,
                                                 currentHouse.y))
 
+                    # place orignal house B back on grid
                     if not self.area.place_house(houseB,
                                                  backupHouseBX,
                                                  backupHouseBY):
@@ -333,16 +399,19 @@ class HillClimbingAlgorithm(Algorithm):
                               "({}, {})".format(currentHouse.x,
                                                 currentHouse.y))
 
+                    # update counter for hillclimber
                     if simulatedAnnealing is None:
                         self.unbeneficialMoves += 1
                         self.unbeneficialSwitchCount += 1
                         print("❌ Unbeneficial move. Has been undone.")
 
+            # Update counter of neutral moves
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
                 self.neutralSlideCount += 1
                 print("😐 Neutral (allowed) or impossible move (reverted)")
 
+            # update counter of succefulmoves
             else:
                 self.succesfullSlideCount += 1
                 self.succesfullMoves += 1
@@ -351,9 +420,7 @@ class HillClimbingAlgorithm(Algorithm):
                               - currentTotalPrice,
                               currentTotalPrice))
 
-        # # remove last house from list of available options in next runs
-        # self.pickHouseList.remove(currentHouse)
-
+        # print total result of the hillclimber or simulated annealing
         print("-------------------- ")
 
         if self.tryCount >= self.totalIterations:
@@ -399,30 +466,48 @@ class HillClimbingAlgorithm(Algorithm):
                             beginTemp, endTemp,
                             tryCount, totalIterations,
                             correctionShortening):
+        """ Algorithm that decide if a move will be accepted or rejected
+
+            Keyword arguments:
+            typeOfSimulatedAnnealing -- type of simulated annealing, lineair
+                                        exponential, sigmoidal
+            newTotalPrice            -- new price of the grid
+            currentTotalPrice        -- original price of the grid
+            beginTemp                -- begin temperature of the simulated
+                                        annealing
+            endTemp                  -- end temperature of the simulated
+                                        annealing
+            tryCount                 -- amount of moves
+            totalIterations          -- total moves
+            correctionShortening     -- correction for the shortening
+        """
 
         currentTemp = 0
         endTemp += 0.000000000001
 
-        # Lineair
+        # simulated annealing lineair
         if typeOfSimulatedAnnealing == 1:
             currentTemp = (beginTemp - tryCount * (beginTemp - endTemp) /
                            totalIterations)
 
-        # Exponential
+        # simulated annealing exponential
         if typeOfSimulatedAnnealing == 2:
             currentTemp = (beginTemp * (endTemp/beginTemp) **
                            (tryCount / totalIterations))
 
-        # Sigmoidal
+        # simulated annealing sigmoidal
         if typeOfSimulatedAnnealing == 3:
             partOfCurrentTemp = (0.3 * (tryCount - totalIterations / 2))
 
+            # if partofcurrentTemp is bigger than 50. reset as e^50 is to big.
             if partOfCurrentTemp > 50:
                 partOfCurrentTemp = 50
 
+            # calculate current temperature
             currentTemp = (endTemp + (beginTemp + endTemp) /
                            (1 + math.exp(partOfCurrentTemp)))
 
+        # calculate shortening, coolinscheme and acception chance
         shortening = (newTotalPrice - currentTotalPrice) / correctionShortening
         coolingscheme = shortening / currentTemp
         if coolingscheme > 50:
@@ -438,6 +523,8 @@ class HillClimbingAlgorithm(Algorithm):
         print('Acceptation Chance', acceptationChance,
               '| Random Value', randomValue)
 
+        # move will be accepted if acceptation chance is bigger than random
+        # value
         if acceptationChance > randomValue:
             return True
 
