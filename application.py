@@ -35,7 +35,7 @@ def main():
                                 '3: SpeedRandom\n'
                                 '4: HillClimbing\n'
                                 '5: Simmulated Annealing\n'
-                                '6: Do Nothing (show only)'
+                                '6: Do Nothing (show only)\n'
                                 'Your choice: '))
     if algorithmChoice == 4 or algorithmChoice == 5:
         print("")
@@ -109,7 +109,7 @@ def main():
             mAmount = 9
 
     # if applicable for the algorithm chosen, provide further choices
-    if algorithmChoice != 2:
+    if algorithmChoice != 2 and gridChoice != 1:
         placementOrder = int(input('In what order do you want houses '
                                    'to be placed on the map?\n'
                                    '1: Random \n'
@@ -172,7 +172,7 @@ def main():
     elif visualizerChoice == 3:
         visualizer = NoDrawVisualizer(area, algorithm)
     elif visualizerChoice == 4:
-        runs = int(input('How many runs do you wnat to do? \n'
+        runs = int(input('How many runs do you want to do? \n'
                          'Your choice: '))
         visualizer = NoDrawBulkVisualizer(area, algorithm, runs)
 
@@ -180,26 +180,6 @@ def main():
     print("Starting your Algorithm...")
     print("----------------------")
     visualizer.on_execute()
-
-    # # # just SpeedRandom Algorithm
-    # # grid = Area()
-    # # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9, totalIterations)
-    # # #                                                  # 20h: 12, 5, 3
-    # # #                                                  # 40: 24, 10, 6
-    # # #                                                  # 60: 36, 15, 9
-    # # visualizer = BulkVisualizer(grid, algorithm, 10)
-    # # visualizer.on_execute()
-
-    # #   just a HillClimbing algorithm
-    # # grid = Area()
-    # # TODO: notice that hillclimbingAlgorithm has fourth value
-    # # for total amound of itteration.
-    # # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9, totalIterations)
-    # # #                                                   # 20h: 12, 5, 3
-    # # #                                                   # 40: 24, 10, 6
-    # # #                                                   # 60: 36, 15, 9
-    # # visualizer = BulkVisualizer(grid, algorithm, 10)
-    # # visualizer.on_execute()
 
 
 if __name__ == "__main__":
