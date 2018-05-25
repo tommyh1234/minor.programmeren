@@ -14,15 +14,15 @@ There is also water in the neighbourhoud: 20% of the total area should be covere
 * (3) All constraints (dutch) can be found at http://heuristieken.nl/wiki/index.php?title=Amstelhaege
 
 ## Prerequisites
-This codebase will be written in Python 3.6.3. We will put all the requirements in requirements.txt, which can be installed by using ```pip install -r requirements.txt```
+This codebase will be written in Python 3.6.3. Older versions of python should be used at users own risk. We have verified that this codebase won't work with Python 2.7. We will put all the requirements in requirements.txt, which can be installed by using ```pip install -r requirements.txt```
 
 ## Authors
-* Tommy Hokkeling
-* Jos Vlaar
-* Pim ten Thije
+* Tommy Hokkeling (10463305)
+* Jos Vlaar (12076619)
+* Pim ten Thije (10818413)
 
 ## Structure
-The program is run from `application.py`. Any given run consist of three important classes. Area is the data model and deals with storing, validating and scoring a state. An algorithm class is the meat of the program, this is where all the nifty stuff happens. Then there are visualizers. These are what actually run an algorithm. Since drawing and executing happen in the same loop it was decided to have this all handled by the visualizers. Each of these three are kept in seperate folders with seperate readme's goin into more detail.
+The program is run from `python3 application.py`. Any given run consist of three important classes. Area is the data model and deals with storing, validating and scoring a state. An algorithm class is the meat of the program, this is where all the nifty stuff happens. Then there are visualizers. These are what actually run an algorithm. Since drawing and executing happen in the same loop it was decided to have this all handled by the visualizers. Each of these three are kept in seperate folders with seperate readme's goin into more detail.
 
 ## Stickler Linting
 This project uses Stickler-CI to check all pull requests for code linting errors and tries to fix them where possible.
@@ -32,4 +32,4 @@ Everyone working on this project is required to install a flake8 pre-commit hook
 To know how look at: https://www.smallsurething.com/how-to-automatically-lint-your-python-code-on-commit/
 
 ## Acknowledgments
-We would like to thank our techassist Bart van Baal voor his indispensable advice and our lecturer Daan van den Berg for his inspiration.
+We would like to thank our techassist Bart van Baal voor his indispensable advice; our lecturer Daan van den Berg for the provided inspiration and our class for the necessary feedback.
