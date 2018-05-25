@@ -1,10 +1,15 @@
 from objects.area import Area
+
 from algorithms.speedrandom import SpeedRandomAlgorithm
 from algorithms.hillClimbing import HillClimbingAlgorithm
 from algorithms.randomalg import RandomAlgorithm
 from algorithms.greedy import GreedyAlgorithm
-from visualizer import Visualizer
-from bulkvisualizer import BulkVisualizer
+
+from visualizers.visualizer import Visualizer
+from visualizers.bulkvisualizer import BulkVisualizer
+from visualizers.nodrawvisualizer import NoDrawVisualizer
+from visualizers.nodrawbulkvisualizer import NoDrawBulkVisualizer
+
 from datahelper import DataHelper
 
 
@@ -28,6 +33,8 @@ def main():
     visualizerChoice = int(input('What visualizer do you want?\n'
                                  '1: Normal visualizer\n'
                                  '2: Bulk visualizer\n'
+                                 '3: No-draw normal visualizer\n'
+                                 '4: No-draw bulk visualizer\n'
                                  'Your choice: '))
     print("")
     isEmpty = True
@@ -69,7 +76,7 @@ def main():
                                    'Your choice: '))
         print("")
         waterAmountChoise = int(input('How many water areas'
-                                      'do you want on the map? \n'
+                                      ' do you want on the map? \n'
                                       '1: 1 Area \n'
                                       '2: 2 Area\'s \n'
                                       '3: 3 Area\'s \n'
@@ -108,6 +115,12 @@ def main():
         runs = int(input('How many runs do you want to do? \n'
                          'Your choice: '))
         visualizer = BulkVisualizer(area, algorithm, runs)
+    elif visualizerChoice == 3:
+        visualizer = NoDrawVisualizer(area, algorithm)
+    elif visualizerChoice == 4:
+        runs = int(input('How many runs do you wnat to do? \n'
+                         'Your choice: '))
+        visualizer = NoDrawBulkVisualizer(area, algorithm, runs)
 
     print("Starting your Algorithm...")
     print("----------------------")
