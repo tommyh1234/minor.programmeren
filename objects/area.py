@@ -3,7 +3,8 @@ import random
 
 
 class Area(object):
-    """Create the area object in which the map will be saved"""
+    """The object in which the map will be saved"""
+
     width = 320
     height = 360
 
