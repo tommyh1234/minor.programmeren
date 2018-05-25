@@ -415,12 +415,10 @@ class HillClimbingAlgorithm(Algorithm):
 
         # Sigmoidal
         if typeOfSimulatedAnnealing == 3:
-            
             partOfCurrentTemp = (0.3 * (tryCount - totalIterations / 2))
 
             if partOfCurrentTemp > 50:
-                partOfCurrentTemp = 50            
-
+                partOfCurrentTemp = 50
 
             currentTemp = (endTemp + (beginTemp + endTemp) /
                            (1 + math.exp(partOfCurrentTemp)))
