@@ -35,6 +35,12 @@ class RandomAlgorithm(Algorithm):
             self.waterAmount = self.waterAmountChoise
             self.watersToPlace = water_list(self.area, self.waterAmount)
 
+        if len(self.housesToPlace) == 0:
+            self.housesToPlace = construction_list(self.area,
+                                                   self.fhAmount,
+                                                   self.bAmount,
+                                                   self.mAmount)
+
         # place water on map
         while len(self.watersToPlace) > 0:
 
@@ -120,7 +126,7 @@ class RandomAlgorithm(Algorithm):
                                                        self.bAmount,
                                                        self.mAmount)
 
-        else:
+        if len(self.housesToPlace) == 0:
             print('✔ All houses placed ✔')
 
             # Recheck the validity of all houses (important to catch
@@ -135,6 +141,7 @@ class RandomAlgorithm(Algorithm):
                     self.area.remove_house(house)
                     self.housesToPlace.append(house)
 
+            self.area.get_area_price()
             if len(self.housesToPlace) == 0:
                 self.isDone = True
 
