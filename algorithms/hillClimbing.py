@@ -421,7 +421,11 @@ class HillClimbingAlgorithm(Algorithm):
 
         shortening = (newTotalPrice - currentTotalPrice) / correctionShortening
         coolingscheme = shortening / currentTemp
+        if coolingscheme > 50:
+            print('coolingscheme bigger than 50')
+            coolingscheme = 50
         acceptationChance = math.exp(coolingscheme)
+        print('After acceptationChance')
         randomValue = random.random()
 
         print('Grid Difference =', (newTotalPrice - currentTotalPrice),
