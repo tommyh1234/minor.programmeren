@@ -7,6 +7,16 @@ import math
 class GreedyAlgorithm(Algorithm):
 
     def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=True):
+        """Initialize the alogrithm and set values
+
+        Keyword arguments:
+        area                -- the area to fill
+        fhAmount            -- the amount of family homes
+        bAmount             -- the amount of bungalows
+        mAmount             -- the amount of mansions
+        isEmpty             -- not used but a standard among algorithms
+        """
+
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
@@ -21,6 +31,7 @@ class GreedyAlgorithm(Algorithm):
         self.previousHouse = None
 
     def execute(self):
+        """Execute a step of the algorithm"""
 
         # add 1 water area in de lower right corner
         if self.housePlacementRuns == 0:
