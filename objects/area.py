@@ -91,7 +91,7 @@ class Area(object):
         house.y = yCoordinate
         kind = type(house).__name__
 
-        if not self.check_house_is_inside_grid(house):
+        if not self.house_inside_grid_check(house):
             return False
 
         # place new house
