@@ -518,7 +518,7 @@ class HillClimbingAlgorithm(Algorithm):
         print('Acceptation Chance', acceptationChance,
               '| Random Value', randomValue)
 
-        # move will be accepted if acceptation chance is 
+        # move will be accepted if acceptation chance is
         # bigger than random value
         if acceptationChance > randomValue:
             return True

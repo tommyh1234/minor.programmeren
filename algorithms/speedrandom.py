@@ -20,7 +20,7 @@ class SpeedRandomAlgorithm(Algorithm):
         waterAmountChoice   -- the amount of water bodies in the map
         isEmpty             -- not used but a standard among algorithms
         """
-        
+
         # create list of houses to be placed
         self.housesToPlace = construction_list(area,
                                                fhAmount,
