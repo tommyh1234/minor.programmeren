@@ -3,7 +3,6 @@ import random
 import math
 from algorithms.randomalg import RandomAlgorithm
 from algorithms.algorithm import Algorithm
-
 # from algorithms.speedrandom import SpeedRandomAlgorithm
 
 
@@ -16,56 +15,56 @@ class HillClimbingAlgorithm(Algorithm):
                  typeOfSimulatedAnnealing=None,
                  correctionShortening=None):
         """Initiate all elements necessary for Hillclimbing or
-            Simulated Annealing
+        Simulated Annealing
 
-            Keyword arguments:
-            placementOrder                  --  determined the order of
-                                                placement of the houses
-            isDone                          --  checks all moves are done
-            tryCount                        --  amount of current move
-            succesfullMoves                 --  amount of succesfull moves
-            succesfullSwitchCount           --  amount of succesfull switches
-            succesfullTurnCount             --  amount of succesfull turns
-            succesfullSlideCount            --  amount of succesfull slides
-            neutralMoves                    --  amount of neutral moves
-            neutralSlideCount               --  amount of neutral slides
-            neutralTurnCount                --  amount of neutral turns
-            neutralSwitchCount              --  amount of neutral switches
-            unbeneficialMoves               --  amount of unbenficial moves
-            unbeneficialSwitchCount         --  amount of unbenficial switches
-            unbeneficialTurnCount           --  amount of unbenficial turn
-            unbeneficialSlideCount          --  amount of unbenficial slides
-            SAAcceptedUnbeneficialMoveCount --  amount of accepted unbenficial
-                                                moves by Simulated Annealing
-            SAAcceptedUnbeneficialSlideCount--  amount of accepted unbenficial
-                                                slides by Simulated Annealing
-            SAAcceptedUnbeneficialTurnCount --  amount of accepted unbenficial
-                                                turns by Simulated Annealing
-            SAAcceptedUnbeneficialSwitchCount-  amount of accepted unbenficial
-                                                switches by Simulated Annealing
-            SARejectedUnbeneficialMoveCount --  amount of rejected unbenficial
-                                                moves by Simulated Annealing
-            SARejectedUnbeneficialSlideCount--  amount of accepted unbenficial
-                                                slides by Simulated Annealing
-            SARejectedUnbeneficialTurnCount --  amount of accepted unbenficial
-                                                turn by Simulated Annealing
-            SARejectedUnbeneficialSwitchCount-- amount of accepted unbenficial
-                                                switches by Simulated Annealing
-            typeOfSimulatedAnnealing         -- the type of Simulated Annealing
-            correctionShortening             -- the correction for the
-                                                shortening, when you use
-                                                Simulated Annealing
-            initialGridPrice                --  orignal price off randomized
-                                                grid
-            area                            --  the area to place houses on
-            beginTemp                       --  begin temperature of the
-                                                Aimulated Annealing
-            endTemp                         --  end temperature of the
-                                                Aimulated Annealing
-            totalIterations                 --  total iterations
-            totalHouseAmount                --  total amount of houses
-            pickHouseList                   --  list of houses
-           """
+        Keyword arguments:
+        placementOrder                  --  determined the order of
+                                            placement of the houses
+        isDone                          --  checks all moves are done
+        tryCount                        --  amount of current move
+        succesfullMoves                 --  amount of succesfull moves
+        succesfullSwitchCount           --  amount of succesfull switches
+        succesfullTurnCount             --  amount of succesfull turns
+        succesfullSlideCount            --  amount of succesfull slides
+        neutralMoves                    --  amount of neutral moves
+        neutralSlideCount               --  amount of neutral slides
+        neutralTurnCount                --  amount of neutral turns
+        neutralSwitchCount              --  amount of neutral switches
+        unbeneficialMoves               --  amount of unbenficial moves
+        unbeneficialSwitchCount         --  amount of unbenficial switches
+        unbeneficialTurnCount           --  amount of unbenficial turn
+        unbeneficialSlideCount          --  amount of unbenficial slides
+        SAAcceptedUnbeneficialMoveCount --  amount of accepted unbenficial
+                                            moves by Simulated Annealing
+        SAAcceptedUnbeneficialSlideCount--  amount of accepted unbenficial
+                                            slides by Simulated Annealing
+        SAAcceptedUnbeneficialTurnCount --  amount of accepted unbenficial
+                                            turns by Simulated Annealing
+        SAAcceptedUnbeneficialSwitchCount-  amount of accepted unbenficial
+                                            switches by Simulated Annealing
+        SARejectedUnbeneficialMoveCount --  amount of rejected unbenficial
+                                            moves by Simulated Annealing
+        SARejectedUnbeneficialSlideCount--  amount of accepted unbenficial
+                                            slides by Simulated Annealing
+        SARejectedUnbeneficialTurnCount --  amount of accepted unbenficial
+                                            turn by Simulated Annealing
+        SARejectedUnbeneficialSwitchCount-- amount of accepted unbenficial
+                                            switches by Simulated Annealing
+        typeOfSimulatedAnnealing         -- the type of Simulated Annealing
+        correctionShortening             -- the correction for the
+                                            shortening, when you use
+                                            Simulated Annealing
+        initialGridPrice                --  orignal price off randomized
+                                            grid
+        area                            --  the area to place houses on
+        beginTemp                       --  begin temperature of the
+                                            Aimulated Annealing
+        endTemp                         --  end temperature of the
+                                            Aimulated Annealing
+        totalIterations                 --  total iterations
+        totalHouseAmount                --  total amount of houses
+        pickHouseList                   --  list of houses
+        """
 
         self.placementOrder = placementOrder
         self.isDone = False
@@ -101,7 +100,7 @@ class HillClimbingAlgorithm(Algorithm):
         self.pickHouseList = []
 
         if isEmpty is True:
-            # fill grid random
+            # fill grid randomly before hillclimbing
             self.randomAlg = RandomAlgorithm(self.area,
                                              fhAmount,
                                              bAmount,
@@ -124,12 +123,6 @@ class HillClimbingAlgorithm(Algorithm):
 
         # total price grid
         currentTotalPrice = self.area.get_area_price()
-
-        # pick random house from list of placed houses,
-        # making sure that all houses are visited once
-        # before a house is revisited
-        # if self.tryCount % self.totalHouseAmount == 0:
-        #     self.pickHouseList.extend(self.area.allHousesList)
 
         # keep track of amount of moves made
         self.tryCount += 1
@@ -166,14 +159,14 @@ class HillClimbingAlgorithm(Algorithm):
                 if self.beginTemp is not None:
                     # if simulated annealing accept new grid
                     simulatedAnnealing = self.simulated_annealing(
-                                         self.typeOfSimulatedAnnealing,
-                                         newTotalPrice,
-                                         currentTotalPrice,
-                                         self.beginTemp,
-                                         self.endTemp,
-                                         self.tryCount,
-                                         self.totalIterations,
-                                         self.correctionShortening)
+                        self.typeOfSimulatedAnnealing,
+                        newTotalPrice,
+                        currentTotalPrice,
+                        self.beginTemp,
+                        self.endTemp,
+                        self.tryCount,
+                        self.totalIterations,
+                        self.correctionShortening)
 
                     # accept unbeneficial move by simulated annealing
                     if simulatedAnnealing is True:
@@ -256,14 +249,14 @@ class HillClimbingAlgorithm(Algorithm):
                 if self.beginTemp is not None:
                     # if simulated annealing accept new grid
                     simulatedAnnealing = self.simulated_annealing(
-                                         self.typeOfSimulatedAnnealing,
-                                         newTotalPrice,
-                                         currentTotalPrice,
-                                         self.beginTemp,
-                                         self.endTemp,
-                                         self.tryCount,
-                                         self.totalIterations,
-                                         self.correctionShortening)
+                        self.typeOfSimulatedAnnealing,
+                        newTotalPrice,
+                        currentTotalPrice,
+                        self.beginTemp,
+                        self.endTemp,
+                        self.tryCount,
+                        self.totalIterations,
+                        self.correctionShortening)
 
                     # accept unbeneficial move by simulated annealing
                     if simulatedAnnealing is True:
@@ -351,14 +344,14 @@ class HillClimbingAlgorithm(Algorithm):
                 if self.beginTemp is not None:
                     # if simulated annealing accept new grid
                     simulatedAnnealing = self.simulated_annealing(
-                                            self.typeOfSimulatedAnnealing,
-                                            newTotalPrice,
-                                            currentTotalPrice,
-                                            self.beginTemp,
-                                            self.endTemp,
-                                            self.tryCount,
-                                            self.totalIterations,
-                                            self.correctionShortening)
+                        self.typeOfSimulatedAnnealing,
+                        newTotalPrice,
+                        currentTotalPrice,
+                        self.beginTemp,
+                        self.endTemp,
+                        self.tryCount,
+                        self.totalIterations,
+                        self.correctionShortening)
 
                     # accept unbeneficial move by simulated annealing
                     if simulatedAnnealing is True:
@@ -468,20 +461,20 @@ class HillClimbingAlgorithm(Algorithm):
                             beginTemp, endTemp,
                             tryCount, totalIterations,
                             correctionShortening):
-        """ Algorithm that decide if a move will be accepted or rejected
+        """Algorithm decides whether a move will be accepted or rejected
 
-            Keyword arguments:
-            typeOfSimulatedAnnealing -- type of simulated annealing, lineair
-                                        exponential, sigmoidal
-            newTotalPrice            -- new price of the grid
-            currentTotalPrice        -- original price of the grid
-            beginTemp                -- begin temperature of the simulated
-                                        annealing
-            endTemp                  -- end temperature of the simulated
-                                        annealing
-            tryCount                 -- amount of moves
-            totalIterations          -- total moves
-            correctionShortening     -- correction for the shortening
+        Keyword arguments:
+        typeOfSimulatedAnnealing -- type of simulated annealing, lineair
+                                    exponential, sigmoidal
+        newTotalPrice            -- new price of the grid
+        currentTotalPrice        -- original price of the grid
+        beginTemp                -- begin temperature of the simulated
+                                    annealing
+        endTemp                  -- end temperature of the simulated
+                                    annealing
+        tryCount                 -- amount of moves
+        totalIterations          -- total moves
+        correctionShortening     -- correction for the shortening
         """
 
         currentTemp = 0
@@ -525,10 +518,9 @@ class HillClimbingAlgorithm(Algorithm):
         print('Acceptation Chance', acceptationChance,
               '| Random Value', randomValue)
 
-        # move will be accepted if acceptation chance is bigger than random
-        # value
+        # move will be accepted if acceptation chance is 
+        # bigger than random value
         if acceptationChance > randomValue:
             return True
-
         else:
             return False
