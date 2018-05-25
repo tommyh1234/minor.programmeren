@@ -37,11 +37,15 @@ class BulkVisualizer(Visualizer):
 
         # when a run is finished...
         if self.algorithm.isDone is True and self.runs < self.maxRuns:
+            print('🎉🎉Run {} is complete! 🎉🎉'.format(self.runs))
+            # ...save values to csv file
+            self.dataHelper.writeArea(self.area)
 
             # ...restore to a fresh state (empty area)
             self.area = copy.deepcopy(self.originalArea)
             self.algorithm = copy.copy(self.originalAlgorithm)
             self.algorithm.area = self.area
+            self.runs += 1
 
-            # ...save values to csv file
-            self.dataHelper.writeArea(self.area)
+        if self.runs == self.maxRuns:
+            print('I succesfully ran {} times!✨ '.format(self.runs))

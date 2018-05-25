@@ -25,19 +25,22 @@ class NoDrawBulkVisualizer:
     def on_execute(self):
         """Executes an algorithm several times"""
 
-        # continue running until algorithm is done
-        while self.algorithm.isDone is False:
-            self.algorithm.execute()
+        while self.runs < self.maxRuns:
+            # continue running until algorithm is done
+            while self.algorithm.isDone is False:
+                self.algorithm.execute()
 
-        # if algorithm completes one run, reset state
-        if self.algorithm.isDone is True and self.runs < self.maxRuns:
+            # if algorithm completes one run, reset state
+            if self.algorithm.isDone is True and self.runs < self.maxRuns:
+                print('Run {} is complete! 🎉'.format(self.runs))
+                # save area to csv
+                self.dataHelper.writeArea(self.area)
 
-            # reset area and algorithm
-            self.area = copy.deepcopy(self.originalArea)
-            self.algorithm = copy.copy(self.originalAlgorithm)
-            self.algorithm.area = self.area
+                # reset area and algorithm
+                self.area = copy.deepcopy(self.originalArea)
+                self.algorithm = copy.copy(self.originalAlgorithm)
+                self.algorithm.area = self.area
+                self.runs += 1
 
-            # save area to csv
-            self.dataHelper.writeArea(self.area)
-            self.runs += 1
-            self.on_execute()
+            if self.runs == self.maxRuns:
+                print('I succesfully ran {} times!✨ '.format(self.runs))
