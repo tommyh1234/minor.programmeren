@@ -91,7 +91,7 @@ class Area(object):
         house.y = yCoordinate
         kind = type(house).__name__
 
-        if not self.check_house_is_inside_grid(house):
+        if not self.house_inside_grid_check(house):
             return False
 
         # place new house
@@ -325,7 +325,7 @@ class Area(object):
         currentHouse.height = backupWidth
 
         # check if the turned house can be validly placed within the grid
-        turnValidity = self.check_house_is_inside_grid(currentHouse)
+        turnValidity = self.house_inside_grid_check(currentHouse)
 
         # if house will not be inside map after turning,
         # put it back in original orientation
