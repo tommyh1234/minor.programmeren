@@ -1,10 +1,16 @@
 from objects.area import Area
+
+from algorithms.algorithm import Algorithm
 from algorithms.speedrandom import SpeedRandomAlgorithm
 from algorithms.hillClimbing import HillClimbingAlgorithm
 from algorithms.randomalg import RandomAlgorithm
 from algorithms.greedy import GreedyAlgorithm
-from visualizer import Visualizer
-from bulkvisualizer import BulkVisualizer
+
+from visualizers.visualizer import Visualizer
+from visualizers.bulkvisualizer import BulkVisualizer
+from visualizers.nodrawvisualizer import NoDrawVisualizer
+from visualizers.nodrawbulkvisualizer import NoDrawBulkVisualizer
+
 from datahelper import DataHelper
 
 
@@ -23,14 +29,16 @@ def main():
                                 '3: SpeedRandom\n'
                                 '4: HillClimbing\n'
                                 '5: Simmulated Annealing\n'
+                                '6: Do Nothing (show only)'
                                 'Your choice: '))
     if algorithmChoice == 4 or algorithmChoice == 5:
         print("")
         totalIterations = int(input('How many steps should algorithm make?\n'
-                                   'Your choice: '))
+                                    'Your choice: '))
         if algorithmChoice == 5:
             print("")
-            typeOfSimulatedAnnealing = int(input('What type of Simulated Annealing?\n'
+            typeOfSimulatedAnnealing = int(input('What type of Simulated'
+                                                 ' Annealing?\n'
                                                  '1: lineair \n'
                                                  '2: exponential\n'
                                                  '3: sigmoidal\n'
@@ -41,14 +49,18 @@ def main():
                                   'Your choice: '))
             print("")
             endTemp = int(input('What is the end temperature?\n'
-                                  'Your choice: '))
+                                'Your choice: '))
             print("")
-            correctionShortening = int(input('What correction factor for the would you like to use?\n'
-                                            'Your choice: '))
+            correctionShortening = int(input('What correction factor for'
+                                             ' shortening the would you like'
+                                             ' to use?\n'
+                                             ' Your choice: '))
     print("")
     visualizerChoice = int(input('What visualizer do you want?\n'
                                  '1: Normal visualizer\n'
                                  '2: Bulk visualizer\n'
+                                 '3: No-draw normal visualizer\n'
+                                 '4: No-draw bulk visualizer\n'
                                  'Your choice: '))
     print("")
     isEmpty = True
@@ -62,52 +74,76 @@ def main():
         isEmpty = False
     else:
         area = Area()
-        amountChoice = int(input('How many houses do you want? \n'
-                                 '1: 20\n'
-                                 '2: 40\n'
-                                 '3: 60\n'
-                                 'Your choice: '))
+        houseAmountChoice = int(input('How many houses do you want? \n'
+                                      '1: 20\n'
+                                      '2: 40\n'
+                                      '3: 60\n'
+                                      'Your choice: '))
         print("")
-        if amountChoice == 1:
+        if houseAmountChoice == 1:
             fhAmount = 12
             bAmount = 5
             mAmount = 3
-        elif amountChoice == 2:
+        elif houseAmountChoice == 2:
             fhAmount = 24
             bAmount = 10
             mAmount = 6
-        elif amountChoice == 3:
+        elif houseAmountChoice == 3:
             fhAmount = 36
             bAmount = 15
             mAmount = 9
 
+    if algorithmChoice != 2:
+        placementOrder = int(input('In what order do you want houses '
+                                   'to be placed on the map?\n'
+                                   '1: Random \n'
+                                   '2: First Mansions, then Bungalows, '
+                                   'then Family homes \n'
+                                   'Your choice: '))
+        print("")
+        waterAmountChoice = int(input('How many water areas'
+                                      ' do you want on the map? \n'
+                                      '1: 1 Area \n'
+                                      '2: 2 Area\'s \n'
+                                      '3: 3 Area\'s \n'
+                                      '4: 4 Area\'s \n'
+                                      '5: Random amount of Area\'s \n'
+                                      'Your choice: '))
+        if waterAmountChoice == "5":
+            waterAmountChoice = "Random"
+        print("")
+
     if algorithmChoice == 1:
         algorithm = RandomAlgorithm(area, fhAmount,
-                                    bAmount, mAmount, isEmpty)
+                                    bAmount, mAmount,
+                                    placementOrder, waterAmountChoice,
+                                    isEmpty)
     elif algorithmChoice == 2:
         algorithm = GreedyAlgorithm(area, fhAmount,
                                     bAmount, mAmount, isEmpty)
     elif algorithmChoice == 3:
         algorithm = SpeedRandomAlgorithm(area, fhAmount,
-                                         bAmount, mAmount, isEmpty)
+                                         bAmount, mAmount,
+                                         placementOrder, waterAmountChoice,
+                                         isEmpty)
     elif algorithmChoice == 4:
-        algorithm = HillClimbingAlgorithm(area,\
-                                          fhAmount,\
-                                          bAmount,\
-                                          mAmount,\
-                                          isEmpty,\
-                                          totalIterations)
+        algorithm = HillClimbingAlgorithm(area, fhAmount,
+                                          bAmount, mAmount,
+                                          placementOrder, waterAmountChoice,
+                                          isEmpty, totalIterations)
     elif algorithmChoice == 5:
-        algorithm = HillClimbingAlgorithm(area,\
-                                          fhAmount,\
-                                          bAmount,\
-                                          mAmount,\
-                                          isEmpty,\
-                                          beginTemp,\
-                                          endTemp,\
-                                          totalIterations,\
-                                          typeOfSimulatedAnnealing,\
+        algorithm = HillClimbingAlgorithm(area, fhAmount,
+                                          bAmount, mAmount, placementOrder,
+                                          waterAmountChoice,
+                                          isEmpty, totalIterations,
+                                          beginTemp, endTemp,
+                                          typeOfSimulatedAnnealing,
                                           correctionShortening)
+
+    elif algorithmChoice == 6:
+        algorithm = Algorithm(area, fhAmount,
+                              bAmount, mAmount,
+                              isEmpty)
 
     if visualizerChoice == 1:
         visualizer = Visualizer(area, algorithm)
@@ -115,15 +151,20 @@ def main():
         runs = int(input('How many runs do you want to do? \n'
                          'Your choice: '))
         visualizer = BulkVisualizer(area, algorithm, runs)
+    elif visualizerChoice == 3:
+        visualizer = NoDrawVisualizer(area, algorithm)
+    elif visualizerChoice == 4:
+        runs = int(input('How many runs do you wnat to do? \n'
+                         'Your choice: '))
+        visualizer = NoDrawBulkVisualizer(area, algorithm, runs)
 
     print("Starting your Algorithm...")
     print("----------------------")
     visualizer.on_execute()
 
-
     # # # just SpeedRandom Algorithm
     # # grid = Area()
-    # # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9, totalIterations)  
+    # # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9, totalIterations)
     # # #                                                  # 20h: 12, 5, 3
     # # #                                                  # 40: 24, 10, 6
     # # #                                                  # 60: 36, 15, 9
@@ -134,7 +175,7 @@ def main():
     # # grid = Area()
     # # TODO: notice that hillclimbingAlgorithm has fourth value
     # # for total amound of itteration.
-    # # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9, totalIterations)  
+    # # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9, totalIterations)
     # # #                                                   # 20h: 12, 5, 3
     # # #                                                   # 40: 24, 10, 6
     # # #                                                   # 60: 36, 15, 9

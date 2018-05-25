@@ -22,7 +22,7 @@ This codebase will be written in Python 3.6.3. We will put all the requirements 
 * Pim ten Thije
 
 ## Structure
-In the folder 'objects' we've created a House class (which is inheritated by the familyHome, Bungalow and Mansion classes) and an area class to represent the map. Water will be added later as a seperate class. This entry will be updated as we expand our code... 
+The program is run from `application.py`. Any given run consist of three important classes. Area is the data model and deals with storing, validating and scoring a state. An algorithm class is the meat of the program, this is where all the nifty stuff happens. Then there are visualizers. These are what actually run an algorithm. Since drawing and executing happen in the same loop it was decided to have this all handled by the visualizers. Each of these three are kept in seperate folders with seperate readme's goin into more detail.
 
 ## Stickler Linting
 This project uses Stickler-CI to check all pull requests for code linting errors and tries to fix them where possible.
