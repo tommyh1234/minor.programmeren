@@ -376,6 +376,7 @@ class HillClimbingAlgorithm(Algorithm):
                         self.SARejectedUnbeneficialMoveCount += 1
                         print('⬇️ ❌️  Unbeneficial move. Has been'
                               'rejected by Simulated Annealing.')
+                        self.area.price = currentTotalPrice
 
                 # will not accept unbeneficial move
                 if simulatedAnnealing is not True:
@@ -404,6 +405,7 @@ class HillClimbingAlgorithm(Algorithm):
                         self.unbeneficialMoves += 1
                         self.unbeneficialSwitchCount += 1
                         print("❌ Unbeneficial move. Has been undone.")
+                        self.area.price = currentTotalPrice
 
             # Update counter of neutral moves
             elif currentTotalPrice == newTotalPrice:

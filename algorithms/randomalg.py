@@ -8,7 +8,20 @@ import random
 class RandomAlgorithm(Algorithm):
 
     def __init__(self, area, fhAmount, bAmount, mAmount,
-                 placementOrder, waterAmountChoise, isEmpty=False):
+                 placementOrder, waterAmountChoice, isEmpty=False):
+        """Initialize the algorithm and prepares variables
+
+        Keyword arguments:
+        area                -- the area to fill
+        fhAmount            -- the amount of family homes
+        bAmount             -- the amount of bungalows
+        mAmount             -- the amount of mansions
+        placementOrder      -- determines the selection strategy for placing
+        waterAmountChoice   -- the amount of water bodies in the map
+        isEmpty             -- not used but a standard among algorithms
+        """
+
+        # create a list of houses that need to be placed
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
@@ -22,17 +35,18 @@ class RandomAlgorithm(Algorithm):
         self.housePlacementRuns = 1
         self.area = area
         self.placementOrder = placementOrder
-        if waterAmountChoise <= 4:
-            self.waterAmountChoise = waterAmountChoise
+        if waterAmountChoice <= 4:
+            self.waterAmountChoice = waterAmountChoice
         else:
-            self.waterAmountChoise = random.randint(1, 4)
+            self.waterAmountChoice = random.randint(1, 4)
 
     def execute(self):
+        """Execute a step of the algorithm"""
 
         # determine amount of water to place and
         # make list with that many water objects
         if self.waterAmount == 0:
-            self.waterAmount = self.waterAmountChoise
+            self.waterAmount = self.waterAmountChoice
             self.watersToPlace = water_list(self.area, self.waterAmount)
 
         if len(self.housesToPlace) == 0:
