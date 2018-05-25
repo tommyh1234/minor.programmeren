@@ -2,18 +2,21 @@
 This folder contains all the algorithms that this application can run. Each algorithm is based off of the `algorithm.py` base class. This class does not contain much functionality but rather serves as a template to bass the other algorithms off of.
 
 ## Structure
-Each algorithm consists of two main parts: a init funciton and a execute function. The init function contains all logic to prepare an area for the algorithm. This can include calling other algorithms! Next to that it also handles all of the setup for the algorithms own state containing information such as move counts and past prices.
+Each algorithm consists of two main parts: a init funciton and a execute function. The init function contains all logic to prepare an area for the algorithm. This can include calling other algorithms! Next to that it also handles all of the setup for the algorithm's own state, this includes information such as move counts and past prices.
 
 The execute function is where the actual logic of the algorithm happens. This function is called upon consecutively many times until the algorithm sets `self.isDone` to true. This allows algorithms to work with radically different logic and runtimes.
 
 ## The available algorithms
 There are several algorithms available:
 * Random (randomalg.py)
+* Greedy (greedy.py)
 * Speedrandom (speedrandom.py)
 * Hill Climbing (hillClimbing.py)
 * Simmulated Annealing (also hillClimbing.py)
 
 Random is a algorithm that tries to randomly fill a map within 1500 tries. If it doesn't succeed it restarts until it eventually does succeed.
+
+Greedy is a algorithm that fills a map by placing houses next to each other on the map in several rows.
 
 Speedrandom is much the same like random but with fewer prints. This is used in other algorithms to generate a map to start from.
 
