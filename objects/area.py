@@ -3,58 +3,101 @@ import random
 
 
 class Area(object):
+    """The object in which the map will be saved"""
+
     width = 320
     height = 360
 
     def __init__(self):
+        """Initiate all elements necessary to create an Area
+
+        Keyword arguments:
+        grid           -- the data structure all houses and waters are saved on
+        allWatersList  -- list of all water objects placed on the grid
+        allHousesList  -- list of all house objects placed on the grid
+        mansionList    -- list of all mansion objects placed on the grid
+        bungalowList   -- list of all bunalow objects placed on the grid
+        familyHomeList -- list of all family home objects placed on the grid
+        price          -- the current value of the configuration of the grid
+        recursiveCount -- counter for the amount of recursion used in the
+                          determineShift function
+        """
+
         self.grid = [[None for y in range(self.height)]
                      for x in range(self.width)]
         self.allWatersList = []
+        self.allHousesList = []
         self.mansionList = []
         self.bungalowList = []
         self.familyHomeList = []
-        self.allHousesList = []
         self.price = 0
         self.recursiveCount = None
 
     def surface(self):
+        """Calculate the total surface of the area"""
         return self.width * self.height
 
-    def place_water(self, water, x, y):
-        water.x = x
-        water.y = y
+    def place_water(self, water, xCoordinate, yCoordinate):
+        """Place a water object on the grid
 
-        # place new piece of water
+        Keyword arguments:
+        water       -- the water object to be placed on the map
+        xCoordinate -- the x-coordiante of that water object
+        yCoordinate -- the y-xooridante of that water object
+        """
+
+        water.x = xCoordinate
+        water.y = yCoordinate
+
         if water.check_validity():
-            # place the water on every coordinate
-            # that is covered by the water
-            for i in range(x, x + water.width):
-                for j in range(y, y + water.height):
+            # place water object on every grid point
+            # covered by the water
+            for i in range(xCoordinate, xCoordinate + water.width):
+                for j in range(yCoordinate, yCoordinate + water.height):
                     self.grid[i][j] = water
-            # add the water to the list of water instances
+
+            # add water object to list of water objects
             self.allWatersList.append(water)
             return True
-        else:
-            return False
+
+        return False
 
     def remove_water(self, water):
+        """Remove a water object from the grid
+
+        Keyword arguments:
+        water -- the water object to be removed from the map
+        """
+
+        # remove water object from every grid point
+        # covered by water
         for i in range(water.x, water.x + water.width):
             for j in range(water.y, water.y + water.height):
                 self.grid[i][j] = None
+
+        # remove water object to list of water objects
         self.allWatersList.remove(water)
 
-    def place_house(self, house, x, y):
-        house.x = x
-        house.y = y
+    def place_house(self, house, xCoordinate, yCoordinate):
+        """Place a house object on the grid
+
+        Keyword arguments:
+        house       -- the house object to be placed on the map
+        xCoordinate -- the x-coordinate of that house object
+        yCoordinate -- the y-xooridante of that house object
+        """
+
+        house.x = xCoordinate
+        house.y = yCoordinate
         kind = type(house).__name__
 
-        # place new house
         if house.check_validity():
-            # place the house on every coordinate
-            # that is covered by the house
-            for i in range(x, x + house.width):
-                for j in range(y, y + house.height):
+            # place house object on every grid point
+            # covered by house
+            for i in range(xCoordinate, xCoordinate + house.width):
+                for j in range(yCoordinate, yCoordinate + house.height):
                     self.grid[i][j] = house
+
             # add the house to the appropriate lists
             self.allHousesList.append(house)
             if kind == "Mansion":
@@ -64,14 +107,24 @@ class Area(object):
             elif kind == "FamilyHome":
                 self.familyHomeList.append(house)
             return True
-        else:
-            return False
+
+        return False
 
     def remove_house(self, house):
+        """Remove a house object from the grid
+
+        Keyword arguments:
+        house -- the house object to be removed from the map
+        """
+
+        # remove house object from every grid point
+        # covered by house
         for i in range(house.x, house.x + house.width):
             for j in range(house.y, house.y + house.height):
                 self.grid[i][j] = None
         kind = type(house).__name__
+
+        # remove house object from approporiate list
         self.allHousesList.remove(house)
         if kind == "Mansion":
             self.mansionList.remove(house)
@@ -81,9 +134,12 @@ class Area(object):
             self.familyHomeList.remove(house)
 
     def check_house_balance(self):
+        """Check ratio of placed houses for required ratio's"""
+
         mansions = len(self.mansionList)
         bungalows = len(self.bungalowList)
         familyHomes = len(self.familyHomeList)
+
         total = mansions + bungalows + familyHomes
         if mansions / total * 100 != 15:
             return False
@@ -91,14 +147,17 @@ class Area(object):
             return False
         if familyHomes / total * 100 != 60:
             return False
+
         return True
 
     def get_area_price(self):
-        # checking grid price house by house, invalid maps get value of 0
+        """Check the grid price house by house"""
 
         totalPrice = 0
         counter = 0
 
+        # check value of all houses and their freespace
+        # invalid house is worth 0
         while counter < len(self.allHousesList):
             if self.allHousesList[counter].check_validity() is False:
                 return 0
@@ -110,16 +169,25 @@ class Area(object):
         return totalPrice
 
     def sliding_house(self, currentHouse, backupX, backupY):
-        # remove house from map
+        """Slide a house up/down or left/right by a certain amount
+
+        Keyword arguments:
+        currentHouse -- the house object to be slided
+        backupX      -- the original x-coordinate of that house
+        backupY      -- the original y-cooridante of that house
+        """
+
+        # remove original house from map
         self.remove_house(currentHouse)
 
         # determine distance to move and update house coordinates
         directionShift = None
         houseIsBlocked = None
-        currentHouse = self.determineShift(currentHouse, directionShift,
-                                           houseIsBlocked)
+        currentHouse = self.determine_shift(currentHouse, directionShift,
+                                            houseIsBlocked)
 
-        # if house cannot be placed at new coordinates, put it back
+        # if house cannot be placed at new coordinates,
+        # put it back at orignial coordinates
         if self.place_house(currentHouse,
                             currentHouse.x,
                             currentHouse.y) is False:
@@ -137,18 +205,17 @@ class Area(object):
             print("✔ House placed at new location ({}, {})"
                   .format(currentHouse.x, currentHouse.y))
 
-    def determineShift(self, currentHouse, directionShift, houseIsBlocked):
+    def determine_shift(self, currentHouse, directionShift, houseIsBlocked):
+        """Determine the direction and amount to shift a house with
 
-        # choose to move horizontally or verticallly
-        if directionShift is None:
-            directionShift = random.randint(0, 1)
-            print("Direction: {}".format(directionShift))
-
-        # pick random distance between -5 and 5 (not 0) to shift house with
-        options = list(range(-5, 5+1))
-        options.remove(0)
-        amountShift = random.choice(options)
-        print("amountShift: {}".format(amountShift))
+        Keyword arguments:
+        currentHouse   -- the house object that the shift
+                          should be determined for
+        directionShift -- the amount of half meters the house
+                          will be shifted with
+        houseIsBlocked -- whether a house is surrounded by other house,
+                          which makes a shift impossible
+        """
 
         # first time a shift is determined for the same house,
         # reset recursive count and house is blocked counter
@@ -164,6 +231,17 @@ class Area(object):
             # return last (invalid) currentHouse
             return currentHouse
 
+        # choose to move house horizontally or verticallly
+        if directionShift is None:
+            directionShift = random.randint(0, 1)
+            print("Direction: {}".format(directionShift))
+
+        # pick random distance between -5 and 5 (not 0) to shift house with
+        options = list(range(-5, 5+1))
+        options.remove(0)
+        amountShift = random.choice(options)
+        print("amountShift: {}".format(amountShift))
+
         # move house in chosen direction,
         # but only if it still falls within the map
         if directionShift == 0:
@@ -171,6 +249,7 @@ class Area(object):
             tempBoundry = (self.width
                            - currentHouse.width
                            - currentHouse.minimumSpace)
+            # check if coordinates of shifted house would be inside map
             if (tempCurrentHouseX > currentHouse.minimumSpace and
                     tempCurrentHouseX < tempBoundry):
                 currentHouse.x += amountShift
@@ -181,22 +260,24 @@ class Area(object):
                 self.recursiveCount += 1
                 print("RecursiveCount (dir 0):", self.recursiveCount)
 
-                # change directoin from horizontal to vertical after 50 tries
+                # change direction from horizontal to vertical
+                # if a horizontal shift wasn't possible in 50 tries
                 if self.recursiveCount >= 50:
                     directionShift = 1
                     houseIsBlocked += 1
                     print(houseIsBlocked)
-                    self.determineShift(currentHouse, directionShift,
-                                        houseIsBlocked)
+                    self.determine_shift(currentHouse, directionShift,
+                                         houseIsBlocked)
                 else:
-                    self.determineShift(currentHouse, directionShift,
-                                        houseIsBlocked)
+                    self.determine_shift(currentHouse, directionShift,
+                                         houseIsBlocked)
 
         else:
             tempCurrentHouseY = currentHouse.y + amountShift
             tempBoundry = (self.height
                            - currentHouse.height
                            - currentHouse.minimumSpace)
+            # check if coordinates of shifted house would be inside map
             if (tempCurrentHouseY > currentHouse.minimumSpace and
                     tempCurrentHouseY < tempBoundry):
                 currentHouse.y += amountShift
@@ -207,22 +288,30 @@ class Area(object):
                 self.recursiveCount += 1
                 print("RecursiveCount (dir 1):", self.recursiveCount)
 
-                # change directoin from vertical to horizontal after 50 tries
+                # change direction from vertical to horizontal
+                # if a vertical shift wasn't possible in 50 tries
                 if self.recursiveCount >= 50:
                     directionShift = 0
                     houseIsBlocked += 1
                     print(houseIsBlocked)
-                    self.determineShift(currentHouse, directionShift,
-                                        houseIsBlocked)
+                    self.determine_shift(currentHouse, directionShift,
+                                         houseIsBlocked)
                 else:
-                    self.determineShift(currentHouse, directionShift,
-                                        houseIsBlocked)
+                    self.determine_shift(currentHouse, directionShift,
+                                         houseIsBlocked)
 
         # recursive error catching
-        # returning currenthouse from last valid determineShift attempt
+        # return currenthouse from last valid determine_shift attempt
         return currentHouse
 
     def turn_house(self, currentHouse, backupWidth, backupHeight):
+        """Turn a house on its side (switching its width and height)
+
+        Keyword arguments:
+        currentHouse -- the house object that should be turned
+        backupWidth  -- the original width of that house
+        backupHeight -- the original width of that house
+        """
 
         # remove house from map
         self.remove_house(currentHouse)
@@ -234,17 +323,17 @@ class Area(object):
         # check if the turned house can be validly placed within the grid
         turnValidity = self.check_house_is_inside_grid(currentHouse)
 
-        # if it cannot, put it back at original location
+        # if house will not be inside map after turning,
+        # put it back in original orientation
         if turnValidity is False:
             currentHouse.width = backupWidth
             currentHouse.height = backupHeight
 
-        # if house cannot be placed at new coordinates, put it back
+        # if another house is in the way of the turned house,
+        # put it back in original orientation
         if self.place_house(currentHouse,
                             currentHouse.x,
                             currentHouse.y) is False:
-
-            # place house back with orignal width and height
             currentHouse.width = backupWidth
             currentHouse.height = backupHeight
 
@@ -264,15 +353,21 @@ class Area(object):
                   .format(currentHouse.x, currentHouse.y))
 
     def switch_house(self, houseA, houseB):
+        """Switch positions of two houses
 
-        # check if house coud valid placed on grid
-        checkValidityBoundarySwitchA = self.check_house_is_inside_grid(houseA)
-        checkValidityBoundarySwitchB = self.check_house_is_inside_grid(houseB)
+        Keyword arguments:
+        houseA -- first of the house objects that should be switched
+        houseB -- other house objects that should be switched
+        """
 
-        if ((checkValidityBoundarySwitchA is True and
-             checkValidityBoundarySwitchB is True)):
+        # check if switched houses coud validly be placed within
+        # grid after switching
+        switchValidityHouseA = self.house_inside_grid_check(houseA)
+        switchValidityHouseB = self.house_inside_grid_check(houseB)
+        if ((switchValidityHouseA is True and
+             switchValidityHouseB is True)):
 
-            # backup coordination of houses
+            # backup houses' coordination
             backUpHouseAX = houseA.x
             backUpHouseAY = houseA.y
             backUpHouseBX = houseB.x
@@ -282,16 +377,18 @@ class Area(object):
             self.remove_house(houseA)
             self.remove_house(houseB)
 
-            # switch coordinates of the houses
+            # switch both houses' coordinates
             houseA.x = backUpHouseBX
             houseA.y = backUpHouseBY
             houseB.x = backUpHouseAX
             houseB.y = backUpHouseAY
 
+            # place houses on new locations
             aSucces = self.place_house(houseA, houseA.x, houseA.y)
             bSucces = self.place_house(houseB, houseB.x, houseB.y)
 
-            # check if houses are placed succesful, if not remove two houses
+            # check if houses are placed succesful,
+            # if not remove two houses
             if any([(aSucces is False and bSucces is True),
                     (bSucces is False and aSucces is True)]):
                 if bSucces is False:
@@ -309,12 +406,16 @@ class Area(object):
                 self.place_house(houseA, backUpHouseAX, backUpHouseAY)
                 self.place_house(houseB, backUpHouseBX, backUpHouseBY)
 
-    def check_house_is_inside_grid(self, house):
+    def house_inside_grid_check(self, house):
+        """Check if a house falls within the grid
 
-        # check if house is entirely inside the grid
+        Keyword arguments:
+        house -- the house objects that should be checked
+        """
+
         if house.x > (self.width - house.width - house.minimumSpace):
             return False
         if house.y > (self.height - house.height - house.minimumSpace):
             return False
-        else:
-            return True
+
+        return True

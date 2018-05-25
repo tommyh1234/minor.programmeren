@@ -142,6 +142,5 @@ class RandomAlgorithm(Algorithm):
 
             self.area.get_area_price()
             if len(self.housesToPlace) == 0:
+                print('Grid value: {}'.format(self.area.get_area_price()))
                 self.isDone = True
-
-            print('Grid value: {}'.format(self.area.get_area_price()))
