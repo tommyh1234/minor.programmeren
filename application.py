@@ -51,15 +51,15 @@ def main():
                                                  'Your choice: '))
         if algorithmChoice == 5:
             print("")
-            beginTemp = int(input('What is the begin temperature?\n'
+            beginTemp = int(input('What is the begin temperature? (Try "50")\n'
                                   'Your choice: '))
             print("")
-            endTemp = int(input('What is the end temperature?\n'
+            endTemp = int(input('What is the end temperature? (Try "0")\n'
                                 'Your choice: '))
             print("")
             correctionShortening = int(input('What correction factor for'
                                              ' shortening the would you like'
-                                             ' to use?\n'
+                                             ' to use? (Try "1000")\n'
                                              ' Your choice: '))
     print("")
 
