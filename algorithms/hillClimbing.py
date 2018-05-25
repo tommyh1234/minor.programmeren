@@ -412,18 +412,26 @@ class HillClimbingAlgorithm(Algorithm):
 
         # Exponential
         if typeOfSimulatedAnnealing == 2:
-            currentTemp = (beginTemp * (endTemp/beginTemp) ^
+            currentTemp = (beginTemp * (endTemp/beginTemp) **
                            (tryCount / totalIterations))
 
         # Sigmoidal
         if typeOfSimulatedAnnealing == 3:
+            partOfCurrentTemp = (0.3 * (tryCount - totalIterations / 2))
+
+            if partOfCurrentTemp > 50:
+                partOfCurrentTemp = 50
+
             currentTemp = (endTemp + (beginTemp + endTemp) /
-                           (1 + math.exp(0.3
-                            (tryCount - totalIterations / 2))))
+                           (1 + math.exp(partOfCurrentTemp)))
 
         shortening = (newTotalPrice - currentTotalPrice) / correctionShortening
         coolingscheme = shortening / currentTemp
+        if coolingscheme > 50:
+            print('coolingscheme bigger than 50')
+            coolingscheme = 50
         acceptationChance = math.exp(coolingscheme)
+        print('After acceptationChance')
         randomValue = random.random()
 
         print('Grid Difference =', (newTotalPrice - currentTotalPrice),
