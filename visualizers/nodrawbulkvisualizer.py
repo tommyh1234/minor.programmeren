@@ -43,4 +43,5 @@ class NoDrawBulkVisualizer:
                 self.runs += 1
 
             if self.runs == self.maxRuns:
-                print('I succesfully ran {} times!✨ '.format(self.runs))
+                print('✨✨ I succesfully ran {}'
+                      'times! ✨✨'.format(self.runs))

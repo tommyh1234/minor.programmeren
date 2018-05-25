@@ -28,24 +28,25 @@ class BulkVisualizer(Visualizer):
     def on_render(self):
         """Runs and visualizes the algorithm"""
 
-        # visualize area
-        super().on_render()
+        while self.runs < self.maxRuns:
+            # continue running until algorithm is done
+            super().on_render()
 
-        # track highest found area value
-        if self.area.price > self.allTimeHigh:
-            self.allTimeHigh = self.area.price
+            # track highest found area value
+            if self.area.price > self.allTimeHigh:
+                self.allTimeHigh = self.area.price
 
-        # when a run is finished...
-        if self.algorithm.isDone is True and self.runs < self.maxRuns:
-            print('🎉🎉Run {} is complete! 🎉🎉'.format(self.runs))
-            # ...save values to csv file
-            self.dataHelper.writeArea(self.area)
+            # when a run is finished...
+            if self.algorithm.isDone is True and self.runs < self.maxRuns:
+                print('🎉🎉Run {} is complete! 🎉🎉'.format(self.runs))
+                # ...save values to csv file
+                self.dataHelper.writeArea(self.area)
 
-            # ...restore to a fresh state (empty area)
-            self.area = copy.deepcopy(self.originalArea)
-            self.algorithm = copy.copy(self.originalAlgorithm)
-            self.algorithm.area = self.area
-            self.runs += 1
+                # ...restore to a fresh state (empty area)
+                self.area = copy.deepcopy(self.originalArea)
+                self.algorithm = copy.copy(self.originalAlgorithm)
+                self.algorithm.area = self.area
+                self.runs += 1
 
-        if self.runs == self.maxRuns:
-            print('I succesfully ran {} times!✨ '.format(self.runs))
+            if self.runs == self.maxRuns:
+                print('✨✨ I succesfully ran {} times! ✨✨'.format(self.runs))

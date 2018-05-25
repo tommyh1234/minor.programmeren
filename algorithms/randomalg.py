@@ -49,6 +49,7 @@ class RandomAlgorithm(Algorithm):
             self.waterAmount = self.waterAmountChoice
             self.watersToPlace = water_list(self.area, self.waterAmount)
 
+        # make list with houses to place
         if len(self.housesToPlace) == 0:
             self.housesToPlace = construction_list(self.area,
                                                    self.fhAmount,
