@@ -2,7 +2,7 @@
 
 Visualizers are both the runners and the visualisation of the program. Since the logic loop and the rendering loop are one and the same we decided to bring these two functionalities together in a single class.
 
-There are two kinds of visualizers, single and bulk. Each has two variants. The single visualizer runs a given algorithm a single time while the bulk visualizer can run a algorithm many times (it will however only vizualize the area that was created last). The bulk visualizer extends the normal visualizer. The only difference is in what it does when the algorithm tells it it's done.
+There are two kinds of visualizers, single and bulk. Each has two variants. The single visualizer runs a given algorithm a single time while the bulk visualizer can run a algorithm many time. The bulk visualizer extends the normal visualizer (it will however only vizualize the area that was created last). The only difference is in what it does when the algorithm tells it it's done.
 
 Both visualizers also have a nodraw variant. This variant does not render anything to the screen but instead only outputs to the terminal and saves to files
 
