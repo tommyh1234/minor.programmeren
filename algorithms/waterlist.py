@@ -4,6 +4,12 @@ import math
 
 
 def water_list(area, waterAmount):
+    """Create a list of waterbodies to be placed
+
+    Keyword arguments:
+    area        -- the area to fill
+    waterAmount -- the amount of water bodies
+    """
 
     # determine size of water areas
     surfaceoToFlood = area.surface() * 0.2

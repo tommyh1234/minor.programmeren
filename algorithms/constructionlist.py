@@ -4,6 +4,14 @@ from objects.mansion import Mansion
 
 
 def construction_list(area, fhAmount, bAmount, mAmount):
+    """Generate a list of houses to be placed
+
+    Keyword arguments:
+    area        -- the area to fill
+    fhAmount    -- the amount of family homes
+    bAmount     -- the amount of bungalows
+    mAmount     -- the amount of mansions
+    """
 
     # create a list with the required amount of houses
     houses = []

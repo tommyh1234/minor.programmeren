@@ -9,6 +9,17 @@ class SpeedRandomAlgorithm(Algorithm):
 
     def __init__(self, area, fhAmount, bAmount, mAmount,
                  placementOrder, waterAmountChoise, isEmpty=False):
+        """Initialize the algorithm and prepares variables
+
+        Keyword arguments:
+        area                -- the area to fill
+        fhAmount            -- the amount of family homes
+        bAmount             -- the amount of bungalows
+        mAmount             -- the amount of mansions
+        placementOrder      -- determines the selection strategy for placing
+        waterAmountChoice   -- the amount of water bodies in the map
+        isEmpty             -- not used but a standard among algorithms
+        """
 
         self.housesToPlace = construction_list(area,
                                                fhAmount,
@@ -30,6 +41,7 @@ class SpeedRandomAlgorithm(Algorithm):
             self.waterAmountChoise = random.randint(1, 4)
 
     def execute(self):
+        """Execute a step of the algorithm"""
 
         if self.housePlacementRuns == 1:
             print("Building random map. Please wait ...")
