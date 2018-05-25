@@ -85,7 +85,6 @@ class RandomAlgorithm(Algorithm):
             else:
                 self.housesToPlace.remove(currentHouse)
             self.housePlacementRuns += 1
-
             # if a valid map can't be created in 1500 runs,
             # retry with a new random amount of water & and
             # the same amount of houses

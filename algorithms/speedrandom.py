@@ -7,11 +7,8 @@ import random
 
 class SpeedRandomAlgorithm(Algorithm):
 
-<<<<<<< HEAD
-    def __init__(self, area, fhAmount, bAmount, mAmountm, totalIteration):
-=======
+
     def __init__(self, area, fhAmount, bAmount, mAmount, isEmpty=False):
->>>>>>> master
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,

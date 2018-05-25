@@ -33,7 +33,6 @@ class House(object):
                         self.area.grid[i][j] is not self and
                         isinstance(self.area.grid[i][j], Water)):
                     return False
-
         return True
 
     def get_space(self):

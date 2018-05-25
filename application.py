@@ -24,12 +24,32 @@ def main():
                                 '4: HillClimbing\n'
                                 '5: Simmulated Annealing\n'
                                 'Your choice: '))
+    if algorithmChoice == 4 or algorithmChoice == 5:
+        print("")
+        totalIterations = int(input('How many steps should algorithm make?\n'
+                                   'Your choice: '))
+        if algorithmChoice == 5:
+            print("")
+            typeOfSimulatedAnnealing = int(input('What type of Simulated Annealing?\n'
+                                                 '1: lineair \n'
+                                                 '2: exponential\n'
+                                                 '3: sigmoidal\n'
+                                                 'Your choice: '))
+        if algorithmChoice == 5:
+            print("")
+            beginTemp = int(input('What is the begin temperature?\n'
+                                  'Your choice: '))
+            print("")
+            endTemp = int(input('What is the end temperature?\n'
+                                  'Your choice: '))
+            print("")
+            correctionShortening = int(input('What correction factor for the would you like to use?\n'
+                                            'Your choice: '))
     print("")
     visualizerChoice = int(input('What visualizer do you want?\n'
                                  '1: Normal visualizer\n'
                                  '2: Bulk visualizer\n'
                                  'Your choice: '))
-    
     print("")
     isEmpty = True
     fhAmount = 0
@@ -61,7 +81,6 @@ def main():
             bAmount = 15
             mAmount = 9
 
-
     if algorithmChoice == 1:
         algorithm = RandomAlgorithm(area, fhAmount,
                                     bAmount, mAmount, isEmpty)
@@ -72,11 +91,23 @@ def main():
         algorithm = SpeedRandomAlgorithm(area, fhAmount,
                                          bAmount, mAmount, isEmpty)
     elif algorithmChoice == 4:
-        algorithm = HillClimbingAlgorithm(area, fhAmount,
-                                          bAmount, mAmount, isEmpty)
+        algorithm = HillClimbingAlgorithm(area,\
+                                          fhAmount,\
+                                          bAmount,\
+                                          mAmount,\
+                                          isEmpty,\
+                                          totalIterations)
     elif algorithmChoice == 5:
-        # SIMMULATED ANNEALING
-        pass
+        algorithm = HillClimbingAlgorithm(area,\
+                                          fhAmount,\
+                                          bAmount,\
+                                          mAmount,\
+                                          isEmpty,\
+                                          beginTemp,\
+                                          endTemp,\
+                                          totalIterations,\
+                                          typeOfSimulatedAnnealing,\
+                                          correctionShortening)
 
     if visualizerChoice == 1:
         visualizer = Visualizer(area, algorithm)
@@ -92,7 +123,7 @@ def main():
 
     # # # just SpeedRandom Algorithm
     # # grid = Area()
-    # # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9, totalIteration)  
+    # # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9, totalIterations)  
     # # #                                                  # 20h: 12, 5, 3
     # # #                                                  # 40: 24, 10, 6
     # # #                                                  # 60: 36, 15, 9
@@ -103,7 +134,7 @@ def main():
     # # grid = Area()
     # # TODO: notice that hillclimbingAlgorithm has fourth value
     # # for total amound of itteration.
-    # # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9, totalIteration)  
+    # # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9, totalIterations)  
     # # #                                                   # 20h: 12, 5, 3
     # # #                                                   # 40: 24, 10, 6
     # # #                                                   # 60: 36, 15, 9
