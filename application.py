@@ -172,7 +172,7 @@ def main():
     elif visualizerChoice == 3:
         visualizer = NoDrawVisualizer(area, algorithm)
     elif visualizerChoice == 4:
-        runs = int(input('How many runs do you wnat to do? \n'
+        runs = int(input('How many runs do you want to do? \n'
                          'Your choice: '))
         visualizer = NoDrawBulkVisualizer(area, algorithm, runs)
 
