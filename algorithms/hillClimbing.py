@@ -1,12 +1,21 @@
 # -*- coding: UTF-8 -*-
 import random
+import math
 from algorithms.randomalg import RandomAlgorithm
 from algorithms.algorithm import Algorithm
 
+# from algorithms.speedrandom import SpeedRandomAlgorithm
+
 
 class HillClimbingAlgorithm(Algorithm):
+
     def __init__(self, area, fhAmount, bAmount, mAmount,
-                 placementOrder, waterAmountChoise, isEmpty=True):
+                 placementOrder=None, waterAmountChoice=None,
+                 isEmpty=True, totalIterations=None,
+                 beginTemp=None, endTemp=None,
+                 typeOfSimulatedAnnealing=None,
+                 correctionShortening=None):
+
         self.placementOrder = placementOrder
         self.isDone = False
         self.tryCount = 0
@@ -22,10 +31,24 @@ class HillClimbingAlgorithm(Algorithm):
         self.unbeneficialSwitchCount = 0
         self.unbeneficialTurnCount = 0
         self.unbeneficialSlideCount = 0
+        self.SAAcceptedUnbeneficialMoveCount = 0
+        self.SAAcceptedUnbeneficialSlideCount = 0
+        self.SAAcceptedUnbeneficialTurnCount = 0
+        self.SAAcceptedUnbeneficialSwitchCount = 0
+        self.SARejectedUnbeneficialMoveCount = 0
+        self.SARejectedUnbeneficialSlideCount = 0
+        self.SARejectedUnbeneficialTurnCount = 0
+        self.SARejectedUnbeneficialSwitchCount = 0
+        self.typeOfSimulatedAnnealing = typeOfSimulatedAnnealing
+        self.correctionShortening = correctionShortening
         self.initialGridPrice = 0
         self.area = area
+        self.beginTemp = beginTemp
+        self.endTemp = endTemp
+        self.totalIterations = totalIterations
         self.totalHouseAmount = fhAmount + bAmount + mAmount
         self.pickHouseList = []
+
         if isEmpty is True:
             # fill grid random
             self.randomAlg = RandomAlgorithm(self.area,
@@ -33,11 +56,14 @@ class HillClimbingAlgorithm(Algorithm):
                                              bAmount,
                                              mAmount,
                                              placementOrder,
-                                             waterAmountChoise)
+                                             waterAmountChoice)
             while self.randomAlg.isDone is False:
                 self.randomAlg.execute()
 
     def execute(self):
+
+        # reset outcome of simulated annealing algorithm
+        simulatedAnnealing = None
 
         # save initial value of grid
         if self.tryCount == 0:
@@ -78,25 +104,61 @@ class HillClimbingAlgorithm(Algorithm):
             # go back to orignal location
             newTotalPrice = self.area.get_area_price()
 
-            # check if grid is increased
+            # accept move by a Hillclimber or simulated Annealing Algorithm
+            # We don't do a simulated annealing when the grid is not decreased
+            # in value. Because the acceptation chance is always bigger than 1.
+            # So new grid will accept.
             if currentTotalPrice > newTotalPrice:
+                # simulated annealing algorithm
+                if self.beginTemp is not None:
+                    # if simulated annealing accept new grid
+                    simulatedAnnealing = self.simulated_annealing(
+                                         self.typeOfSimulatedAnnealing,
+                                         newTotalPrice,
+                                         currentTotalPrice,
+                                         self.beginTemp,
+                                         self.endTemp,
+                                         self.tryCount,
+                                         self.totalIterations,
+                                         self.correctionShortening)
 
-                # remove current house
-                self.area.remove_house(currentHouse)
+                    # accept unbeneficial move by simulated annealing
+                    if simulatedAnnealing is True:
+                        self.SAAcceptedUnbeneficialSlideCount += 1
+                        self.SAAcceptedUnbeneficialMoveCount += 1
+                        print("⬇️ ✅  Unbeneficial move. Has been done by "
+                              "Simulated Annealing.")
+                        print("Price decrease: {} | New grid value: {}"
+                              .format(newTotalPrice - currentTotalPrice,
+                                      newTotalPrice))
 
-                # place house back at origanal coordinates
-                if not self.area.place_house(currentHouse, backupX, backupY):
-                    print("✘ Cannot validly place house at "
-                          "({}, {})".format(currentHouse.x, currentHouse.y))
+                    if simulatedAnnealing is False:
+                        self.SARejectedUnbeneficialSlideCount += 1
+                        self.SARejectedUnbeneficialMoveCount += 1
+                        print("⬇️ ❌️  Unbeneficial move. Has been rejected by"
+                              "Simulated Annealing.")
 
-                self.unbeneficialMoves += 1
-                self.unbeneficialSlideCount += 1
-                print("❌ Unbeneficial move. Has been undone.")
+                if simulatedAnnealing is not True:
+                    # remove current house
+                    self.area.remove_house(currentHouse)
+
+                    # place house back at origanal coordinates
+                    if not self.area.place_house(currentHouse, backupX,
+                                                 backupY):
+                        print("✘ Cannot validly place house at "
+                              "({}, {})".format(currentHouse.x,
+                                                currentHouse.y))
+
+                    if simulatedAnnealing is None:
+                        self.unbeneficialMoves += 1
+                        self.unbeneficialSlideCount += 1
+                        print("❌ Unbeneficial move. Has been undone.")
 
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
                 self.neutralSlideCount += 1
                 print("😐 Neutral (allowed) or impossible move (reverted)")
+
             else:
                 self.succesfullSlideCount += 1
                 self.succesfullMoves += 1
@@ -127,18 +189,53 @@ class HillClimbingAlgorithm(Algorithm):
             # go back to orignal location
             newTotalPrice = self.area.get_area_price()
 
-            # check if grid price has increased
+            # accept move by a Hillclimber or simulated Annealing Algorithm
+            # We don't do a simulated annealing when the grid is not decreased
+            # in value. Because the acceptation chance is always bigger than 1.
+            # So new grid will accept.
             if currentTotalPrice > newTotalPrice:
+                # simulated annealing algorithm
+                if self.beginTemp is not None:
+                    # if simulated annealing accept new grid
+                    simulatedAnnealing = self.simulated_annealing(
+                                         self.typeOfSimulatedAnnealing,
+                                         newTotalPrice,
+                                         currentTotalPrice,
+                                         self.beginTemp,
+                                         self.endTemp,
+                                         self.tryCount,
+                                         self.totalIterations,
+                                         self.correctionShortening)
 
-                # turn house back to orignal height and length
-                if not self.area.turn_house(currentHouse, currentHouse.width,
-                                            currentHouse.height):
-                    print("✘ Cannot validly place house at "
-                          "({}, {})".format(currentHouse.x, currentHouse.y))
+                    # accept unbeneficial move by simulated annealing
+                    if simulatedAnnealing is True:
+                        self.SAAcceptedUnbeneficialTurnCount += 1
+                        self.SAAcceptedUnbeneficialMoveCount += 1
+                        print('⬇️ ✅  Unbeneficial move. Has been done by'
+                              'Simulated Annealing.')
+                        print("Price decrease: {} | New grid value: {}"
+                              .format(newTotalPrice - currentTotalPrice,
+                                      newTotalPrice))
 
-                self.unbeneficialMoves += 1
-                self.unbeneficialTurnCount += 1
-                print("❌ Unbeneficial move. Has been undone.")
+                    if simulatedAnnealing is False:
+                        self.SARejectedUnbeneficialTurnCount += 1
+                        self.SARejectedUnbeneficialMoveCount += 1
+                        print('⬇️ ❌️  Unbeneficial move. Has been rejected by,'
+                              'Simulated Annealing.')
+
+                if simulatedAnnealing is not True:
+                    # turn house back to orignal height and length
+                    if not self.area.turn_house(currentHouse,
+                                                currentHouse.width,
+                                                currentHouse.height):
+                        print("✘ Cannot validly place house at "
+                              "({}, {})".format(currentHouse.x,
+                                                currentHouse.y))
+
+                    if simulatedAnnealing is None:
+                        self.unbeneficialMoves += 1
+                        self.unbeneficialTurnCount += 1
+                        print("❌ Unbeneficial move. Has been undone.")
 
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
@@ -181,36 +278,73 @@ class HillClimbingAlgorithm(Algorithm):
             # get price of grid
             newTotalPrice = self.area.get_area_price()
 
-            # check if price grid is increased
+            # Accept move by a Hillclimber or simulated Annealing Algorithm
+            # We don't do a simulated annealing when the grid is not decreased
+            # invalue. Because the acceptation chance is always bigger than 1.
+            # So new grid will accept.
             if currentTotalPrice > newTotalPrice:
-                # remove houses from grid if not increased
-                self.area.remove_house(houseA)
-                self.area.remove_house(houseB)
 
-                # place orignal houses back on grid
-                if not self.area.place_house(houseA,
-                                             backupHouseAX,
-                                             backupHouseAY):
-                    print("✘ Cannot validly place house at "
-                          "({}, {})".format(currentHouse.x,
-                                            currentHouse.y))
+                # simulated annealing algorithm
+                if self.beginTemp is not None:
+                    # if simulated annealing accept new grid
+                    simulatedAnnealing = self.simulated_annealing(
+                                            self.typeOfSimulatedAnnealing,
+                                            newTotalPrice,
+                                            currentTotalPrice,
+                                            self.beginTemp,
+                                            self.endTemp,
+                                            self.tryCount,
+                                            self.totalIterations,
+                                            self.correctionShortening)
 
-                if not self.area.place_house(houseB,
-                                             backupHouseBX,
-                                             backupHouseBY):
-                    print("✘ Cannot validly place house at "
-                          "({}, {})".format(currentHouse.x,
-                                            currentHouse.y))
+                    # accept unbeneficial move by simulated annealing
+                    if simulatedAnnealing is True:
+                        self.SAAcceptedUnbeneficialSwitchCount += 1
+                        self.SAAcceptedUnbeneficialMoveCount += 1
+                        print('⬇️ ✅  Unbeneficial move. Has been done by'
+                              'Simulated Annealing.')
+                        print('Price decrease: {} | New grid value: {}'
+                              .format(newTotalPrice - currentTotalPrice,
+                                      currentTotalPrice))
 
-                self.unbeneficialMoves += 1
-                self.unbeneficialSwitchCount += 1
-                print("❌ Unbeneficial move. Has been undone.")
+                    if simulatedAnnealing is False:
+                        self.SARejectedUnbeneficialSwitchCount += 1
+                        self.SARejectedUnbeneficialMoveCount += 1
+                        print('⬇️ ❌️  Unbeneficial move. Has been'
+                              'rejected by Simulated Annealing.')
+
+                if simulatedAnnealing is not True:
+                    # remove houses from grid if not increased
+                    self.area.remove_house(houseA)
+                    self.area.remove_house(houseB)
+
+                    # place orignal houses back on grid
+                    if not self.area.place_house(houseA,
+                                                 backupHouseAX,
+                                                 backupHouseAY):
+                        print("✘ Cannot validly place house at "
+                              "({}, {})".format(currentHouse.x,
+                                                currentHouse.y))
+
+                    if not self.area.place_house(houseB,
+                                                 backupHouseBX,
+                                                 backupHouseBY):
+                        print("✘ Cannot validly place house at "
+                              "({}, {})".format(currentHouse.x,
+                                                currentHouse.y))
+
+                    if simulatedAnnealing is None:
+                        self.unbeneficialMoves += 1
+                        self.unbeneficialSwitchCount += 1
+                        print("❌ Unbeneficial move. Has been undone.")
+
             elif currentTotalPrice == newTotalPrice:
                 self.neutralMoves += 1
-                self.neutralSwitchCount += 1
+                self.neutralSlideCount += 1
                 print("😐 Neutral (allowed) or impossible move (reverted)")
+
             else:
-                self.succesfullSwitchCount += 1
+                self.succesfullSlideCount += 1
                 self.succesfullMoves += 1
                 print("✅ Price increase: {} | New grid value: {}"
                       .format(newTotalPrice
@@ -222,12 +356,12 @@ class HillClimbingAlgorithm(Algorithm):
 
         print("-------------------- ")
 
-        if self.tryCount >= 1000:
-            print("Total price: {} | "
+        if self.tryCount >= self.totalIterations:
+            print("Total price: {} "
                   "Total price increase: {} "
                   .format(currentTotalPrice,
                           currentTotalPrice - self.initialGridPrice))
-            print("In: ✅ {} succesfull moves "
+            print("In: ✅ {} succesfull moves"
                   "({} slide(s), {} turn(s), {} switche(s)"
                   .format(self.succesfullMoves,
                           self.succesfullSlideCount,
@@ -245,5 +379,59 @@ class HillClimbingAlgorithm(Algorithm):
                           self.unbeneficialSlideCount,
                           self.unbeneficialTurnCount,
                           self.unbeneficialSwitchCount))
+            print("In: ⬇️ ✅ {} Simulated Annealing accepted unbeneficial"
+                  "({} slide(s), {} turn(s), {} switche(s)"
+                  .format(self.SAAcceptedUnbeneficialMoveCount,
+                          self.SAAcceptedUnbeneficialSlideCount,
+                          self.SAAcceptedUnbeneficialTurnCount,
+                          self.SAAcceptedUnbeneficialSwitchCount))
+            print("In: ⬇️ ❌ {} Simulated Annealing rejected unbeneficial"
+                  "({} slide(s), {} turn(s), {} switche(s)"
+                  .format(self.SARejectedUnbeneficialMoveCount,
+                          self.SARejectedUnbeneficialSlideCount,
+                          self.SARejectedUnbeneficialTurnCount,
+                          self.SARejectedUnbeneficialSwitchCount))
 
             self.isDone = True
+
+    def simulated_annealing(self, typeOfSimulatedAnnealing,
+                            newTotalPrice, currentTotalPrice,
+                            beginTemp, endTemp,
+                            tryCount, totalIterations,
+                            correctionShortening):
+
+        currentTemp = 0
+        endTemp += 0.000000000001
+
+        # Lineair
+        if typeOfSimulatedAnnealing == 1:
+            currentTemp = (beginTemp - tryCount * (beginTemp - endTemp) /
+                           totalIterations)
+
+        # Exponential
+        if typeOfSimulatedAnnealing == 2:
+            currentTemp = (beginTemp * (endTemp/beginTemp) ^
+                           (tryCount / totalIterations))
+
+        # Sigmoidal
+        if typeOfSimulatedAnnealing == 3:
+            currentTemp = (endTemp + (beginTemp + endTemp) /
+                           (1 + math.exp(0.3
+                            (tryCount - totalIterations / 2))))
+
+        shortening = (newTotalPrice - currentTotalPrice) / correctionShortening
+        coolingscheme = shortening / currentTemp
+        acceptationChance = math.exp(coolingscheme)
+        randomValue = random.random()
+
+        print('Grid Difference =', (newTotalPrice - currentTotalPrice),
+              '| Shortening =', shortening, '| Current Temp. =', currentTemp,
+              '| Coolingscheme =', coolingscheme)
+        print('Acceptation Chance', acceptationChance,
+              '| Random Value', randomValue)
+
+        if acceptationChance > randomValue:
+            return True
+
+        else:
+            return False

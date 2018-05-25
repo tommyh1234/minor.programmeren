@@ -37,6 +37,30 @@ def main():
                                 '5: Simmulated Annealing\n'
                                 '6: Do Nothing (show only)'
                                 'Your choice: '))
+    if algorithmChoice == 4 or algorithmChoice == 5:
+        print("")
+        totalIterations = int(input('How many steps should algorithm make?\n'
+                                    'Your choice: '))
+        if algorithmChoice == 5:
+            print("")
+            typeOfSimulatedAnnealing = int(input('What type of Simulated'
+                                                 ' Annealing?\n'
+                                                 '1: lineair \n'
+                                                 '2: exponential\n'
+                                                 '3: sigmoidal\n'
+                                                 'Your choice: '))
+        if algorithmChoice == 5:
+            print("")
+            beginTemp = int(input('What is the begin temperature?\n'
+                                  'Your choice: '))
+            print("")
+            endTemp = int(input('What is the end temperature?\n'
+                                'Your choice: '))
+            print("")
+            correctionShortening = int(input('What correction factor for'
+                                             ' shortening the would you like'
+                                             ' to use?\n'
+                                             ' Your choice: '))
     print("")
 
     # let the user choose a type of visualization.
@@ -93,7 +117,7 @@ def main():
                                    'then Family homes \n'
                                    'Your choice: '))
         print("")
-        waterAmountChoise = int(input('How many water areas'
+        waterAmountChoice = int(input('How many water areas'
                                       ' do you want on the map? \n'
                                       '1: 1 Area \n'
                                       '2: 2 Area\'s \n'
@@ -101,15 +125,15 @@ def main():
                                       '4: 4 Area\'s \n'
                                       '5: Random amount of Area\'s \n'
                                       'Your choice: '))
-        if waterAmountChoise == "5":
-            waterAmountChoise = "Random"
+        if waterAmountChoice == "5":
+            waterAmountChoice = "Random"
         print("")
 
     # initiate the algorithm chosen by the user
     if algorithmChoice == 1:
         algorithm = RandomAlgorithm(area, fhAmount,
                                     bAmount, mAmount,
-                                    placementOrder, waterAmountChoise,
+                                    placementOrder, waterAmountChoice,
                                     isEmpty)
     elif algorithmChoice == 2:
         algorithm = GreedyAlgorithm(area, fhAmount,
@@ -117,16 +141,22 @@ def main():
     elif algorithmChoice == 3:
         algorithm = SpeedRandomAlgorithm(area, fhAmount,
                                          bAmount, mAmount,
-                                         placementOrder, waterAmountChoise,
+                                         placementOrder, waterAmountChoice,
                                          isEmpty)
     elif algorithmChoice == 4:
         algorithm = HillClimbingAlgorithm(area, fhAmount,
                                           bAmount, mAmount,
-                                          placementOrder, waterAmountChoise,
-                                          isEmpty)
+                                          placementOrder, waterAmountChoice,
+                                          isEmpty, totalIterations)
     elif algorithmChoice == 5:
-        # SIMMULATED ANNEALING
-        pass
+        algorithm = HillClimbingAlgorithm(area, fhAmount,
+                                          bAmount, mAmount, placementOrder,
+                                          waterAmountChoice,
+                                          isEmpty, totalIterations,
+                                          beginTemp, endTemp,
+                                          typeOfSimulatedAnnealing,
+                                          correctionShortening)
+
     elif algorithmChoice == 6:
         algorithm = Algorithm(area, fhAmount,
                               bAmount, mAmount,
@@ -150,6 +180,26 @@ def main():
     print("Starting your Algorithm...")
     print("----------------------")
     visualizer.on_execute()
+
+    # # # just SpeedRandom Algorithm
+    # # grid = Area()
+    # # algorithm = SpeedRandomAlgorithm(grid, 36, 15, 9, totalIterations)
+    # # #                                                  # 20h: 12, 5, 3
+    # # #                                                  # 40: 24, 10, 6
+    # # #                                                  # 60: 36, 15, 9
+    # # visualizer = BulkVisualizer(grid, algorithm, 10)
+    # # visualizer.on_execute()
+
+    # #   just a HillClimbing algorithm
+    # # grid = Area()
+    # # TODO: notice that hillclimbingAlgorithm has fourth value
+    # # for total amound of itteration.
+    # # algorithm = HillClimbingAlgorithm(grid, 36, 15, 9, totalIterations)
+    # # #                                                   # 20h: 12, 5, 3
+    # # #                                                   # 40: 24, 10, 6
+    # # #                                                   # 60: 36, 15, 9
+    # # visualizer = BulkVisualizer(grid, algorithm, 10)
+    # # visualizer.on_execute()
 
 
 if __name__ == "__main__":

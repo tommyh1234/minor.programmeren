@@ -9,6 +9,7 @@ class SpeedRandomAlgorithm(Algorithm):
 
     def __init__(self, area, fhAmount, bAmount, mAmount,
                  placementOrder, waterAmountChoise, isEmpty=False):
+
         self.housesToPlace = construction_list(area,
                                                fhAmount,
                                                bAmount,
