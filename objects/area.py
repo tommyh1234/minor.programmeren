@@ -359,12 +359,12 @@ class Area(object):
         houseB -- other house objects that should be switched
         """
 
-        # check if switched houses coud validly be
-        # placed within grid after switching
-        checkValidityBoundarySwitchA = self.check_house_is_inside_grid(houseA)
-        checkValidityBoundarySwitchB = self.check_house_is_inside_grid(houseB)
-        if ((checkValidityBoundarySwitchA is True and
-             checkValidityBoundarySwitchB is True)):
+        # check if switched houses coud validly be placed within
+        # grid after switching
+        switchValidityHouseA = self.house_inside_grid_check(houseA)
+        switchValidityHouseB = self.house_inside_grid_check(houseB)
+        if ((switchValidityHouseA is True and
+             switchValidityHouseB is True)):
 
             # backup houses' coordination
             backUpHouseAX = houseA.x
@@ -405,7 +405,7 @@ class Area(object):
                 self.place_house(houseA, backUpHouseAX, backUpHouseAY)
                 self.place_house(houseB, backUpHouseBX, backUpHouseBY)
 
-    def check_house_is_inside_grid(self, house):
+    def house_inside_grid_check(self, house):
         """Check if a house falls within the grid
 
         Keyword arguments:
