@@ -32,11 +32,9 @@ class Area(object):
         self.price = 0
         self.recursiveCount = None
 
-
     def surface(self):
         """Calculate the total surface of the area"""
         return self.width * self.height
-
 
     def place_water(self, water, xCoordinate, yCoordinate):
         """Place a water object on the grid
@@ -63,7 +61,6 @@ class Area(object):
 
         return False
 
-
     def remove_water(self, water):
         """Remove a water object from the grid
 
@@ -79,7 +76,6 @@ class Area(object):
 
         # remove water object to list of water objects
         self.allWatersList.remove(water)
-
 
     def place_house(self, house, xCoordinate, yCoordinate):
         """Place a house object on the grid
@@ -113,7 +109,6 @@ class Area(object):
 
         return False
 
-
     def remove_house(self, house):
         """Remove a house object from the grid
 
@@ -137,7 +132,6 @@ class Area(object):
         elif kind == "FamilyHome":
             self.familyHomeList.remove(house)
 
-
     def check_house_balance(self):
         """Check ratio of placed houses for required ratio's"""
 
@@ -154,7 +148,6 @@ class Area(object):
             return False
 
         return True
-
 
     def get_area_price(self):
         """Check the grid price house by house"""
@@ -174,7 +167,6 @@ class Area(object):
         self.price = totalPrice
         return totalPrice
 
-
     def sliding_house(self, currentHouse, backupX, backupY):
         """Slide a house up/down or left/right by a certain amount
 
@@ -191,7 +183,7 @@ class Area(object):
         directionShift = None
         houseIsBlocked = None
         currentHouse = self.determine_shift(currentHouse, directionShift,
-                                           houseIsBlocked)
+                                            houseIsBlocked)
 
         # if house cannot be placed at new coordinates,
         # put it back at orignial coordinates
@@ -211,7 +203,6 @@ class Area(object):
         else:
             print("✔ House placed at new location ({}, {})"
                   .format(currentHouse.x, currentHouse.y))
-
 
     def determine_shift(self, currentHouse, directionShift, houseIsBlocked):
         """Determine the direction and amount to shift a house with
@@ -312,7 +303,6 @@ class Area(object):
         # return currenthouse from last valid determine_shift attempt
         return currentHouse
 
-
     def turn_house(self, currentHouse, backupWidth, backupHeight):
         """Turn a house on its side (switching its width and height)
 
@@ -360,7 +350,6 @@ class Area(object):
         else:
             print("✓ House placed at new location ({}, {})"
                   .format(currentHouse.x, currentHouse.y))
-
 
     def switch_house(self, houseA, houseB):
         """Switch positions of two houses
@@ -416,7 +405,6 @@ class Area(object):
                 self.place_house(houseA, backUpHouseAX, backUpHouseAY)
                 self.place_house(houseB, backUpHouseBX, backUpHouseBY)
 
-
     def check_house_is_inside_grid(self, house):
         """Check if a house falls within the grid
 
@@ -428,5 +416,5 @@ class Area(object):
             return False
         if house.y > (self.height - house.height - house.minimumSpace):
             return False
-        
+
         return True
