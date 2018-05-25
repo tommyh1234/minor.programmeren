@@ -48,6 +48,9 @@ class Area(object):
         house.y = y
         kind = type(house).__name__
 
+        if not self.check_house_is_inside_grid(house):
+            return False
+
         # place new house
         if house.check_validity():
             # place the house on every coordinate
