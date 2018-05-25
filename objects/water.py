@@ -9,7 +9,9 @@ class Water(object):
     area = None
 
     def __init__(self, area):
-        """Extra characteristics for a water instance created on initialization"""
+        """Extra characteristics for a water instance created
+        on initialization"""
+
         self.area = area
 
     def surface(self):

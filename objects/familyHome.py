@@ -2,7 +2,8 @@ from objects.house import House
 
 
 class FamilyHome(House):
-    """The house object in which the family home's characteristics will be saved"""
+    """The house object in which the family home's characteristics
+    will be saved"""
 
     height = 16
     width = 16

@@ -15,7 +15,8 @@ class House(object):
     area = None
 
     def __init__(self, area):
-        """Extra characteristics for a house instance created on initialization"""
+        """Extra characteristics for a house instance created
+        on initialization"""
 
         self.area = area
 
@@ -87,7 +88,8 @@ class House(object):
             elif (self.width + space < self.area.width or
                   self.height + space < self.area.height):
 
-                # reset x and y-coordinates and check a larger area around house
+                # reset x and y-coordinates and check a
+                # larger area around house
                 space += 1
                 x = self.x - space
                 y = self.y - space

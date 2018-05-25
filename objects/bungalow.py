@@ -2,7 +2,8 @@ from objects.house import House
 
 
 class Bungalow(House):
-    """The house object in which the bungalow's characteristics will be saved"""
+    """The house object in which the bungalow's characteristics
+    will be saved"""
 
     height = 20
     width = 15
