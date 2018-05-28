@@ -29,12 +29,14 @@ class NoDrawBulkVisualizer:
             # continue running until algorithm is done
             while self.algorithm.isDone is False:
                 self.algorithm.execute()
+                self.dataHelper.writeCSVLine(self.area)
 
             # if algorithm completes one run, reset state
             if self.algorithm.isDone is True and self.runs < self.maxRuns:
                 print('Run {} is complete! 🎉'.format(self.runs))
                 # save area to csv
                 self.dataHelper.writeArea(self.area)
+                self.dataHelper = DataHelper()
 
                 # reset area and algorithm
                 self.area = copy.deepcopy(self.originalArea)
