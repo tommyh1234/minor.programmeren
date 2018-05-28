@@ -172,7 +172,7 @@ def main():
         if algorithmChoice == 5:
             visualizer = Visualizer(area, algorithm, True)
         else:
-            visualizer = Visualizer(area, algorithm, True)
+            visualizer = Visualizer(area, algorithm, False)
     elif visualizerChoice == 2:
         runs = int(input('How many runs do you want to do? \n'
                          'Your choice: '))
