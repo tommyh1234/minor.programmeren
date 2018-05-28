@@ -17,6 +17,10 @@ from datahelper import DataHelper
 def main():
     """Present the user with choices about the algorithm to run"""
 
+    # set some values
+    placementOrder = None
+    waterAmountChoice = None
+
     print("----------------------")
     print("WELCOME TO AMSTELHAEGE \n")
 
