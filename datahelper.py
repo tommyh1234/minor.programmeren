@@ -33,6 +33,15 @@ class DataHelper(object):
                              area.price,
                              timestamp + '.area'])
 
+    def writeCSVLine(self, area):
+        if self.file is None:
+            raise RuntimeError('Trying to write before opening a .csv file!')
+
+        self.writer.writerow([
+                             len(area.allHousesList),
+                             area.price,
+                             'None'])
+
     def writeSeperator(self):
         if self.file is None:
             raise RuntimeError('Trying to write before opening a .csv file!')
