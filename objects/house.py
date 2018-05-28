@@ -56,60 +56,70 @@ class House(object):
         """Get the possible free space for a house"""
 
         space = 0
-        x = self.x
-        y = self.y
 
         # while a given grid position is not taken by something else...
-        while (self.area.grid[x][y] is None or
-               self.area.grid[x][y] is self or
-               isinstance(self.area.grid[x][y], Water)):
+        while (space < self.area.width):
 
-            # if x-coordinate + house width + free space is smaller than
-            # current x-coordinate and falls within area
-            if (x < self.x + self.width - 1 + space and
-                    x >= 0 and x < self.area.width - 1):
-                # check next x-coordinate
-                x += 1
+            # first check horizontally
+            for x in range(self.x - space, self.x + self.width + space):
+                safeX = x
+                if safeX >= self.area.width - 1:
+                    safeX = self.area.width - 1
 
-            # if y-coordinate + house height + free space is smaller than
-            # current y-coordinate and falls within area
-            elif (y < self.y + self.height - 1 + space and
-                  y >= 0 and y < self.area.height - 1):
-                # check next y-coordiante and reset x-coordinate
-                y += 1
-                x = self.x - space
+                if safeX < 0:
+                    safeX = 0
 
-                # make sure x and y-coordinates will not be outside of area
-                if x < 0:
-                    x = 0
-                if x > self.area.width - 1:
-                    x = self.area.width - 1
-                if y > self.area.height - 1:
-                    y = self.area.height - 1
+                topY = self.y - space
+                if topY < 0:
+                    topY = 0
 
-            # if free space + house's width or height falls within map...
-            elif (self.width + space < self.area.width or
-                  self.height + space < self.area.height):
+                # first check the top
+                if(self.area.grid[safeX][topY] is not None and
+                   self.area.grid[safeX][topY] is not self and
+                   not isinstance(self.area.grid[safeX][topY], Water)):
+                    return space - 1
 
-                # reset x and y-coordinates and check a
-                # larger area around house
-                space += 1
-                x = self.x - space
-                y = self.y - space
+                bottomY = self.y + self.height + space
+                if bottomY >= self.area.height - 1:
+                    bottomY = self.area.height - 1
+                # then check the bottom
+                if(self.area.grid[safeX][bottomY] is not None and
+                   self.area.grid[safeX][bottomY] is not self and
+                   not isinstance(self.area.grid[safeX][bottomY], Water)):
+                    return space - 1
 
-                # make sure x and y-coordinates will not be outside of area
-                if x < 0:
-                    x = 0
-                if x > self.area.width - 1:
-                    x = self.area.width - 1
-                if y < 0:
-                    y = 0
-                if y > self.area.height - 1:
-                    y = self.area.height - 1
-            else:
-                break
+            # then check vertically
+            for y in range(self.y - space, self.y + self.height + space):
+                safeY = y
+                if safeY >= self.area.height - 1:
+                    safeY = self.area.height - 1
 
-        return space - 1
+                if safeY < 0:
+                    safeY = 0
+
+                # make sure the left x is not out of bounds
+                leftX = self.x - space
+                if leftX < 0:
+                    leftX = 0
+
+                # check the left side
+                if(self.area.grid[leftX][safeY] is not None and
+                   self.area.grid[leftX][safeY] is not self and
+                   not isinstance(self.area.grid[leftX][safeY], Water)):
+                    return space - 1
+
+                # make sure the right x is not out of bounds
+                rightX = self.x + self.width + space
+                if rightX >= self.area.width - 1:
+                    rightX = self.area.width - 1
+
+                # then check the right side
+                if(self.area.grid[rightX][safeY] is not None and
+                   self.area.grid[rightX][safeY] is not self and
+                   not isinstance(self.area.grid[rightX][safeY], Water)):
+                    return space - 1
+
+            space += 1
 
     def get_price(self):
         """Get the value for a house"""
