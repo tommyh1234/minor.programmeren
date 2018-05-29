@@ -2,7 +2,7 @@
 
 ## 20 houses
 As an experiment 4 hillclimbers were ran on the best generated random map with 20 houses. Each hillclimber ran for 10.000 steps. The following graph shows the increase in value as each hillclimber climbed.
-![Graph of hillclimbing runs](HillClimbing-40Hs/hillclimber40.png "Hillclimbing runs 40 houses")
+![Graph of hillclimbing runs](HillClimbing-20Hs/hillclimber20.png "Hillclimbing runs 20 houses")
 
 As this graph shows the increase really starts to flatten at around 6000 steps and really plateaus at around 8000 steps.
 
