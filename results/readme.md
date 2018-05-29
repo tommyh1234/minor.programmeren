@@ -1,5 +1,3 @@
 # Results
 
-The results folder constains .area files which are interesting to view because of their grid value (low / high) and graphs that show average values for different algorithm configurations. This file further explains some of these interesting results.
-
-** Results will be addeded after experimentation is done coming weekend.
+In this folder we've gathered interesing results from the experiments we've run. They have been sorted in the folders of their respective alogorithm names. The 'random' map contains all experiments with the random algorithm, 'Hillclimbing' with the Hillclimbing algorithm etc. Depending on the experiment we provide a pdf with explanatory graphs, a csv with map values and/or area files so you can load in the respective map itself. Each map also contains a short description and conclusion of the experiments.
