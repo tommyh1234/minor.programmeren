@@ -24,6 +24,12 @@ The results are plotted in this graph:
 The graph shows that there are very few outliers in the highest and lowest regions. This means generating random maps will generally not result in the high values that we are looking for.
 
 ## 60 houses
+In the experiment to find the highest random map by generating 40.000 maps, we sall that the lowest value was 22.690.080 and the highest score of 25.100.010. 
+
+The results are plotted in this graph:
+![Graph of random runs](Random-60Hs/random60.png "Random runs 60 houses")
+
+The graph shows that there are very few outliers in the highest and lowest regions. This means generating random maps will generally not result in the high values that we are looking for.
 
 
 ## Few or many waterbodies?
