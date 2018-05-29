@@ -24,7 +24,7 @@ The graph shows that there are very few outliers in the highest and lowest regio
 
 ## 60 houses
 
-## Few or much water?
+## Few or many waterbodies?
 We wondered wether the amount of water would have a big impact on the value of the map. Therefore we compared the highest and lowest map values of all diferent map configurations. 
 
 
