@@ -44,8 +44,8 @@ The results of this comparison can be seen in this figure: ![figure of different
 | 2 Waters    | 20 Houses | 8.185.245       | *12.653.865*   |
 | 3 Waters    | 20 Houses | 7.995.075       | 12.551.340     |
 | 4 Waters    | 20 Houses | 8.148.225       | 11.915.220     |
-| 1 Water     | 40 Houses |                 |                |
-| 2 Waters    | 40 Houses |                 |                |
+| 1 Water     | 40 Houses | 15.645.495      | 18.692.055     |
+| 2 Waters    | 40 Houses | 15.671.310      | 18.458.760     |
 | 3 Waters    | 40 Houses | 15.628.035      | 18.139.845     |
 | 4 Waters    | 40 Houses | *15.719.000*    | *18.187.035*   |
 | 1 Water     | 60 Houses | 22.769.565      | 24.631.680     |
