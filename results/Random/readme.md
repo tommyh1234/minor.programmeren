@@ -11,6 +11,7 @@ The results are plotted in this graph:
 
 The graph shows that there are very few outliers in the highest and lowest regions. This means generating random maps will generally not result in the high map values that we are looking for.
 
+
 ## 40 houses
 As an experiment the random generator was ran and created 4000 maps with 40 houses. Four runs of 1000 maps were done. The first run with 1 water body per map, the second run with 2 water bodies and so on. In this document the results will be compared.
 
@@ -30,9 +31,9 @@ The results are plotted in this graph:
 
 The graph shows that there are very few outliers in the highest and lowest regions. This means generating random maps will generally not result in the high values that we are looking for.
 
-## Few or much water?
-We wondered wether the amount of water would have a big impact on the value of the map. Therefore we compared the highest and lowest map values of all diferent map configurations. 
 
+## Few or many waterbodies?
+We wondered wether the amount of water would have a big impact on the value of the map. Therefore we compared the highest and lowest map values of all diferent map configurations. 
 
 ### Results
 The results of this comparison can be seen in this figure: ![figure of different water configurations](waterConfigsCompared.png "Waterconfigurations Compared") and the table below:
