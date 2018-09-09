@@ -17,9 +17,9 @@ There is also water in the neighbourhoud: 20% of the total area should be covere
 This codebase will be written in Python 3.6.3. Older versions of python should be used at users own risk. We have verified that this codebase won't work with Python 2.7. We will put all the requirements in requirements.txt, which can be installed by using ```pip install -r requirements.txt```
 
 ## Authors
-* Tommy Hokkeling (10463305)
-* Jos Vlaar (12076619)
-* Pim ten Thije (10818413)
+* Tommy Hokkeling
+* Jos Vlaar
+* Pim ten Thije
 
 ## Structure
 The program is run from `python3 application.py`. Any given run consist of three important classes. Area is the data model and deals with storing, validating and scoring a state. An algorithm class is the meat of the program, this is where all the nifty stuff happens. Then there are visualizers. These are what actually run an algorithm. Since drawing and executing happen in the same loop it was decided to have this all handled by the visualizers. Each of these three are kept in seperate folders with seperate readme's goin into more detail.
