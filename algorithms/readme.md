@@ -2,7 +2,7 @@
 This folder contains all the algorithms that this application can run. Each algorithm is based off of the `algorithm.py` base class. This class does not contain much functionality but rather serves as a template to bass the other algorithms off of.
 
 ## Structure
-Each algorithm consists of two main parts: a init funciton and a execute function. The init function contains all logic to prepare an area for the algorithm. This can include calling other algorithms! Next to that it also handles all of the setup for the algorithm's own state, this includes information such as move counts and past prices.
+Each algorithm consists of two main parts: a init function and a execute function. The init function contains all logic to prepare an area for the algorithm. This can include calling other algorithms! Next to that it also handles all of the setup for the algorithm's own state, this includes information such as move counts and past prices.
 
 The execute function is where the actual logic of the algorithm happens. This function is called upon consecutively many times until the algorithm sets `self.isDone` to true. This allows algorithms to work with radically different logic and runtimes.
 
